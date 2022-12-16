@@ -11,17 +11,17 @@ Voici les étapes à suivre pour créer un site web en HTML et CSS :
 
 //mettre des x a l'inteirieur des crochets pour cocher les cases
 
-1. [ ]  Ouvrez un éditeur de code et créez un nouveau fichier HTML. Vous pouvez utiliser un éditeur de code simple, comme Notepad, ou un éditeur de code plus avancé, comme Sublime Text ou Atom. 
-2. [ ] Dans le fichier HTML, ajoutez les éléments de base de votre page web. Cela inclut la balise `<html>`, qui indique que le fichier est un document HTML, ainsi que les balises `<head>` et `<body>`, qui sont utilisées pour structurer le contenu de votre page.
-3. [ ] Dans la balise `<head>`, ajoutez une balise `<title>`, qui définira le titre de votre page web. 
-4. [ ] Dans la balise `<body>`, ajoutez les éléments de contenu de votre page, comme des titres, des paragraphes, des images, etc. Utilisez les balises HTML appropriées pour chaque élément de contenu, comme `<h1>` pour un titre, `<p>` pour un paragraphe, et `<img>` pour une image.
+1. [x]  Ouvrez un éditeur de code et créez un nouveau fichier HTML. Vous pouvez utiliser un éditeur de code simple, comme Notepad, ou un éditeur de code plus avancé, comme Sublime Text ou Atom. 
+2. [x] Dans le fichier HTML, ajoutez les éléments de base de votre page web. Cela inclut la balise `<html>`, qui indique que le fichier est un document HTML, ainsi que les balises `<head>` et `<body>`, qui sont utilisées pour structurer le contenu de votre page.
+3. [x] Dans la balise `<head>`, ajoutez une balise `<title>`, qui définira le titre de votre page web. 
+4. [x] Dans la balise `<body>`, ajoutez les éléments de contenu de votre page, comme des titres, des paragraphes, des images, etc. Utilisez les balises HTML appropriées pour chaque élément de contenu, comme `<h1>` pour un titre, `<p>` pour un paragraphe, et `<img>` pour une image.
    
-5. [ ] Dans la balise `<head>`, ajoutez une balise `<link>`, qui permet d'inclure un fichier CSS dans votre page web.
+5. [x] Dans la balise `<head>`, ajoutez une balise `<link>`, qui permet d'inclure un fichier CSS dans votre page web.
 
-6.  [ ] Dans la balise `<head>`, ajoutez une balise `<style>`, qui permet d'inclure du CSS directement dans votre page web.
-7.  [ ] Dans la balise `<style>`, ajoutez des règles CSS pour définir le style de votre page web. Vous pouvez définir des règles pour les différents éléments de votre page, comme les couleurs, les polices de caractères, les marges, etc.  
-8.  [ ] Dans la balise `<a>`, ajoutez un attribut `href`, qui définira l'URL vers laquelle votre lien pointera.  
-9.  [ ]  Ajoutez du style à votre page en utilisant CSS. Vous pouvez écrire du CSS directement dans la balise `<style>` de votre document HTML, ou vous pouvez créer un fichier CSS séparé et l'inclure dans votre document HTML en utilisant la balise `<link>`. Dans votre CSS, vous pouvez définir des règles pour les différents éléments de votre page, comme les couleurs, les polices de caractères, les marges, etc.  
+6.  [x] Dans la balise `<head>`, ajoutez une balise `<style>`, qui permet d'inclure du CSS directement dans votre page web.
+7.  [x] Dans la balise `<style>`, ajoutez des règles CSS pour définir le style de votre page web. Vous pouvez définir des règles pour les différents éléments de votre page, comme les couleurs, les polices de caractères, les marges, etc.  
+8.  [x] Dans la balise `<a>`, ajoutez un attribut `href`, qui définira l'URL vers laquelle votre lien pointera.  
+9.  []  Ajoutez du style à votre page en utilisant CSS. Vous pouvez écrire du CSS directement dans la balise `<style>` de votre document HTML, ou vous pouvez créer un fichier CSS séparé et l'inclure dans votre document HTML en utilisant la balise `<link>`. Dans votre CSS, vous pouvez définir des règles pour les différents éléments de votre page, comme les couleurs, les polices de caractères, les marges, etc.  
     
 **J'ai reussi a trouver quelques liens pour apprendre le HTML et CSS :** 
 
@@ -52,7 +52,9 @@ Voici les étapes à suivre pour ajouter une base de données à votre site web 
 4. [ ] Écrivez du code PHP pour interagir avec votre base de données. Vous pouvez utiliser des fonctions PHP pour exécuter des requêtes SQL sur votre base de données, comme des INSERT, SELECT, UPDATE, et DELETE. Assurez-vous de vérifier les erreurs et de gérer les cas d'exception pour garantir la sécurité et la fiabilité de votre code.  
 5. [ ]  Intégrez votre code PHP dans votre site web en utilisant les balises PHP appropriées. Vous pouvez inclure du code PHP directement dans vos fichiers HTML en utilisant la balise `<?php ?>`, ou vous pouvez créer des fichiers PHP séparés et les inclure dans vos fichiers HTML en utilisant la fonction `include()` ou `require()`.  
 
-**liens pour apprendre le PHP et MYSQL :**
+**liens pour apprendre le PHP et MYSQL :**  
+
+https://www.pierre-giraud.com/php-mysql-apprendre-coder-cours/
 
 https://www.php.net/manual/fr/intro-whatis.php =>"pour les fonctions php"
 
