@@ -52,7 +52,9 @@ Voici les étapes à suivre pour ajouter une base de données à votre site web 
 4. [ ] Écrivez du code PHP pour interagir avec votre base de données. Vous pouvez utiliser des fonctions PHP pour exécuter des requêtes SQL sur votre base de données, comme des INSERT, SELECT, UPDATE, et DELETE. Assurez-vous de vérifier les erreurs et de gérer les cas d'exception pour garantir la sécurité et la fiabilité de votre code.  
 5. [ ]  Intégrez votre code PHP dans votre site web en utilisant les balises PHP appropriées. Vous pouvez inclure du code PHP directement dans vos fichiers HTML en utilisant la balise `<?php ?>`, ou vous pouvez créer des fichiers PHP séparés et les inclure dans vos fichiers HTML en utilisant la fonction `include()` ou `require()`.  
 
-**liens pour apprendre le PHP et MYSQL :**
+**liens pour apprendre le PHP et MYSQL :**  
+
+https://www.pierre-giraud.com/php-mysql-apprendre-coder-cours/
 
 https://www.php.net/manual/fr/intro-whatis.php =>"pour les fonctions php"
 
