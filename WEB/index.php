@@ -11,6 +11,41 @@
 
 <body>
 	<h1>Projet Maison Économe</h1>
+
+	<?php
+	// afficher un lien vers tous les .php et .html du projet
+	$files = scandir(".");
+	foreach ($files as $file) {
+		if (substr($file, -4) == ".php" || substr($file, -5) == ".html") {
+			echo "<a href='$file'>$file</a><br>";
+		}
+	}
+
+	// et sous-dossiers
+	$folders = scandir(".");
+	foreach ($folders as $folder) {
+		// ignorer le dossier common
+		if ($folder == "common") {
+			continue;
+		}
+		if (is_dir($folder) && $folder != "." && $folder != "..") {
+			$files = scandir($folder);
+			$filesPhp = array_filter($files, function ($file) {
+				return substr($file, -4) == ".php" || substr($file, -5) == ".html";
+			});
+			if (count($filesPhp) == 0) {
+				continue;
+			}
+			echo "<h2>$folder</h2>";
+			foreach ($filesPhp as $file) {
+				echo "<a href='$folder/$file'>$file</a><br>";
+			}
+		}
+	}
+
+	?>
+
+
 </body>
 
 </html>
