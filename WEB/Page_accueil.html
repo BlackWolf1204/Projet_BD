@@ -12,15 +12,16 @@
  <html lang="fr"><!-- déclaration de la langue de la page -->
  
  <head><!-- début de l'entête de la page -->
+
+    <title>Page d'acceuil</title><!-- déclaration du titre de la page -->
+
+    <meta charset="UTF-8"><!-- déclaration du jeu de caractères utilisé sur la page -->
  
-     <meta charset="UTF-8"><!-- déclaration du jeu de caractères utilisé sur la page -->
- 
-     <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- déclaration de la taille de la page -->
- 
-     <title>Page d'acceuil</title><!-- déclaration du titre de la page -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- déclaration de la taille de la page -->
  
      <link rel="stylesheet" href="style.css"><!-- lien vers le fichier CSS -->
-     <
+
+    </head><!-- fin de l'entête de la page --> 
 
      <header><!-- début de l'entête de la page -->
 
@@ -35,6 +36,12 @@
             <div class="header-right"><!-- début de la classe header-right -->
     
                 <a href="connexion.html" class="connexion-button">Connexion</a><!-- déclaration de la classe connexion-button -->
+
+                <a href="Creer compte.html" class="connexion-button">Connexion</a><!-- déclaration de la classe connexion-button -->
+
+                    <!-- les boutons ci dessous seront visibles que sous la condition d'être connectée -->
+                    
+                <a href="Deconnexion.html" class="deconexion-button">Decconexion</a><!-- déclaration de la classe deconexion-button -->
     
                 <a href="gestion_compte.html" class="account-management-button">Gestion du compte</a><!-- déclaration de la classe account-management-button -->
     
@@ -60,7 +67,8 @@
             <script>
 
             // Ajout de l'effet d'image dynamique de fond 
-            VANTA.TOPOLOGY({
+            VANTA.TOPOLOGY(
+            {
                 el: "#vantatopologymin", // ID de l'élément HTML
                 mouseControls: true,
                 touchControls: true,
@@ -69,7 +77,8 @@
                 minWidth: 200.00,
                 scale: 1.00,
                 scaleMobile: 1.00
-                })
+            }
+            )
                 </script>
             
         </div><!-- fin de la classe body-left -->
