@@ -1,7 +1,7 @@
 
 CREATE DATABASE IF NOT EXISTS MaisonEco;
 USE MaisonEco;
-DROP TABLE IF EXISTS InfoPersonne, Administrateur, Immeuble,
+DROP TABLE IF EXISTS InfoPersonne, Administrateur, Propriete,
 	TypeAppartement, TypePiece, TypeSecurite,
 	TypeAppareil, TypeRessource, TypeSubstance,
 	Utilisateur, Appartement, Piece, Appareil,
@@ -28,15 +28,15 @@ CREATE TABLE Administrateur(
    FOREIGN KEY(idPersonne) REFERENCES InfoPersonne(idPersonne)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE Immeuble(
-   idImmeuble INT,
+CREATE TABLE Propriete(
+   idPropriete INT,
    numeroRue INT,
    nomRue VARCHAR(50) ,
    codePostal INT,
    ville VARCHAR(50) ,
-   nomImmeuble VARCHAR(50) ,
+   nomPropriete VARCHAR(50) ,
    degreIsolation CHAR(1) ,
-   PRIMARY KEY(idImmeuble)
+   PRIMARY KEY(idPropriete)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE TypeAppartement(
@@ -94,11 +94,11 @@ CREATE TABLE Appartement(
    numAppart INT,
    degreSecurite INT NOT NULL,
    typeAppart INT NOT NULL,
-   idImmeuble INT NOT NULL,
+   idPropriete INT NOT NULL,
    PRIMARY KEY(idAppartement),
    FOREIGN KEY(degreSecurite) REFERENCES TypeSecurite(degreSecurite),
    FOREIGN KEY(typeAppart) REFERENCES TypeAppartement(typeAppart),
-   FOREIGN KEY(idImmeuble) REFERENCES Immeuble(idImmeuble)
+   FOREIGN KEY(idPropriete) REFERENCES Propriete(idPropriete)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Piece(
@@ -152,12 +152,12 @@ CREATE TABLE Produire(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Proprietaire(
-   idImmeuble INT,
+   idPropriete INT,
    datedebutprop DATETIME,
    datefinprop DATETIME,
    idPersonne INT NOT NULL,
-   PRIMARY KEY(idImmeuble, datedebutprop),
-   FOREIGN KEY(idImmeuble) REFERENCES Immeuble(idImmeuble),
+   PRIMARY KEY(idPropriete, datedebutprop),
+   FOREIGN KEY(idPropriete) REFERENCES Propriete(idPropriete),
    FOREIGN KEY(idPersonne) REFERENCES Utilisateur(idPersonne)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

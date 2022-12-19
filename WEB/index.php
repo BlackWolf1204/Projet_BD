@@ -1,3 +1,4 @@
+<?php $ROOT = "/"; ?>
 <!DOCTYPE html>
 <html>
 
@@ -10,7 +11,7 @@
 </head>
 
 <body>
-	<h1>Projet Maison Économe</h1>
+	<?php require('common/header.php') ?>
 
 	<?php
 	// afficher un lien vers tous les .php et .html du projet
@@ -45,7 +46,7 @@
 
 	?>
 
-
+	<?php require('common/footer.php') ?>
 </body>
 
 </html>
