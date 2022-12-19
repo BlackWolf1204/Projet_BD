@@ -52,7 +52,7 @@ require_once("../common/bdd.php");
 <body>
 	<h1>Ajouter un immeuble</h1>
 
-	<form target="creerimmeuble.php" action="post">
+	<form target="ajoutPropriete.php" action="post">
 		<label for="numéroRue">Numéro de rue</label>
 		<input type="text" name="numéroRue" placeholder="123">
 		<label for="nomRue">Nom de rue</label>

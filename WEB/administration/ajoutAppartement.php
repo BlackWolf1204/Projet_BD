@@ -20,14 +20,14 @@ require_once("../common/bdd.php");
 	$immeubles = $bdd->query("SELECT * FROM immeuble");
 	// si pas d'immeuble, afficher un message d'erreur
 	if ($immeubles->rowCount() == 0) {
-		echo "<p>Vous devez d'abord ajouter un immeuble.</p>";
-		echo "<a href='creerimmeuble.php'>Ajouter un immeuble</a>";
+		echo "<p>Vous devez d'abord ajouter une prorpriété.</p>";
+		echo "<a href='ajoutPropriete.php'>Ajouter une propriété</a>";
 		exit();
 	}
 	?>
 
 	<!-- idImmeuble/nomImmeuble, numAppartement, degreSecurité (faible, moyen, fort), typeAppartement (select récup de la table typeappartement : T1, T2...) -->
-	<form target="creerappartement.php" action="post">
+	<form target="ajoutAppartement.php" action="post">
 		<label for="idImmeuble">Immeuble</label>
 		<select name="idImmeuble">
 			<?php
