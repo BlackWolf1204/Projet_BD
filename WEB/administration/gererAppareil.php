@@ -11,26 +11,18 @@ require_once("../common/main.php");
  
     <title>Page appareil</title>
 
-     <meta charset="UTF-8">
- 
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
-     <link rel="stylesheet" href="style.css">
-    
- </head>
-
- <body>
-
     <?php require "../common/header.php"; ?>
 
     <h2>Vos appareils</h2>
 
-    <?php require_once "../common/bdd.php";
+    <?php
     
     // requete pour la base
     $req = 'SELECT idType, nomAppareil, libTypeAppareil 
-            FROM Appareil NATURAL JOIN TypeAppareil';   //restreindre au appareils de l'utilisateur
+            FROM Appareil NATURAL JOIN TypeAppareil';   //restreindre aux appareils de l'utilisateur
     
+    ### peut regarder description de l'appareil si survole son nom ? ###
+
     // exécution de la requête
     $data = $bdd->query($req);
     // si erreur
@@ -47,7 +39,7 @@ require_once("../common/main.php");
                 </tr>
             </thead>
             <tbody>";
-    foreach ($data as $lignes) {
+    foreach ($data as $ligne) {
         echo "<tr>
                 <th>$ligne->nomAppareil</th>
                 <th>$ligne->libTypeAppareil</th>
@@ -130,7 +122,7 @@ require_once("../common/main.php");
 ---------------------------------------------------------------->
         </tbody>
     </table>
-    <a href="../Page_accueil/Page_accueil.html">Ajouter appareil</a>
+    <a href="../Page_accueil/Page_accueil.php">Ajouter appareil</a>
  </body>
 
  <?php require "../common/footer.php"; ?>

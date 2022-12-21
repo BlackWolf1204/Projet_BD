@@ -15,43 +15,7 @@
 
     <title>Page d'acceuil</title><!-- déclaration du titre de la page -->
 
-    <meta charset="UTF-8"><!-- déclaration du jeu de caractères utilisé sur la page -->
- 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- déclaration de la taille de la page -->
- 
-     <link rel="stylesheet" href="style.css"><!-- lien vers le fichier CSS -->
-
-    </head><!-- fin de l'entête de la page -->
-
-     <header><!-- début de l'entête de la page -->
-
-        <div class="header"><!-- début de la classe header NB: Une classe c'est -->
-    
-            <div class="header-left"><!-- début de la classe header-left  -->
-    
-                <img src="images/logo.png" alt="logo" class="logo"><!-- déclaration de la classe logo -->
-    
-            </div><!-- fin de la classe header-left -->
-    
-            <div class="header-right"><!-- début de la classe header-right -->
-    
-                <a href="connexion.html" class="connexion-button">Connexion</a><!-- déclaration de la classe connexion-button -->
-
-                <a href="Creer compte.html" class="connexion-button">Connexion</a><!-- déclaration de la classe connexion-button -->
-
-                    <!-- les boutons ci dessous seront visibles que sous la condition d'être connectée -->
-                    
-                <a href="Deconnexion.html" class="deconexion-button">Decconexion</a><!-- déclaration de la classe deconexion-button -->
-    
-                <a href="gestion_compte.html" class="account-management-button">Gestion du compte</a><!-- déclaration de la classe account-management-button -->
-    
-            </div><!-- fin de la classe header-right -->
-    
-        </div><!-- fin de la classe header -->
-    
-    </header><!-- fin de l'entête de la page -->
-    
-    <div class="body"><!-- début de la classe body -->
+        <?php require "../common/header.php"?>
     
         <div class="body-left"><!-- début de la classe body-left -->
     
@@ -121,6 +85,8 @@
     </footer><!-- fin du pied de page -->
 
 </body><!-- fin du corps de la page -->
+
+<?php require "../common/footer.php"; ?>
 
 </html><!-- fin de la page -->
 

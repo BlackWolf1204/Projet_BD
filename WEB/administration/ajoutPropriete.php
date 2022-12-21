@@ -1,16 +1,8 @@
-<?php
-$ROOT = "../";
-require_once("../common/main.php");
-?>
-
 <!DOCTYPE html>
 <html>
 
 <head>
-	<meta charset='utf-8'>
 	<title>Ajouter un immeuble</title>
-	<meta name='viewport' content='width=device-width, initial-scale=1'>
-	<link rel='stylesheet' type='text/css' media='screen' href='../style/main.css'>
 
 	<script>
 		function sendRequest(params, callback) {
@@ -56,10 +48,9 @@ require_once("../common/main.php");
 			}
 		}
 	</script>
-</head>
 
-<body>
 	<?php require('../common/header.php') ?>
+	
 	<h2>Ajouter un immeuble</h2>
 
 	<form action="ajoutPropriete.php" method="post">

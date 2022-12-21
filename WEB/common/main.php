@@ -11,4 +11,4 @@ if (!isset($ROOT)) {
 	exit();
 }
 
-require_once($ROOT . "common/bdd.php");
+require_once("bdd.php");

@@ -1,16 +1,8 @@
-<?php
-$ROOT = "../";
-require_once("../common/main.php");
-?>
-
 <!DOCTYPE html>
 <html>
 
 <head>
-	<meta charset='utf-8'>
 	<title>Ajouter un appartement</title>
-	<meta name='viewport' content='width=device-width, initial-scale=1'>
-	<link rel='stylesheet' type='text/css' media='screen' href='../style/main.css'>
 	<style>
 		.infoAppart {
 			border: 1px solid black;
@@ -19,9 +11,7 @@ require_once("../common/main.php");
 			width: fit-content;
 		}
 	</style>
-</head>
 
-<body>
 	<?php require('../common/header.php') ?>
 
 	<?php
