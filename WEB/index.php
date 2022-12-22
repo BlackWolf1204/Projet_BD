@@ -1,4 +1,4 @@
-<?php $ROOT = "/"; ?>
+<?php $ROOT = "./"; ?>
 <!DOCTYPE html>
 <html>
 
