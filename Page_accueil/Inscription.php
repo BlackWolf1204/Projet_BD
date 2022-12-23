@@ -1,5 +1,7 @@
 <!-- Inscription.php --> 
 
+<!--Notes du 22/12/22: ajouter des required pour les champs obligatoires et un pattern pour le numéro de téléphone (pattern="[0-9]{10}")-->
+<!-- Notes du 23/12/22: J'ai remarqué que l'ID dans la base de données est n'est jamais remis à 0, dans les cas ou on supprimes tous les comptes, il faut le faire manuellement dans la base de données , je sais pas si cela va poser un prob -->$_COOKIE
 <?php
 session_start();//On démarre la session
 // On se connecte à la base de données interne qui se trouve dans le dossier Page_accueil (C:\xampp\htdocs\xampp\Projet_BD\Page_accueil\comptes.sql)
@@ -40,7 +42,7 @@ if(isset($_POST['inscription']))
                         {
                             $insertmbr = $bdd->prepare("INSERT INTO info_comptes(Nom, Prenom, Genre, DateNaissance, NumTel, Mail, MotDePasse) VALUES(?, ?, ?, ?, ?, ?, ?)");
                             $insertmbr->execute(array($Nom, $Prenom, $Genre, $Date_naissance, $Num_tel, $mail, $mdp));
-                            $erreur = "Votre compte a bien été créé ! <a href=\"Page_connexion.php\">Me connecter</a>";
+                            $erreur = "Votre compte a bien été créé ! <a href=\"connexion.php\">Me connecter</a>";// Techniquement ce n'est pas une erreur, mais c'est plus simple de l'appeler comme ça 
                         } 
                         else 
                         {
