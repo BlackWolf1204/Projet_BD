@@ -1,4 +1,5 @@
 
+DROP DATABASE IF EXISTS MaisonEco;
 CREATE DATABASE IF NOT EXISTS MaisonEco;
 USE MaisonEco;
 DROP TABLE IF EXISTS InfoPersonne, Administrateur, Propriete,
@@ -58,9 +59,9 @@ CREATE TABLE TypeSecurite(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE TypeAppareil(
-   idType INT,
+   idTypeAppareil INT,
    libTypeAppareil VARCHAR(50) ,
-   PRIMARY KEY(idType)
+   PRIMARY KEY(idTypeAppareil)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE TypeRessource(
@@ -112,11 +113,12 @@ CREATE TABLE Piece(
 
 CREATE TABLE Appareil(
    idAppareil INT,
+   nomAppareil VARCHAR(20)  NOT NULL,
    emplacement VARCHAR(50) ,
-   idType INT NOT NULL,
+   idTypeAppareil INT NOT NULL,
    idPiece INT NOT NULL,
    PRIMARY KEY(idAppareil),
-   FOREIGN KEY(idType) REFERENCES TypeAppareil(idType),
+   FOREIGN KEY(idTypeAppareil) REFERENCES TypeAppareil(idTypeAppareil),
    FOREIGN KEY(idPiece) REFERENCES Piece(idPiece)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -130,24 +132,24 @@ CREATE TABLE HistoriqueConsommation(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Consommer(
-   idType INT,
+   idTypeAppareil INT,
    typeRessource INT,
    qteMinParJour FLOAT,
    qteMaxParJour FLOAT,
    quantiteAllume FLOAT,
-   PRIMARY KEY(idType, typeRessource),
-   FOREIGN KEY(idType) REFERENCES TypeAppareil(idType),
+   PRIMARY KEY(idTypeAppareil, typeRessource),
+   FOREIGN KEY(idTypeAppareil) REFERENCES TypeAppareil(idTypeAppareil),
    FOREIGN KEY(typeRessource) REFERENCES TypeRessource(typeRessource)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Produire(
-   idType INT,
+   idTypeAppareil INT,
    typeSubstance INT,
    qteMinParJour FLOAT,
    qteMaxParJour FLOAT,
    quantiteAllume FLOAT,
-   PRIMARY KEY(idType, typeSubstance),
-   FOREIGN KEY(idType) REFERENCES TypeAppareil(idType),
+   PRIMARY KEY(idTypeAppareil, typeSubstance),
+   FOREIGN KEY(idTypeAppareil) REFERENCES TypeAppareil(idTypeAppareil),
    FOREIGN KEY(typeSubstance) REFERENCES TypeSubstance(typeSubstance)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
