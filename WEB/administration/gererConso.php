@@ -70,6 +70,8 @@
             else echo "<th class=\"rouge\">C mauvais!</th>";
             echo "</tr>";
         }
+        echo "</tbody>
+            </table>";
 
         
         // requete pour la base
@@ -111,6 +113,8 @@
             else echo "<th class=\"rouge\">C mauvais!</th>";
             echo "</tr>";
         }
+        echo "</tbody>
+            </table>";
     }
     ?>
         </tbody>
