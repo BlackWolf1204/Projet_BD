@@ -15,6 +15,8 @@ require_once("../common/main.php");
 
     <h2>Votre/Vos propriété(s)</h2>
 
+    <a href="../Page_accueil/Page_accueil.php">Retour</a>
+
     <table>
         <tbody>
             <tr>
@@ -55,7 +57,7 @@ require_once("../common/main.php");
     
     foreach ($data as $ligne) {
         // requete pour la base
-        $req2 = "SELECT numAppart, libTypeAppart, nomSecurite
+        $req2 = "SELECT numAppart, libTypeAppart, nomSecurite, DATE_FORMAT(datedebutprop, %d %b %Y)
         FROM (((Appartment NATURAL JOIN Proprietaire) NATURAL JOIN TypeAppartement) NATURAL JOIN TypeSecurite) NATURAL JOIN Locataire 
         WHERE idPropriete = $ligne->idPropriete";
 
@@ -88,7 +90,7 @@ require_once("../common/main.php");
                     <td>$ligne2->nomSecurite</td>";
 
             // requete pour la base
-            $req3 = "SELECT datedebutloc, nom, prenom
+            $req3 = "SELECT DATE_FORMAT(datedebutloc, %d %b %Y), nom, prenom
             FROM (Locataire NATURAL JOIN Utilisateur) NATURAL JOIN InfoPersonne
             WHERE idAppartement = $ligne->idAppartement AND dateFinLoc IS NULL";
 

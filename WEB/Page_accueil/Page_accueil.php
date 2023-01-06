@@ -64,6 +64,8 @@
             <a href="../administration/gererAppareil.php" class="bouton">Gerer ses appareils</a><!-- déclaration de la classe bouton -->
 
             <a href="../administration/gererPropriete.php" class="bouton">Gerer sa/ses propriété(s)</a><!-- déclaration de la classe bouton -->
+            
+            <a href="../administration/ajoutPropriete.php" class="bouton">Ajouter une propriété</a><!-- déclaration de la classe bouton -->
             <!-- <a href="statistiques.php" class="bouton">Statistiques</a>  seulement pour admins -->
             
         </div><!-- fin de la classe body-right -->

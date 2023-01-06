@@ -15,6 +15,8 @@ require_once("../common/main.php");
 
     <h2>Vos appareils</h2>
 
+    <a href="../Page_accueil/Page_accueil.php">Retour</a>
+
     <?php
     
     // requete pour la base
