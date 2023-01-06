@@ -18,7 +18,7 @@ require_once("../common/main.php");
     <?php
     
     // requete pour la base
-    $req = 'SELECT idType, nomAppareil, libTypeAppareil 
+    $req = 'SELECT idAppareil, idTypeAppareil, nomAppareil, libTypeAppareil 
             FROM Appareil NATURAL JOIN TypeAppareil';   //restreindre aux appareils de l'utilisateur
     
     ### peut regarder description de l'appareil si survole son nom ? ###

@@ -8,13 +8,13 @@
 
     <?php require "../common/header.php"; ?>
 
-    <h2>Vos appareils</h2>
+    <h2>Votre consommation et production</h2>
 
     <?php
 
     // requete pour la base
-    $req = 'SELECT idAppartement, numAppart, numeroRue, nomRue, codePostal, ville, nomImmeuble
-    FROM Appartement NATURAL JOIN Immeuble';   //restreindre aux appartements de l'utilisateur
+    $req = 'SELECT idAppartement, numAppart, numeroRue, nomRue, codePostal, ville, nomPropriete
+    FROM Appartement NATURAL JOIN Propriete';   //restreindre aux appartements de l'utilisateur
 
     // exécution de la requête
     $data = $bdd->query($req);
@@ -72,7 +72,6 @@
         }
         echo "</tbody>
             </table>";
-
         
         // requete pour la base
         $req2 = "SELECT libTypeSubstance, valCritiqueProdAppart, valIdealProdAppart, SUM(quantiteAllume) AS sumQuantite
