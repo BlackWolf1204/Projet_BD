@@ -43,6 +43,7 @@ CREATE TABLE Propriete(
 CREATE TABLE TypeAppartement(
    typeAppart INT,
    libTypeAppart VARCHAR(50) ,
+   nbPieces INT,
    PRIMARY KEY(typeAppart)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
