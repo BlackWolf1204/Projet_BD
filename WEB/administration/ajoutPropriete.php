@@ -1,3 +1,39 @@
+<?php
+$ROOT = '../';
+
+// Si paramètres POST non vides
+if (!empty($_POST)) {
+	// Connexion à la base de données
+	require('../common/main.php');
+
+	// Récupération des paramètres POST
+	$type = $_POST['type'];
+	$nbAppartements = $_POST['nbAppartements'];
+	$numéroRue = $_POST['numéroRue'];
+	$nomRue = $_POST['nomRue'];
+	$codePostal = $_POST['codePostal'];
+	$ville = $_POST['ville'];
+	$nomImmeuble = $_POST['nomImmeuble'];
+	$degreIsolation = $_POST['degreIsolation'];
+
+	// Requête SQL
+	$sql = "INSERT INTO propriete (numeroRue, nomRue, codePostal, ville, nomPropriete, degreIsolation) VALUES ('$numéroRue', '$nomRue', '$codePostal', '$ville', '$nomImmeuble', '$degreIsolation')";
+
+	// Exécution de la requête
+	$result = $bdd->query($sql);
+
+	// Si la requête a échoué
+	if (!$result) {
+		// Affichage de l'erreur
+		echo "Error: " . $sql . "<br>" . $bdd->error;
+	} else {
+		// Rediriger vers ajoutAppartement.php
+		$idPropriete = $bdd->lastInsertId();
+		header("Location: ajoutAppartement.php?type=$type&idPropriete=$idPropriete&nbApparts=$nbAppartements");
+	}
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -50,7 +86,7 @@
 	</script>
 
 	<?php require('../common/header.php') ?>
-	
+
 	<h2>Ajouter un immeuble</h2>
 
 	<form action="ajoutPropriete.php" method="post">
@@ -97,6 +133,6 @@
 	</form>
 
 	<?php require('../common/footer.php') ?>
-</body>
+	</body>
 
 </html>
