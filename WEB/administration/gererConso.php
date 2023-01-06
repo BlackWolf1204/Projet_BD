@@ -8,13 +8,15 @@
 
     <?php require "../common/header.php"; ?>
 
-    <h2>Vos appareils</h2>
+    <h2>Votre consommation et production</h2>
+
+    <a href="../Page_accueil/Page_accueil.php">Retour</a>
 
     <?php
 
     // requete pour la base
-    $req = 'SELECT idAppartement, numAppart, numeroRue, nomRue, codePostal, ville, nomImmeuble
-    FROM Appartement NATURAL JOIN Immeuble';   //restreindre aux appartements de l'utilisateur
+    $req = 'SELECT idAppartement, numAppart, numeroRue, nomRue, codePostal, ville, nomPropriete
+    FROM Appartement NATURAL JOIN Propriete';   //restreindre aux appartements de l'utilisateur
 
     // exécution de la requête
     $data = $bdd->query($req);
@@ -32,12 +34,11 @@
         echo "</h3>";
 
         // requete pour la base
-        $req2 = "SELECT libTypeRessource, valCritiqueConsoAppart, valIdealConsoAppart, SUM(quantiteAllume) AS sumQuantite 
+        $req2 = "SELECT libTypeRessource, valCritiqueConsoAppart, valIdealConsoAppart, quantiteAllume
                 FROM TypeRessouce NATURAL JOIN Consommer NATURAL JOIN TypeApparail NATURAL JOIN Appareil NATURAL JOIN Piece NATURAL JOIN Appartement
                 GROUP BY libTypeRessource, valCritiqueConsoAppart, valIdealConsoAppart
                 HAVING idAppartement = $ligne->idAppartement";
                 
-        ### changer base de donnée pour avoir historique des on/off et pouvoir calculer le temps de marche ###
         ### peut regarder une description de la ressource si survole son nom ? ###
 
         // exécution de la requête
@@ -45,6 +46,28 @@
         // si erreur
         if ($data2 == NULL)
         die("Problème d'exécution de la requête \n");
+
+        $req3 = "SELECT TIME_TO_SEC(dateOff) AS dOff, TIME_TO_SEC(dateOn) AS dOn, TIME_TO_SEC(CURRENT_TIME) AS dCurrent
+                FROM Historique NATURAL JOIN Appareil
+                WHERE idAppareil = $ligne->idAppareil";
+
+        // exécution de la requête
+        $data3 = $bdd->query($req3);
+        // si erreur
+        if ($data3 == NULL)
+        die("Problème d'exécution de la requête \n");
+
+        $somme = 0;
+
+        foreach ($data3 as $ligne3) {
+            if ($ligne3->dOff != NULL)
+                $somme = $ligne3->dOff - $ligne3->dOn;
+            else 
+                $somme = $ligne3->dCurrent - $ligne3->dOn;
+        }
+
+        $somme = $somme*$ligne2->quantiteAllume/(60*60);
+        // faire en sorte que se soit par jour !!!!!!!!!!!!!!!!
 
         echo "<table>
                 <thead>
@@ -61,7 +84,7 @@
         foreach ($data2 as $ligne2) {
             echo "<tr>
                     <th>$ligne2->libTypeRessource</th>
-                    <th>A calculer</th>
+                    <th>$somme k..../j</th>
                     <th>$ligne2->valIdealConsoAppart</th>
                     <th>$ligne2->valCritiqueConsoAppart</th>";
 
@@ -70,7 +93,8 @@
             else echo "<th class=\"rouge\">C mauvais!</th>";
             echo "</tr>";
         }
-
+        echo "</tbody>
+            </table>";
         
         // requete pour la base
         $req2 = "SELECT libTypeSubstance, valCritiqueProdAppart, valIdealProdAppart, SUM(quantiteAllume) AS sumQuantite
@@ -111,6 +135,8 @@
             else echo "<th class=\"rouge\">C mauvais!</th>";
             echo "</tr>";
         }
+        echo "</tbody>
+            </table>";
     }
     ?>
         </tbody>

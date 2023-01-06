@@ -88,6 +88,8 @@ if (!empty($_POST)) {
 	<?php require('../common/header.php') ?>
 
 	<h2>Ajouter un immeuble</h2>
+	
+    <a href="../Page_accueil/Page_accueil.php">Retour</a>
 
 	<form action="ajoutPropriete.php" method="post">
 		<!-- radio box : maison ou immeuble -->

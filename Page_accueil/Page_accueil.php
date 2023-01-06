@@ -15,15 +15,12 @@
 
     <title>Page d'acceuil</title><!-- déclaration du titre de la page -->
 
-   
+        <?php require "../common/header.php"?>
     
         <div class="body-left"><!-- début de la classe body-left -->
     
             <img src="images/accueil.jpg" alt="accueil" class="accueil"><!-- déclaration de la classe accueil -->
 
-            <!-- Ci dessous on programme en Java Script , même si cela n'est pas indispensable 
-            , je trouve que en terme d'investissemnt visuel ça en vaut la peine
-            lien : https://www.vantajs.com/?effect=topology -->
 
             <div id="vantatopologymin"></div><!-- ID de l'élément HTML -->
             <script src="p5.min.js"></script>
