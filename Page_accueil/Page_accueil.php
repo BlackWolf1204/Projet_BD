@@ -1,11 +1,3 @@
-<!--        //SITE D'UNE MAISON ECONOME EN ENERGIE // -->
-<!--        
-    Cette page sera la page d'accueil de notre site web. 
-     Elle sera divisée en 3 parties :
-     (1) L'entête : où nous mettrons un bouton de connexion, une image de fond (à définir), et un bouton de gestion du compte en haut à droite.
-     (2) Le corps de la page : où nous mettrons une image de fond avec du texte et différents liens vers les autres pages.
-     (3) Le pied de page : où nous mettrons nos noms et prénoms.
- -->
 
  <!DOCTYPE html><!-- déclaration du type de document HTML -->
 
@@ -24,7 +16,7 @@
 
             <div id="vantatopologymin"></div><!-- ID de l'élément HTML -->
             <script src="p5.min.js"></script>
-            <script src="vanta.topology.min.js"></script>
+            <script src="vanta.topology.min.js"> </script>
             <script>
 
             // Ajout de l'effet d'image dynamique de fond 

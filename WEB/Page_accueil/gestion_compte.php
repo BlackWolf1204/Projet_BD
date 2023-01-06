@@ -3,6 +3,8 @@
 <!--Notes du 23/12/2022 : Page partiellement fonctionnelle-->
 
 <?php
+
+
 session_start();//On démarre la session
 
 // On se connecte à la base de données
@@ -77,7 +79,7 @@ if(isset($_GET['id']) AND !empty($_GET['id']))
                         <h2>Profil de <?php echo $userinfo['prenom']; ?></h2>
                         <br /><br />
 
-        
+                    
                             <p>Nom : <?php echo $userinfo['nom']; ?></p>
                             <p>Prénom : <?php echo $userinfo['prenom']; ?></p>
                             <p>Genre : <?php echo $userinfo['genre']; ?></p>

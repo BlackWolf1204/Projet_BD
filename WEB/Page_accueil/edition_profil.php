@@ -15,17 +15,19 @@ if(isset($_SESSION['Id']))
         $newmail = htmlspecialchars($_POST['newmail']);
         $insertmail = $bdd->prepare("UPDATE InfoPersonne SET mail = ? WHERE idPersonne = ?");
         $insertmail->execute(array($newmail, $getid));
+        header('Location: edition_profil.php?id='.$_SESSION['Id']);
         
-        /*
+        // on chercher a envoyer le mail dans la table utilisateur
+
         $requser = $bdd->prepare("SELECT idPersonne FROM InfoPersonne WHERE Mail = ?");
-        $requser->execute(array($Mail));
+        $requser->execute(array($newmail));
         $userinfo = $requser->fetch();
-        
         $_SESSION['Id'] = $userinfo['idPersonne'];
         $insertmbr = $bdd->prepare("UPDATE INTO Utilisateur(idPersonne,identifiant,mdp) VALUES(?,?,?)");
-        $insertmbr->execute(array($_SESSION['Id'], $Mail, $Mdp));*/
+        $insertmbr->execute(array($_SESSION['Id'], $newmail, $Mdp));
 
-            // on veut toujours rester dans la même page 
+
+            
         header('Location: edition_profil.php?id='.$_SESSION['Id']);
     }
     if(isset($_POST['newmdp1']) AND !empty($_POST['newmdp1']) AND isset($_POST['newmdp2']) AND !empty($_POST['newmdp2']))

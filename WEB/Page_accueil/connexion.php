@@ -35,7 +35,7 @@ if(isset($_POST['connexion']))
             $_SESSION['Prenom'] = $userinfo['prenom'];
             
             //On affiche une image de validation au premier plan (C:\xampp\htdocs\xampp\Projet_BD\Page_accueil\Validation.png)
-            echo '<img src="Validation.png" style="position: absolute; top: 0; left: 0; z-index: 1000;"/>';
+            
             // on attend 2 secondes avant de rediriger
             sleep(2);
 
