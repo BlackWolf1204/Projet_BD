@@ -45,10 +45,10 @@ INSERT INTO TypePiece VALUES (3, 'salle à manger');
 INSERT INTO TypePiece VALUES (4, 'piece principale');
 
 -- Pièce (idPiece, typePiece, idAppartement)
-INSERT INTO Piece VALUES (1, 2, 1); # salon
-INSERT INTO Piece VALUES (2, 1, 1); # cuisine
-INSERT INTO Piece VALUES (3, 4, 3); # pièce principale
-INSERT INTO Piece VALUES (4, 4, 4); # pièce principale
+INSERT INTO Piece VALUES (1, 2, 1); -- salon
+INSERT INTO Piece VALUES (2, 1, 1); -- cuisine
+INSERT INTO Piece VALUES (3, 4, 3); -- pièce principale
+INSERT INTO Piece VALUES (4, 4, 4); -- pièce principale
 
 -- Propriétaire (idPropriete, datedebutprop, datefinprop, idPersonne)
 INSERT INTO Proprietaire VALUES (1, '2017-06-18', '2025-02-25', 3);
@@ -69,39 +69,39 @@ INSERT INTO TypeAppareil VALUES (5, 'plaques de cuisson');
 INSERT INTO TypeAppareil VALUES (6, 'télévision');
 INSERT INTO TypeAppareil VALUES (7, 'chauffage au gaz');
 
--- Appareil (idAppareil, idPiece, idTypeAppareil, idTypeRessource)
-INSERT INTO Appareil VALUES (1, 2, 1, 2); # chauffage éléctrique, cuisine
-INSERT INTO Appareil VALUES (2, 4, 3, 3); # lampe, piece principale
-INSERT INTO Appareil VALUES (3, 4, 4, 3); # aspirateur, piece principale
-INSERT INTO Appareil VALUES (4, 1, 6, 1); # télévision, salon
+-- Appareil (idAppareil, nomAppareil, emplacement, idTypeAppareil, idPiece)
+INSERT INTO Appareil VALUES (1, "Chauffage cuisine", "Sous la fenêtre", 1, 2); -- chauffage éléctrique, cuisine
+INSERT INTO Appareil VALUES (2, "La lampe du séjour", "Au milieu du plafond", 3, 3); -- lampe, piece principale
+INSERT INTO Appareil VALUES (3, "L'aspirateur", "Sous les mantaux", 4, 3); -- aspirateur, piece principale
+INSERT INTO Appareil VALUES (4, "La télé", "Devant le canapé", 6, 1); -- télévision, salon
 
 -- TypeRessource (idTypeRessource, libéllé, valCritiqueConsoAppart, valIdealeConsoAppart, description)
-INSERT INTO TypeRessource VALUES (1, 'électricité', 50000, 5000, 'électricité...'); # Wh / jour / foyer
-INSERT INTO TypeRessource VALUES (2, 'gaz', 50000, 13000, 'le gaz...'); # Wh / jour / foyer
-INSERT INTO TypeRessource VALUES (3, 'eau', 2, 0.7, "l'eau..."); # m3 / jour / foyer
+INSERT INTO TypeRessource VALUES (1, 'électricité', 50000, 5000, 'électricité...'); -- Wh / jour / foyer
+INSERT INTO TypeRessource VALUES (2, 'gaz', 50000, 13000, 'le gaz...'); -- Wh / jour / foyer
+INSERT INTO TypeRessource VALUES (3, 'eau', 2, 0.7, "l'eau..."); -- m3 / jour / foyer
 
 -- Consommer (idTypeAppareil, typeRessource, qteMinParJour, qteMaxParJour, quantiteAllume)
-INSERT INTO Consommer VALUES (1, 1, 500, 1400, 1150); # chauffage élec
-INSERT INTO Consommer VALUES (2, 1, 100, 1000, 150); # réfrigérateur
-INSERT INTO Consommer VALUES (3, 1, 0, 1800, 75); # lampe
-INSERT INTO Consommer VALUES (4, 1, 0, 200, 150); # aspirateur
-INSERT INTO Consommer VALUES (5, 1, 0, 300, 250); # plaques de cuisson
-INSERT INTO Consommer VALUES (6, 1, 0, 1200, 50); # télévision
-INSERT INTO Consommer VALUES (7, 2, 0, 1000, 500); # chauffage au gaz
+INSERT INTO Consommer VALUES (1, 1, 500, 1400, 1150); -- chauffage élec
+INSERT INTO Consommer VALUES (2, 1, 100, 1000, 150); -- réfrigérateur
+INSERT INTO Consommer VALUES (3, 1, 0, 1800, 75); -- lampe
+INSERT INTO Consommer VALUES (4, 1, 0, 200, 150); -- aspirateur
+INSERT INTO Consommer VALUES (5, 1, 0, 300, 250); -- plaques de cuisson
+INSERT INTO Consommer VALUES (6, 1, 0, 1200, 50); -- télévision
+INSERT INTO Consommer VALUES (7, 2, 0, 1000, 500); -- chauffage au gaz
 
 -- TypeSubstance (idTypeSubstance, libéllé, valCritiqueConsoAppart, valIdealeConsoAppart, description)
 INSERT INTO TypeSubstance VALUES (1, 'chaleur', 50000, 5000, 'chaleur...');
 INSERT INTO TypeSubstance VALUES (2, 'dioxyde de carbone', 50000, 13000, 'le dioxyde de carbone...');
 
 -- Produire (idTypeAppareil, idTypeSubstance, qteMinParJour, qteMaxParJour, quantiteAllume)
-INSERT INTO Produire VALUES (1, 1, 0, 1000, 500); # chauffage élec, chaleur
-INSERT INTO Produire VALUES (2, 1, 0, 500, 100); # réfrigérateur, chaleur
-INSERT INTO Produire VALUES (5, 1, 0, 1000, 500); # plaques de cuisson, chaleur
-INSERT INTO Produire VALUES (7, 1, 0, 1000, 500); # chauffage au gaz, chaleur
-INSERT INTO Produire VALUES (7, 2, 0, 1000, 500); # chauffage au gaz, dioxyde de carbone
+INSERT INTO Produire VALUES (1, 1, 0, 1000, 500); -- chauffage élec, chaleur
+INSERT INTO Produire VALUES (2, 1, 0, 500, 100); -- réfrigérateur, chaleur
+INSERT INTO Produire VALUES (5, 1, 0, 1000, 500); -- plaques de cuisson, chaleur
+INSERT INTO Produire VALUES (7, 1, 0, 1000, 500); -- chauffage au gaz, chaleur
+INSERT INTO Produire VALUES (7, 2, 0, 1000, 500); -- chauffage au gaz, dioxyde de carbone
 
 -- HistoriqueConsommation (idConso, dateOn, dateOff, idAppareil)
-INSERT INTO HistoriqueConsommation VALUES (1, '2007-03-11', '2013-04-15', 2); # lampe
-INSERT INTO HistoriqueConsommation VALUES (2, '2014-06-01', '2020-06-01', 1); # chauffage éléctrique
-INSERT INTO HistoriqueConsommation VALUES (3, '2015-01-04', '2019-08-19', 4); # télévision
-INSERT INTO HistoriqueConsommation VALUES (4, '2018-05-27', '2021-03-03', 3); # aspirateur
+INSERT INTO HistoriqueConsommation VALUES (1, '2007-03-11', '2013-04-15', 2); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (2, '2014-06-01', '2020-06-01', 1); -- chauffage éléctrique
+INSERT INTO HistoriqueConsommation VALUES (3, '2015-01-04', '2019-08-19', 4); -- télévision
+INSERT INTO HistoriqueConsommation VALUES (4, '2018-05-27', '2021-03-03', 3); -- aspirateur
