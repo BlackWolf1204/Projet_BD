@@ -15,10 +15,12 @@ require_once("../common/main.php");
 
     <h2>Vos appareils</h2>
 
+    <a href="../Page_accueil/Page_accueil.php">Retour</a>
+
     <?php
     
     // requete pour la base
-    $req = 'SELECT idType, nomAppareil, libTypeAppareil 
+    $req = 'SELECT idAppareil, idTypeAppareil, nomAppareil, libTypeAppareil 
             FROM Appareil NATURAL JOIN TypeAppareil';   //restreindre aux appareils de l'utilisateur
     
     ### peut regarder description de l'appareil si survole son nom ? ###
@@ -87,6 +89,8 @@ require_once("../common/main.php");
                       </tr>";       
         }
     }
+    echo "</tbody>
+        </table>";
     ?>
 <!----------------------------------------------------------------
     <tr>

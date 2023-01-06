@@ -59,15 +59,15 @@
             <p><b>De nos jours il est important de faire des economies en energie,
                  ce site va permetre d'avoir un control sur l'ensemble de vos appartement ....</b></p><!-- paragraphe d'introduction -->
     
-            <a href="qqchose1.html" class="bouton">qqchose1</a><!-- déclaration de la classe bouton -->
+            <a href="../administration/gererConso.php" class="bouton">Regarder sa consomation/production</a><!-- déclaration de la classe bouton -->
     
-            <a href="qqchose2.html" class="bouton">qqchose2</a><!-- déclaration de la classe bouton -->
+            <a href="../administration/gererAppareil.php" class="bouton">Gerer ses appareils</a><!-- déclaration de la classe bouton -->
 
-            <a href="qqchose3.html" class="bouton">qqchose3</a><!-- déclaration de la classe bouton -->
-
-
-
-
+            <a href="../administration/gererPropriete.php" class="bouton">Gerer sa/ses propriété(s)</a><!-- déclaration de la classe bouton -->
+            
+            <a href="../administration/ajoutPropriete.php" class="bouton">Ajouter une propriété</a><!-- déclaration de la classe bouton -->
+            <!-- <a href="statistiques.php" class="bouton">Statistiques</a>  seulement pour admins -->
+            
         </div><!-- fin de la classe body-right -->
     
 
