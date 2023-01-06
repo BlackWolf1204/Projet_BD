@@ -1,3 +1,42 @@
+<?php
+$ROOT = '../';
+
+// Enregistrer les appartements d'une seule fois
+if (!empty($_POST)) {
+	// Connexion à la base de données
+	require('../common/main.php');
+
+	$idPropriete = $_POST['idPropriete'];
+	$nbApparts = $_POST['nbApparts'];
+	$appartements = array();
+	for ($i = 1; $i <= $nbApparts; $i++) {
+		$appartements[] = array(
+			'numAppartement' => $_POST["numAppartement_$i"],
+			'degreSecurite' => $_POST["degreSecurite_$i"],
+			'typeAppart' => $_POST["typeAppart_$i"],
+		);
+	}
+
+	// Ajouter les appartements
+	$sql = "INSERT INTO appartement (idPropriete, numAppart, degreSecurite, typeAppart) VALUES ";
+	$first = true;
+	foreach ($appartements as $appartement) {
+		if (!$first)
+			$sql .= ", ";
+		$sql .= "($idPropriete, {$appartement['numAppartement']}, {$appartement['degreSecurite']}, '{$appartement['typeAppart']}')";
+		$first = false;
+	}
+	$result = $bdd->query($sql);
+	if (!$result) {
+		echo "Error: " . $sql . "<br>" . $bdd->error;
+	} else {
+		// Ajouter les pièces
+		header("Location: ajoutPieces.php?idPropriete=$idPropriete&nbApparts=$nbApparts");
+	}
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -15,8 +54,8 @@
 	<?php require('../common/header.php') ?>
 
 	<?php
-	if (isset($_POST['idPropriete']))
-		$idPropriete = $_POST['idPropriete'];
+	if (isset($_GET['idPropriete']))
+		$idPropriete = $_GET['idPropriete'];
 	else if (isset($_GET['debug_dont_redirect'])) {
 		$idPropriete = 1;
 	} else {
@@ -25,17 +64,11 @@
 		exit();
 	}
 
-	if (isset($_POST['numApparts']))
-		$numApparts = $_POST['numApparts'];
-	else
-		$numApparts = 1;
-	if (isset($_POST['estMaison']))
-		$estMaison = $_POST['estMaison'];
-	else
-		$estMaison = false;
+	$nbApparts = isset($_GET['nbApparts']) ? $_GET['nbApparts'] : 1;
+	$type = isset($_GET['type']) ? $_GET['type'] : "immeuble";
 
-	if ($estMaison == true)
-		$numApparts = 1;
+	if ($type == "maison")
+		$nbApparts = 1;
 
 	$proprieteQuery = $bdd->query("SELECT * FROM propriete WHERE idPropriete = $idPropriete");
 	if ($proprieteQuery) {
@@ -45,7 +78,7 @@
 		$propriete = array(
 			'idPropriete' => 1,
 			'nomPropriete' => 'Maison',
-			'numRue' => '123',
+			'numeroRue' => '123',
 			'nomRue' => 'Rue de la maison',
 			'codePostal' => '12345',
 			'ville' => 'Ville de la maison'
@@ -54,12 +87,12 @@
 	?>
 
 	<?php
-	if ($estMaison == true) {
-		echo "<h2>Type de maison</h2>";
-	} else if ($numApparts == 1) {
-		echo "<h2>Type de l'appartement</h2>";
+	if ($type == "maison") {
+		echo "<h2>Configuration de la maison</h2>";
+	} else if ($nbApparts == 1) {
+		echo "<h2>Configuration de l'appartement</h2>";
 	} else {
-		echo "<h2>Type des $numApparts appartements</h2>";
+		echo "<h2>Configuration des $nbApparts appartements</h2>";
 	}
 	?>
 
@@ -69,7 +102,7 @@
 			<label for="labelPropriete">Propriété</label>
 			<?php
 			// si nomPropriete est null, afficher l'adresse de la propriété, sinon afficher le nom de la propriété
-			$adresse = $propriete['numRue'] . " " . $propriete['nomRue'] . ", " . $propriete['codePostal'] . " " . $propriete['ville'];
+			$adresse = $propriete['numeroRue'] . " " . $propriete['nomRue'] . ", " . $propriete['codePostal'] . " " . $propriete['ville'];
 			if ($propriete['nomPropriete'] != null) {
 				$labelPropriete = $propriete['nomPropriete'] . " (" . $adresse . ")";
 			} else {
@@ -78,40 +111,50 @@
 			?>
 			<span name="labelPropriete" type="text" readonly=true><?= $labelPropriete ?></span>
 		</div>
+		<input type="hidden" name="idPropriete" value="<?= $propriete['idPropriete'] ?>">
+		<input type="hidden" name="nbApparts" value="<?= $nbApparts ?>">
 
 		<!-- Pour une maison (1 ppartment) : degreSecurité (faible, moyen, fort), typeAppartement (select récup de la table typeappartement : T1, T2...) -->
 		<!-- Pour les n appartements => numAppartement, degreSecurité (faible, moyen, fort), typeAppartement (select récup de la table typeappartement : T1, T2...) -->
 		<?php
-		for ($i = 1; $i <= $numApparts; $i++) {
+		$TypeSecurite = $bdd->query("SELECT * FROM TypeSecurite");
+		$TypeSecurite = $TypeSecurite->fetchAll();
+		$TypeAppartement = $bdd->query("SELECT * FROM TypeAppartement");
+		$TypeAppartement = $TypeAppartement->fetchAll();
+
+		for ($i = 1; $i <= $nbApparts; $i++) {
 		?>
 
 			<div class="infoAppart" appartNum=<?= $i ?>>
 
 				<?php
-				if ($estMaison == true) {
-					echo "<div id=\"numAppartement\">";
-					echo "<label for=\"numAppartement\">Numéro d'appartement</label>";
-					echo "<input type=\"text\" name=\"numAppartement\" placeholder=\"123\">";
+				if ($type != "maison") {
+					echo "<div id=\"numAppartement_$i\">";
+					echo "<label for=\"numAppartement_$i\">Numéro d'appartement</label> ";
+					echo "<input type=\"text\" name=\"numAppartement_$i\" placeholder=\"$i\" value=\"$i\" size=4>";
 					echo "</div>";
 				}
 				?>
 
-				<div id="degreSecurite">
-					<label for="degreSecurite">Degré de sécurité</label>
-					<select name="degreSecurite">
-						<option value="faible">Faible</option>
-						<option value="moyen">Moyen</option>
-						<option value="fort">Fort</option>
+				<div id="degreSecurite_<?= $i ?>">
+					<label for="degreSecurite_<?= $i ?>">Degré de sécurité</label>
+					<select name="degreSecurite_<?= $i ?>">
+						<?php
+						$default = 2;
+						foreach ($TypeSecurite as $TypeSec) {
+							$selected = $TypeSec['degreSecurite'] == $default ? "selected" : "";
+							echo "<option value='" . $TypeSec['degreSecurite'] . "' $selected>" . $TypeSec['nomSecurite'] . "</option>";
+						}
+						?>
 					</select>
 				</div>
 
-				<div id="typeAppart">
-					<label for="typeAppart">Type de logement</label>
-					<select name="typeAppart">
+				<div id="typeAppart_<?= $i ?>">
+					<label for="typeAppart_<?= $i ?>">Type de logement</label>
+					<select name="typeAppart_<?= $i ?>">
 						<?php
-						$typeappartements = $bdd->query("SELECT * FROM typeappartement");
-						while ($typeappartement = $typeappartements->fetch()) {
-							echo "<option value='" . $typeappartement['typeAppart'] . "'>" . $typeappartement['libTypeAppart'] . "</option>";
+						foreach ($TypeAppartement as $TypeAppart) {
+							echo "<option value='" . $TypeAppart['typeAppart'] . "'>" . $TypeAppart['libTypeAppart'] . "</option>";
 						}
 						?>
 					</select>
@@ -127,6 +170,6 @@
 	</form>
 
 	<?php require('../common/footer.php') ?>
-</body>
+	</body>
 
 </html>

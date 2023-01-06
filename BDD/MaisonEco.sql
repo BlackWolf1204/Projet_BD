@@ -30,7 +30,7 @@ CREATE TABLE Administrateur(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Propriete(
-   idPropriete INT,
+   idPropriete INT AUTO_INCREMENT,
    numeroRue INT,
    nomRue VARCHAR(50) ,
    codePostal INT,
@@ -43,6 +43,7 @@ CREATE TABLE Propriete(
 CREATE TABLE TypeAppartement(
    typeAppart INT,
    libTypeAppart VARCHAR(50) ,
+   nbPieces INT,
    PRIMARY KEY(typeAppart)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -59,13 +60,13 @@ CREATE TABLE TypeSecurite(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE TypeAppareil(
-   idTypeAppareil INT,
+   idTypeAppareil INT AUTO_INCREMENT,
    libTypeAppareil VARCHAR(50) ,
    PRIMARY KEY(idTypeAppareil)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE TypeRessource(
-   typeRessource INT,
+   typeRessource INT AUTO_INCREMENT,
    libTypeRessource VARCHAR(50) ,
    valCritiqueConsoAppart FLOAT,
    valIdealeConsoAppart FLOAT,
@@ -74,7 +75,7 @@ CREATE TABLE TypeRessource(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE TypeSubstance(
-   typeSubstance INT,
+   typeSubstance INT AUTO_INCREMENT,
    libTypeSubstance VARCHAR(50) ,
    valCritiqueProdAppart FLOAT,
    valIdealeProdAppart FLOAT,
@@ -91,7 +92,7 @@ CREATE TABLE Utilisateur(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Appartement(
-   idAppartement INT,
+   idAppartement INT AUTO_INCREMENT,
    numAppart INT,
    degreSecurite INT NOT NULL,
    typeAppart INT NOT NULL,
@@ -103,7 +104,7 @@ CREATE TABLE Appartement(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Piece(
-   idPiece INT,
+   idPiece INT AUTO_INCREMENT,
    typePiece INT NOT NULL,
    idAppartement INT NOT NULL,
    PRIMARY KEY(idPiece),
@@ -112,7 +113,7 @@ CREATE TABLE Piece(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Appareil(
-   idAppareil INT,
+   idAppareil INT AUTO_INCREMENT,
    nomAppareil VARCHAR(20)  NOT NULL,
    emplacement VARCHAR(50) ,
    idTypeAppareil INT NOT NULL,
@@ -123,7 +124,7 @@ CREATE TABLE Appareil(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE HistoriqueConsommation(
-   idConsommation INT,
+   idConsommation INT AUTO_INCREMENT,
    dateOn DATETIME,
    dateOff DATETIME,
    idAppareil INT NOT NULL,
