@@ -1,19 +1,22 @@
 
-
-
+<!-- Page de gestion de compte -->
+<!--Notes du 23/12/2022 : Page partiellement fonctionnelle-->
 
 <?php
 session_start();//On démarre la session
-// On se connecte à la base de données interne qui se trouve dans le dossier Page_accueil (C:\xampp\htdocs\xampp\Projet_BD\Page_accueil\comptes.sql)
-$bdd = new PDO('mysql:host=127.0.0.1;dbname=comptes;charset=utf8', 'root', '');
 
-if(isset($_GET['id']) AND $_GET['id'] > 0)
+// On se connecte à la base de données
+$bdd = new PDO('mysql:host=127.0.0.1;dbname=MaisonEco;charset=utf8', 'root', '');
+
+if(isset($_GET['id']) AND !empty($_GET['id']))
 {
     $getid = intval($_GET['id']);
-    $requser = $bdd->prepare('SELECT * FROM info_comptes WHERE Id = ?');
+    $requser = $bdd->prepare('SELECT * FROM InfoPersonne WHERE idPersonne = ?');
     $requser->execute(array($getid));
     $userinfo = $requser->fetch();
 ?>
+
+
     <html>
     <head>
         <title> Page Profil </title>
@@ -66,22 +69,26 @@ if(isset($_GET['id']) AND $_GET['id'] > 0)
                 <div class="container mt-5"> <!-- container c'est pour le centrage -->
 
                     <div class="row">
-                    <div class="col-sm-8 offset-sm-2"><!-- col-sm-8 offset-sm-2 c'est pour le centrage avec un espace de 2 -->
+                    <div class="col-sm-8 offset-sm-2" align="center"><!-- col-sm-8 offset-sm-2 c'est pour le centrage avec un espace de 2 -->
 
                     <!--on affiche le infos du profil nom, prenom , on met un bouton de modification a cote du mail, du numero de telephone et si on  clique dessus on peut modifier les champs -->
-                        <h2>Profil de <?php echo $userinfo['Prenom']; ?></h2>
-                        <br /><br />
-                        <p>Nom : <?php echo $userinfo['Nom']; ?></p>
-                        <p>Prénom : <?php echo $userinfo['Prenom']; ?></p>
-                        <p>Genre : <?php echo $userinfo['Genre']; ?></p>
-                        <p>Mail : <?php echo $userinfo['Mail']; ?></p>
-                        <p>Date de naissance : <?php echo $userinfo['Date_Naissance']; ?></p>
-                        <p>Numéro de téléphone : <?php echo $userinfo['Num_Tel']; ?></p>
 
+                        <!-- Affichage des informations du profil -->
+                        <h2>Profil de <?php echo $userinfo['prenom']; ?></h2>
+                        <br /><br />
+
+        
+                            <p>Nom : <?php echo $userinfo['nom']; ?></p>
+                            <p>Prénom : <?php echo $userinfo['prenom']; ?></p>
+                            <p>Genre : <?php echo $userinfo['genre']; ?></p>
+                            <p>Mail : <?php echo $userinfo['mail']; ?></p>
+                            <p>Date de naissance : <?php echo $userinfo['dateNais']; ?></p>
+                            <p>Numéro de téléphone : <?php echo $userinfo['numTel']; ?></p>
+                      
                         <br /><br />
                         <a href="edition_profil.php">Editer mon profil</a>
-                        <br /><br />
-                        <a href="deconnexion.php">Se déconnecter</a>
+                        <a href="Page_accueil.php">Retour à l'accueil</a>
+                        
                     </div>
                     </div>
                 </div>
