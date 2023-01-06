@@ -28,9 +28,34 @@ INSERT INTO TypeSecurite VALUES (2, 'moyen');
 INSERT INTO TypeSecurite VALUES (3, 'fort');
 
 -- Type appartement (typeAppart, libéllé)
-INSERT INTO TypeAppartement VALUES (1, 'Studio');
-INSERT INTO TypeAppartement VALUES (2, 'T1');
+INSERT INTO TypeAppartement VALUES (1, 'T1');
+INSERT INTO TypeAppartement VALUES (2, 'T1 bis');
 INSERT INTO TypeAppartement VALUES (3, 'T2');
+INSERT INTO TypeAppartement VALUES (4, 'T2 bis');
+INSERT INTO TypeAppartement VALUES (5, 'T3');
+INSERT INTO TypeAppartement VALUES (6, 'T3 bis');
+INSERT INTO TypeAppartement VALUES (7, 'T4');
+INSERT INTO TypeAppartement VALUES (8, 'T3 T4');
+INSERT INTO TypeAppartement VALUES (9, 'T5');
+INSERT INTO TypeAppartement VALUES (10, 'T6');
+INSERT INTO TypeAppartement VALUES (11, 'T7');
+INSERT INTO TypeAppartement VALUES (12, 'Studio');
+INSERT INTO TypeAppartement VALUES (13, 'Duplex');
+INSERT INTO TypeAppartement VALUES (14, 'Triplex');
+INSERT INTO TypeAppartement VALUES (15, 'Souplex');
+INSERT INTO TypeAppartement VALUES (16, 'Loft');
+INSERT INTO TypeAppartement VALUES (17, 'F1');
+INSERT INTO TypeAppartement VALUES (18, 'F2');
+INSERT INTO TypeAppartement VALUES (19, 'F3');
+INSERT INTO TypeAppartement VALUES (20, 'F4');
+INSERT INTO TypeAppartement VALUES (21, 'F5');
+INSERT INTO TypeAppartement VALUES (22, 'F6');
+INSERT INTO TypeAppartement VALUES (23, 'P1');
+INSERT INTO TypeAppartement VALUES (24, 'P2');
+INSERT INTO TypeAppartement VALUES (25, 'P3');
+INSERT INTO TypeAppartement VALUES (26, 'P4');
+INSERT INTO TypeAppartement VALUES (27, 'P5');
+INSERT INTO TypeAppartement VALUES (28, 'P6');
 
 -- Appartement (idAppartement, numAppart, degreSecurite, typeAppart, idPropriete)
 INSERT INTO Appartement VALUES (1, 2, 1, 3, 3);
