@@ -48,7 +48,9 @@ session_start();
             <div class="header-right">
                 <a id="signup" href=<?php echo $url_co_deco; ?>><?php echo $co_deco ; ?></a>
 				<a id="login" href=<?php echo $url_sign_gerer; ?>><?php echo $sign_gerer; ?></a>
-				<a id="login" href=<?php echo $url_co_admin; ?>><?php echo $co_admin; ?></a>
+                <?php
+                    if (isset($url_co_admin)) echo "<a id=\"login\" href= $url_co_admin>$co_admin</a>";
+                ?>
             </div>	
  		</div>
 

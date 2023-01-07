@@ -176,3 +176,5 @@ require_once("../common/main.php");
  </body>
 
  <?php require "../common/footer.php"; ?>
+
+</html>
