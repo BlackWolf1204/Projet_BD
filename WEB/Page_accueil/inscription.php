@@ -54,12 +54,8 @@
                     {
                       $insertmbr = $bdd->prepare("INSERT INTO InfoPersonne(nom, dateNais, genre, mail, numTel, prenom) VALUES(?, ?, ?, ?, ?, ?)");//-> On insère les données dans la base de données
                       $insertmbr->execute(array($Nom, $DateNais, $Genre, $Mail, $NumTel, $Prenom));
-                      
-                      $requser = $bdd->prepare("SELECT idPersonne FROM InfoPersonne WHERE Mail = ?");
-                      $requser->execute(array($Mail));
-                      $userinfo = $requser->fetch();
-                      
-                      $_SESSION['Id'] = $userinfo['idPersonne'];
+                      $_SESSION['Id'] = $bdd->lastInsertId();
+
                       $insertmbr = $bdd->prepare("INSERT INTO Utilisateur(idPersonne,identifiant,mdp) VALUES(?,?,?)");
                       $insertmbr->execute(array($_SESSION['Id'], $Mail, $Mdp));
               

@@ -4,9 +4,9 @@ session_start();
 
 $bdd = new PDO('mysql:host=127.0.0.1;dbname=MaisonEco;charset=utf8', 'root', '');
 
-if(isset($_SESSION['Id']))
+if(isset($_COOKIE['Id']))
 {
-    $getid = intval($_SESSION['Id']);
+    $getid = intval($_COOKIE['Id']);
     $requser = $bdd->prepare('SELECT * FROM InfoPersonne JOIN Utilisateur ON InfoPersonne.idPersonne = Utilisateur.idPersonne WHERE InfoPersonne.idPersonne = ?');
     $requser->execute(array($getid));
     $userinfo = $requser->fetch();
@@ -15,20 +15,14 @@ if(isset($_SESSION['Id']))
         $newmail = htmlspecialchars($_POST['newmail']);
         $insertmail = $bdd->prepare("UPDATE InfoPersonne SET mail = ? WHERE idPersonne = ?");
         $insertmail->execute(array($newmail, $getid));
-        header('Location: edition_profil.php?id='.$_SESSION['Id']);
+        header('Location: edition_profil.php');
         
-        // on chercher a envoyer le mail dans la table utilisateur
-
-        $requser = $bdd->prepare("SELECT idPersonne FROM InfoPersonne WHERE Mail = ?");
-        $requser->execute(array($newmail));
-        $userinfo = $requser->fetch();
-        $_SESSION['Id'] = $userinfo['idPersonne'];
         $insertmbr = $bdd->prepare("UPDATE INTO Utilisateur(idPersonne,identifiant,mdp) VALUES(?,?,?)");
-        $insertmbr->execute(array($_SESSION['Id'], $newmail, $Mdp));
+        $insertmbr->execute(array($_COOKIE['Id'], $newmail, $Mdp));
 
 
             
-        header('Location: edition_profil.php?id='.$_SESSION['Id']);
+        header('Location: edition_profil.php');
     }
     if(isset($_POST['newmdp1']) AND !empty($_POST['newmdp1']) AND isset($_POST['newmdp2']) AND !empty($_POST['newmdp2']))
     {
@@ -38,7 +32,7 @@ if(isset($_SESSION['Id']))
         {
             $insertmdp = $bdd->prepare("UPDATE Utilisateur SET mdp = ? WHERE idPersonne = ?");
             $insertmdp->execute(array($mdp1, $getid));
-            header('Location: edition_profil.php?id='.$_SESSION['Id']);
+            header('Location: edition_profil.php');
         }
         else
         {
@@ -51,7 +45,7 @@ if(isset($_SESSION['Id']))
         $insertnumtel = $bdd->prepare("UPDATE InfoPersonne SET numTel = ? WHERE idPersonne = ?");
         $insertnumtel->execute(array($newnumtel, $getid));
 
-        header('Location: edition_profil.php?id='.$_SESSION['Id']);
+        header('Location: edition_profil.php');
     }
     if(isset($_POST['newgenre']) AND !empty($_POST['newgenre']) AND $_POST['newgenre'] != $userinfo['genre'])
     {
@@ -59,28 +53,28 @@ if(isset($_SESSION['Id']))
         $insertgenre = $bdd->prepare("UPDATE InfoPersonne SET genre = ? WHERE idPersonne = ?");
         $insertgenre->execute(array($newgenre, $getid));
 
-        header('Location: edition_profil.php?id='.$_SESSION['Id']);
+        header('Location: edition_profil.php');
     }
     if(isset($_POST['newnom']) AND !empty($_POST['newnom']) AND $_POST['newnom'] != $userinfo['nom'])
     {
         $newnom = htmlspecialchars($_POST['newnom']);
         $insertnom = $bdd->prepare("UPDATE InfoPersonne SET nom = ? WHERE idPersonne = ?");
         $insertnom->execute(array($newnom, $getid));
-        header('Location: edition_profil.php?id='.$_SESSION['Id']);
+        header('Location: edition_profil.php');
     }
     if(isset($_POST['newprenom']) AND !empty($_POST['newprenom']) AND $_POST['newprenom'] != $userinfo['prenom'])
     {
         $newprenom = htmlspecialchars($_POST['newprenom']);
         $insertprenom = $bdd->prepare("UPDATE InfoPersonne SET prenom = ? WHERE idPersonne = ?");
         $insertprenom->execute(array($newprenom, $getid));
-        header('Location: edition_profil.php?id='.$_SESSION['Id']);
+        header('Location: edition_profil.php');
     }
 }
 else
 {
     $msg = "Votre Compte a bien été mis a jour !";
 
-  //  header("Location: Page_accueil.php?id=".$_SESSION['Id']);
+  //  header("Location: Page_accueil.php");
 }
 ?>
 

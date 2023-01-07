@@ -43,8 +43,9 @@ if(isset($_POST['connexion']))
             $_SESSION['Id'] = $userinfo['idPersonne'];
             $_SESSION['Identifiant'] = $userinfo['identifiant'];
             $_SESSION['MotDePasse'] = $userinfo['mdp'];
+            setcookie('Id', $userinfo['idPersonne'], time() + 3600); // expire dans 1 heure
         
-            header("Location: Page_accueil.php?id=".$_SESSION['Id']);
+            header("Location: Page_accueil.php");
         }
         else
         {

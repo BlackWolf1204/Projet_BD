@@ -19,26 +19,27 @@ if (!empty($_POST)) {
 			);
 		}
 		$appartements[] = array(
-			'idAppart' => $_POST["idAppart_$i"],
+			'idAppartement' => $_POST["idAppartement_$i"],
 			'nbPieces' => $_POST["nbPieces_$i"],
 			'pieces' => $pieces,
 		);
 	}
 
 	// Ajouter les pièces
-	$sql = "INSERT INTO piece (idAppart, typePiece) VALUES ";
+	$sql = "INSERT INTO piece (idAppartement, typePiece) VALUES ";
 	$first = true;
 	foreach ($appartements as $appartement) {
 		foreach ($appartement['pieces'] as $piece) {
 			if (!$first)
 				$sql .= ", ";
-			$sql .= "({$appartement['idAppart']}, '{$piece['typePiece']}')";
+			$sql .= "({$appartement['idAppartement']}, '{$piece['typePiece']}')";
 			$first = false;
 		}
 	}
 	$result = $bdd->query($sql);
 	if (!$result) {
 		echo "Error: " . $sql . "<br>" . $bdd->error;
+		die();
 	} else {
 		// Page d'accueil
 		header("Location: ../index.php?success");
@@ -111,19 +112,7 @@ if (!empty($_POST)) {
 
 	<form action="ajoutPieces.php" method="post">
 		<!-- idPropriete/nomPropriete/adresse -->
-		<div id="labelPropriete">
-			<label for="labelPropriete">Propriété</label>
-			<?php
-			// si nomPropriete est null, afficher l'adresse de la propriété, sinon afficher le nom de la propriété
-			$adresse = $propriete['numeroRue'] . " " . $propriete['nomRue'] . ", " . $propriete['codePostal'] . " " . $propriete['ville'];
-			if ($propriete['nomPropriete'] != null) {
-				$labelPropriete = $propriete['nomPropriete'] . " (" . $adresse . ")";
-			} else {
-				$labelPropriete = $adresse;
-			}
-			?>
-			<span name="labelPropriete" type="text" readonly=true><?= $labelPropriete ?></span>
-		</div>
+		<?php echoLabelPropriete($propriete); ?>
 		<input type="hidden" name="idPropriete" value="<?= $propriete['idPropriete'] ?>">
 		<input type="hidden" name="nbApparts" value="<?= $nbApparts ?>">
 
@@ -133,13 +122,20 @@ if (!empty($_POST)) {
 
 		for ($i = 1; $i <= $nbApparts; $i++) {
 			$appartement = $appartements[$i - 1];
-			$typeAppartement = $typeAppartements[$appartement['typeAppart']];
+			foreach ($typeAppartements as $typeAppart) {
+				if ($typeAppart['typeAppart'] == $appartement['typeAppart']) {
+					$typeAppartement = $typeAppart;
+					break;
+				}
+			}
 		?>
 
 			<div class="infoAppart" appartNum=<?= $i ?>>
 
 				<h2 id="numAppartement_<?= $i ?>">Appartement numéro <?= $i ?></h2>
 				<input type="hidden" name="numAppartement_<?= $i ?>" value="<?= $i ?>">
+				<input type="hidden" name="idAppartement_<?= $i ?>" value="<?= $appartement['idAppartement'] ?>">
+				<input type="hidden" name="nbPieces_<?= $i ?>" value="<?= $typeAppartement['nbPieces'] ?>">
 				<p>Type : <?= $typeAppartement['libTypeAppart'] ?></p>
 
 				<?php
@@ -154,7 +150,9 @@ if (!empty($_POST)) {
 						<select name="typePiece_<?= $i_j ?>" id="typePiece_<?= $i_j ?>">
 							<?php
 							foreach ($typePieces as $typePiece) {
-								echo "<option value='{$typePiece['typePiece']}'>{$typePiece['libTypePiece']}</option>";
+								$id = $typePiece['typePiece'];
+								$libelle = iconv('ISO-8859-1', 'UTF-8', $typePiece['libTypePiece']);
+								echo "<option value='$id'>$libelle</option>";
 							}
 							?>
 						</select>

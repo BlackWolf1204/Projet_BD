@@ -29,6 +29,7 @@ if (!empty($_POST)) {
 	$result = $bdd->query($sql);
 	if (!$result) {
 		echo "Error: " . $sql . "<br>" . $bdd->error;
+		die();
 	} else {
 		// Ajouter les pièces
 		header("Location: ajoutPieces.php?idPropriete=$idPropriete&nbApparts=$nbApparts");
@@ -73,20 +74,11 @@ if (!empty($_POST)) {
 	$proprieteQuery = $bdd->query("SELECT * FROM propriete WHERE idPropriete = $idPropriete");
 	if ($proprieteQuery) {
 		$propriete = $proprieteQuery->fetch();
+	} else {
+		echo "Error: " . $sql . "<br>" . $bdd->error;
+		exit();
 	}
-	if (!$propriete && isset($_GET['debug_dont_redirect'])) {
-		$propriete = array(
-			'idPropriete' => 1,
-			'nomPropriete' => 'Maison',
-			'numeroRue' => '123',
-			'nomRue' => 'Rue de la maison',
-			'codePostal' => '12345',
-			'ville' => 'Ville de la maison'
-		);
-	}
-	?>
 
-	<?php
 	if ($type == "maison") {
 		echo "<h2>Configuration de la maison</h2>";
 	} else if ($nbApparts == 1) {
@@ -94,23 +86,21 @@ if (!empty($_POST)) {
 	} else {
 		echo "<h2>Configuration des $nbApparts appartements</h2>";
 	}
+
+	// Si appartements déjà dans la base de données, informer l'utilisateur et lui proposer de passer à l'étape suivante
+	$nbAppartsInDB = $bdd->query("SELECT COUNT(*) FROM appartement WHERE idPropriete = $idPropriete")->fetch()[0];
+	if ($nbAppartsInDB > 0) {
+		echoLabelPropriete($propriete);
+		echo "<p>Vous avez déjà ajouté $nbAppartsInDB appartement(s) à cette propriété.</p>";
+		echo "<a href='ajoutPieces.php?idPropriete=$idPropriete&nbApparts=$nbApparts'>Ajouter les pièces</a>";
+		exit();
+	}
+
 	?>
 
 	<form action="ajoutAppartement.php" method="post">
 		<!-- idPropriete/nomPropriete/adresse -->
-		<div id="labelPropriete">
-			<label for="labelPropriete">Propriété</label>
-			<?php
-			// si nomPropriete est null, afficher l'adresse de la propriété, sinon afficher le nom de la propriété
-			$adresse = $propriete['numeroRue'] . " " . $propriete['nomRue'] . ", " . $propriete['codePostal'] . " " . $propriete['ville'];
-			if ($propriete['nomPropriete'] != null) {
-				$labelPropriete = $propriete['nomPropriete'] . " (" . $adresse . ")";
-			} else {
-				$labelPropriete = $adresse;
-			}
-			?>
-			<span name="labelPropriete" type="text" readonly=true><?= $labelPropriete ?></span>
-		</div>
+		<?php echoLabelPropriete($propriete); ?>
 		<input type="hidden" name="idPropriete" value="<?= $propriete['idPropriete'] ?>">
 		<input type="hidden" name="nbApparts" value="<?= $nbApparts ?>">
 
