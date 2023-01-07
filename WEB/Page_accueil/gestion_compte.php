@@ -10,9 +10,9 @@ session_start();//On démarre la session
 // On se connecte à la base de données
 $bdd = new PDO('mysql:host=127.0.0.1;dbname=MaisonEco;charset=utf8', 'root', '');
 
-if(isset($_GET['id']) AND !empty($_GET['id']))
+if(isset($_COOKIE['Id']) AND !empty($_COOKIE['Id']))
 {
-    $getid = intval($_GET['id']);
+    $getid = intval($_COOKIE['Id']);
     $requser = $bdd->prepare('SELECT * FROM InfoPersonne WHERE idPersonne = ?');
     $requser->execute(array($getid));
     $userinfo = $requser->fetch();
@@ -98,6 +98,9 @@ if(isset($_GET['id']) AND !empty($_GET['id']))
             </body>
     </html>
 <?php
+}
+else {
+    header("Location: connexion.php");
 }
 ?>
 

@@ -33,6 +33,7 @@ if(isset($_POST['connexion']))
             $_SESSION['DateNaissance'] = $userinfo['dateNais'];
             $_SESSION['Nom'] = $userinfo['nom'];
             $_SESSION['Prenom'] = $userinfo['prenom'];
+            setcookie('Id', $userinfo['idPersonne'], time() + 3600); // expire dans 1 heure
             
             //On affiche une image de validation au premier plan (C:\xampp\htdocs\xampp\Projet_BD\Page_accueil\Validation.png)
             
@@ -41,7 +42,7 @@ if(isset($_POST['connexion']))
 
             //Si tout est bon on redirige vers la page d'accueil avec l'id de l'utilisateur vu que c'est unique
             //Sinon pour la version finale
-            header("Location: Page_accueil.php?id=".$_SESSION['Id']);
+            header("Location: Page_accueil.php");
         }
         else
         {

@@ -14,16 +14,14 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
     $url = 'http';
 }
 $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-if (isset($_SESSION["Id"])) {
+if (isset($_COOKIE['Id'])) {
     $co_deco = "Deconnexion";
     $url_co_deco = "{$ROOT}Page_accueil/deconnexion.php";
     $sign_gerer = "Gérer compte";
-    $url_sign_gerer = "{$ROOT}Page_accueil/gestion_compte.php?id=" . $_SESSION['Id'];
+    $url_sign_gerer = "{$ROOT}Page_accueil/gestion_compte.php";
 } else {
     $co_deco = "Se connecter";
     $url_co_deco = "{$ROOT}Page_accueil/connexion.php";
-    $co_admin = "Se connecter en tant qu'administrateur";
-    $url_co_admin = "{$ROOT}Page_accueil/connexion_administrateur.php";
     $sign_gerer = "S'inscrire";
     $url_sign_gerer = "{$ROOT}Page_accueil/inscription.php";
 }
@@ -50,7 +48,11 @@ if (isset($_SESSION["Id"])) {
         <div class="header-right">
             <a id="signup" href=<?php echo $url_co_deco; ?>><?php echo $co_deco; ?></a>
             <a id="login" href=<?php echo $url_sign_gerer; ?>><?php echo $sign_gerer; ?></a>
-            <a id="login" href=<?php echo $url_co_admin; ?>><?php echo $co_admin; ?></a>
+            <?php
+            if (!isset($_COOKIE['Id'])) {
+                echo "<a id=\"login_admin\" href=\"{$ROOT}Page_accueil/connexion_administrateur.php\">Se connecter en tant qu'administrateur</a>";
+            }
+            ?>
         </div>
         </div>
 
