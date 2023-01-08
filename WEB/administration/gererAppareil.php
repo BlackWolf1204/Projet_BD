@@ -128,5 +128,7 @@ require_once("../common/main.php");
     </table>
     <a href="../Page_accueil/Page_accueil.php">Ajouter appareil</a>
  </body>
-
+ 
  <?php require "../common/footer.php"; ?>
+
+</html>

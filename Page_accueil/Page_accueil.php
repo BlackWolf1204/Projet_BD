@@ -1,11 +1,3 @@
-<!--        //SITE D'UNE MAISON ECONOME EN ENERGIE // -->
-<!--        
-    Cette page sera la page d'accueil de notre site web. 
-     Elle sera divisée en 3 parties :
-     (1) L'entête : où nous mettrons un bouton de connexion, une image de fond (à définir), et un bouton de gestion du compte en haut à droite.
-     (2) Le corps de la page : où nous mettrons une image de fond avec du texte et différents liens vers les autres pages.
-     (3) Le pied de page : où nous mettrons nos noms et prénoms.
- -->
 
  <!DOCTYPE html><!-- déclaration du type de document HTML -->
 
@@ -15,19 +7,16 @@
 
     <title>Page d'acceuil</title><!-- déclaration du titre de la page -->
 
-   
+        <?php require "../common/header.php"?>
     
         <div class="body-left"><!-- début de la classe body-left -->
     
             <img src="images/accueil.jpg" alt="accueil" class="accueil"><!-- déclaration de la classe accueil -->
 
-            <!-- Ci dessous on programme en Java Script , même si cela n'est pas indispensable 
-            , je trouve que en terme d'investissemnt visuel ça en vaut la peine
-            lien : https://www.vantajs.com/?effect=topology -->
 
             <div id="vantatopologymin"></div><!-- ID de l'élément HTML -->
             <script src="p5.min.js"></script>
-            <script src="vanta.topology.min.js"></script>
+            <script src="vanta.topology.min.js"> </script>
             <script>
 
             // Ajout de l'effet d'image dynamique de fond 
