@@ -9,3 +9,10 @@ try {
 }
 
 $bdd = $pdo;
+
+$result = $bdd->query("SELECT COUNT(*) FROM Administrateur WHERE idPersonne = {$_SESSION['Id']}");
+if ($result) {
+	$estAdmin = $result->fetchColumn() > 0;
+} else {
+	$estAdmin = false;
+}

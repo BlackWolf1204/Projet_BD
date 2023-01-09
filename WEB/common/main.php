@@ -11,4 +11,6 @@ if (!isset($ROOT)) {
 	exit();
 }
 
+session_start();
+
 require_once("bdd.php");

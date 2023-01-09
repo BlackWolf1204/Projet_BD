@@ -6,15 +6,13 @@ require_once("main.php");
 require_once("fonctions.php");
 
 
-session_start();
-
 if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
     $url = 'https';
 } else {
     $url = 'http';
 }
 $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-if (isset($_COOKIE['Id'])) {
+if (isset($_SESSION['Id'])) {
     $co_deco = "Deconnexion";
     $url_co_deco = "{$ROOT}Page_accueil/deconnexion.php";
     $sign_gerer = "Gérer compte";
@@ -49,7 +47,7 @@ if (isset($_COOKIE['Id'])) {
             <a id="signup" href=<?php echo $url_co_deco; ?>><?php echo $co_deco; ?></a>
             <a id="login" href=<?php echo $url_sign_gerer; ?>><?php echo $sign_gerer; ?></a>
             <?php
-            if (!isset($_COOKIE['Id'])) {
+            if (!isset($_SESSION['Id'])) {
                 echo "<a id=\"login_admin\" href=\"{$ROOT}Page_accueil/connexion_administrateur.php\">Se connecter en tant qu'administrateur</a>";
             }
             ?>

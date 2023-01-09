@@ -17,7 +17,7 @@ form {
   border: 1px solid #ddd; /* Ajoute une bordure au formulaire */
   padding: 20px; /* Ajoute de l'espace autour du contenu du formulaire */
 }
-input, select {
+input:not([type="radio"]), select {
   width: 100%; /* Remplit toute la largeur de la colonne */
   padding: 12px 20px; /* Ajoute de l'espace à l'intérieur de l'élément */
   margin: 8px 0; /* Ajoute de l'espace en dessous de l'élément */
