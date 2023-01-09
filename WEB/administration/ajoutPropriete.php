@@ -26,6 +26,7 @@ if (!empty($_POST)) {
 	if (!$result) {
 		// Affichage de l'erreur
 		echo "Error: " . $sql . "<br>" . $bdd->error;
+		die();
 	} else {
 		// Rediriger vers ajoutAppartement.php
 		$idPropriete = $bdd->lastInsertId();
@@ -88,8 +89,8 @@ if (!empty($_POST)) {
 	<?php require('../common/header.php') ?>
 
 	<h2>Ajouter un immeuble</h2>
-	
-    <a href="../Page_accueil/Page_accueil.php">Retour</a>
+
+	<a href="../Page_accueil/Page_accueil.php">Retour</a>
 
 	<form action="ajoutPropriete.php" method="post">
 		<!-- radio box : maison ou immeuble -->
