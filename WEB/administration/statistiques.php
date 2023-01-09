@@ -10,8 +10,6 @@
 
     <h2>Les statistiques</h2>
 
-    <a href="../Page_accueil/Page_accueil.php">Retour</a>
-
     <!-- Graphique en secteur -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
