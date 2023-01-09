@@ -7,9 +7,9 @@ INSERT INTO InfoPersonne VALUES (3, 'MALLET', '1995-01-01', 'F', 'AlaineE9586@gm
 INSERT INTO InfoPersonne VALUES (4, 'LAURENT', '1999-01-01', 'M', 'Lucas22@gmail.com', '0639356827', 'Lucas');
 INSERT INTO InfoPersonne VALUES (5, 'PETIT', '1997-01-01', 'F', 'Doriane562@gmail.com', '0695847233', 'Doriane');
 
--- Administrateur (idPersonne, login, mdp)
-INSERT INTO Administrateur VALUES (1, 'Martin_Gab', 'yRTX7pf6');
-INSERT INTO Administrateur VALUES (4, 'Laurent_Lucas', 'TgeiRD8v7');
+-- Administrateur (idPersonne, identifiant, mdp)
+INSERT INTO Administrateur VALUES (1, 'gabriel9854@gmail.com', 'd269d30513bca41eb810eb899dcbf87b6bf00f8e'); -- yRTX7pf6
+INSERT INTO Administrateur VALUES (4, 'Lucas22@gmail.com', 'adac4426a544473cd74a61a48f145cdbb38d1f07'); -- TgeiRD8v7
 
 -- Utilisateur (idPersonne, login, mdp)
 INSERT INTO Utilisateur VALUES (2, 'Adam7474', '97Edmf');

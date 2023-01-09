@@ -4,9 +4,9 @@ session_start();
 
 $bdd = new PDO('mysql:host=127.0.0.1;dbname=MaisonEco;charset=utf8', 'root', '');
 
-if(isset($_COOKIE['Id']))
+if(isset($_SESSION['Id']))
 {
-    $getid = intval($_COOKIE['Id']);
+    $getid = intval($_SESSION['Id']);
     $requser = $bdd->prepare('SELECT * FROM InfoPersonne JOIN Utilisateur ON InfoPersonne.idPersonne = Utilisateur.idPersonne WHERE InfoPersonne.idPersonne = ?');
     $requser->execute(array($getid));
     $userinfo = $requser->fetch();
@@ -18,7 +18,7 @@ if(isset($_COOKIE['Id']))
         header('Location: edition_profil.php');
         
         $insertmbr = $bdd->prepare("UPDATE INTO Utilisateur(idPersonne,identifiant,mdp) VALUES(?,?,?)");
-        $insertmbr->execute(array($_COOKIE['Id'], $newmail, $Mdp));
+        $insertmbr->execute(array($_SESSION['Id'], $newmail, $Mdp));
 
 
             
