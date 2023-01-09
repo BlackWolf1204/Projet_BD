@@ -17,4 +17,9 @@ if (isset($_SESSION['Id'])) {
 	} else {
 		$estAdmin = false;
 	}
+<<<<<<< HEAD
+=======
+} else {
+	$estAdmin = false;
+>>>>>>> 4dcf05559612b3f35764f5bcadf7713a6604c4ec
 }

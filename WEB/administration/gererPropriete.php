@@ -89,7 +89,7 @@ require_once("../common/main.php");
         echo "  </th>
                 <th>{$ligne['degreIsolation']}</th>
                 <th>{$ligne['dateDebutProp']}</th>
-                <th rowspan = \"$nbAppart\"><a href='../ajoutPropriete.php'>Modifier<a></th>
+                <th rowspan = \"$nbAppart\"><a href='{$ROOT}proprietes/ajoutPropriete/ajoutPropriete.php'>Modifier<a></th>
             </tr>";   //changer Modification pour garder en memoire l'id de la propriété a modifier
         
         foreach ($data2 as $ligne2) {
@@ -198,7 +198,7 @@ require_once("../common/main.php");
 ---------------------------------------------------------------->
         </tbody>
     </table>
-    <a href="ajoutPropriete.php">Ajouter propiété</a>
+    <a href="../proprietes/ajoutPropriete/ajoutPropriete.php">Ajouter propiété</a>
  </body>
 
  <?php require "../common/footer.php"; ?>
