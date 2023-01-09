@@ -28,16 +28,16 @@
         echo "<div class=\"appart\">
                 <h3>";
         
-        if ($ligne->numAppart != NULL) echo "$ligne->numAppart";
-        if ($ligne->nomPropriete != NULL) echo "$ligne->nomPropriete";
-        else echo "$ligne->numeroRue $ligne->nomRue $ligne->codePostal $ligne->ville";
+        if ($ligne['numAppart'] != NULL) echo $ligne['numAppart'];
+        if ($ligne['nomPropriete'] != NULL) echo $ligne['nomPropriete'];
+        else echo "{$ligne['numeroRue']} {$ligne['nomRue']} {$ligne['codePostal']} {$ligne['ville']}";
         echo "</h3>";
 
         // requete pour la base
-        $req2 = "SELECT libTypeRessource, valCritiqueConsoAppart, valIdealConsoAppart, quantiteAllume, TIME_TO_SEC(CURRENT_TIME) AS dCurrent
-                FROM TypeRessouce NATURAL JOIN Consommer NATURAL JOIN TypeApparail NATURAL JOIN Appareil NATURAL JOIN Piece NATURAL JOIN Appartement
-                GROUP BY libTypeRessource, valCritiqueConsoAppart, valIdealConsoAppart
-                HAVING idAppartement = $ligne->idAppartement";
+        $req2 = "SELECT idAppareil, libTypeRessource, valCritiqueConsoAppart, valIdealeConsoAppart, quantiteAllume, TIME_TO_SEC(CURRENT_TIME) AS dCurrent
+                FROM TypeRessource NATURAL JOIN Consommer NATURAL JOIN TypeAppareil NATURAL JOIN Appareil NATURAL JOIN Piece
+                WHERE idAppartement = {$ligne['idAppartement']}
+                GROUP BY libTypeRessource, valCritiqueConsoAppart, valIdealeConsoAppart";
                 
         ### peut regarder une description de la ressource si survole son nom ? ###
 
@@ -49,7 +49,7 @@
 
         $req3 = "SELECT TIME_TO_SEC(dateOff) AS dOff, TIME_TO_SEC(dateOn) AS dOn
                 FROM Historique NATURAL JOIN Appareil
-                WHERE idAppareil = $ligne->idAppareil";
+                WHERE idAppareil = {$ligne['idAppareil']}";
 
         // exécution de la requête
         $data3 = $bdd->query($req3);
@@ -61,17 +61,17 @@
 
         foreach ($data3 as $ligne3) {
             if ($ligne3->dOff != NULL)
-                $somme = $ligne3->dOff - $ligne3->dOn;
+                $somme = $ligne3['dOff'] - $ligne3['dOn'];
             else 
-                $somme = $ligne2->dCurrent - $ligne3->dOn;
+                $somme = $ligne2-['dCurrent'] - $ligne3['dOn'];
         }
 
-        $somme = $somme*$ligne2->quantiteAllume/(60*60);
+        $somme = $somme*$ligne2['quantiteAllume']/(60*60);
         if ($ligne->finProp != NULL) {
-            $somme = $somme/((int)($ligne->finProp/(60*60*24))-(int)($ligne->debutProp/(60*60*24)))
+            $somme = $somme/((int)($ligne['finProp']/(60*60*24))-(int)($ligne['debutProp']/(60*60*24)));
         }
         else {            
-            $somme = $somme/((int)($ligne->finProp/(60*60*24))-(int)($ligne->debutProp/(60*60*24)))
+            $somme = $somme/((int)($ligne['finProp']/(60*60*24))-(int)($ligne['debutProp']/(60*60*24)));
         }
 
         echo "<table>
@@ -88,13 +88,13 @@
 
         foreach ($data2 as $ligne2) {
             echo "<tr>
-                    <th>$ligne2->libTypeRessource</th>
+                    <th>{$ligne2['libTypeRessource']}</th>
                     <th>$somme k..../j</th>
-                    <th>$ligne2->valIdealConsoAppart</th>
-                    <th>$ligne2->valCritiqueConsoAppart</th>";
+                    <th>{$ligne2['valIdealeConsoAppart']}</th>
+                    <th>{$ligne2['valCritiqueConsoAppart']}</th>";
 
-            if ($ligne2->valIdealConsoAppart+5 >= $ligne2->sumQuantite) echo "<th class=\"vert\">C'est très bien!</th>";
-            else if ($ligne2->valCritiqueConsoAppart-5 > $ligne2->sumQuantite) echo "<th class=\"orange\">C'est moyen</th>";
+            if ($ligne2['valIdealConsoAppart']+5 >= $ligne2['sumQuantite']) echo "<th class=\"vert\">C'est très bien!</th>";
+            else if ($ligne2['valCritiqueConsoAppart']-5 > $ligne2['sumQuantite']) echo "<th class=\"orange\">C'est moyen</th>";
             else echo "<th class=\"rouge\">C mauvais!</th>";
             echo "</tr>";
         }
@@ -102,10 +102,10 @@
             </table>";
         
         // requete pour la base
-        $req2 = "SELECT libTypeSubstance, valCritiqueProdAppart, valIdealProdAppart, SUM(quantiteAllume) AS sumQuantite
+        $req2 = "SELECT libTypeSubstance, valCritiqueProdAppart, valIdealeProdAppart, SUM(quantiteAllume) AS sumQuantite
                 FROM TypeSubstance NATURAL JOIN Produire NATURAL JOIN TypeApparail NATURAL JOIN Appareil NATURAL JOIN Piece NATURAL JOIN Appartement
-                GROUP BY libTypeRessource, valCritiqueConsoAppart, valIdealProdAppart
-                HAVING idAppartement = $ligne->idAppartement";
+                GROUP BY libTypeRessource, valCritiqueConsoAppart, valIdealeProdAppart
+                HAVING idAppartement = {$ligne['idAppartement']}";
 
         ### changer base de donnée pour avoir historique des on/off et pouvoir calculer le temps de marche ###
         ### peut regarder une description de la substance si survole son nom ? ###
@@ -130,13 +130,13 @@
 
         foreach ($data2 as $ligne2) {
             echo "<tr>
-                    <th>$ligne2->libTypeSubstance</th>
+                    <th>{$ligne2['libTypeSubstance']}</th>
                     <th>A calculer</th>
-                    <th>$ligne2->valIdealProdAppart</th>
-                    <th>$ligne2->valCritiquePrdoAppart</th>";
+                    <th>{$ligne2['valIdealeProdAppart']}</th>
+                    <th>{$ligne2['valCritiquePrdoAppart']}</th>";
 
-            if ($ligne2->valIdealProdAppart+5 >= $ligne2->sumQuantite) echo "<th class=\"vert\">C'est très bien!</th>";
-            else if ($ligne2->valCritiqueProdAppart-5 > $ligne2->sumQuantite) echo "<th class=\"orange\">C'est moyen</th>";
+            if ($ligne2['valIdealProdAppart']+5 >= $ligne2['sumQuantite']) echo "<th class=\"vert\">C'est très bien!</th>";
+            else if ($ligne2['valCritiqueProdAppart']-5 > $ligne2['sumQuantite']) echo "<th class=\"orange\">C'est moyen</th>";
             else echo "<th class=\"rouge\">C mauvais!</th>";
             echo "</tr>";
         }
