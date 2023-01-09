@@ -6,6 +6,7 @@ INSERT INTO InfoPersonne VALUES (2, 'ETIENNE', '1997-01-01', 'M', 'Adam7474@gmai
 INSERT INTO InfoPersonne VALUES (3, 'MALLET', '1995-01-01', 'F', 'AlaineE9586@gmail.com', '06359824', 'Alaine');
 INSERT INTO InfoPersonne VALUES (4, 'LAURENT', '1999-01-01', 'M', 'Lucas22@gmail.com', '0639356827', 'Lucas');
 INSERT INTO InfoPersonne VALUES (5, 'PETIT', '1997-01-01', 'F', 'Doriane562@gmail.com', '0695847233', 'Doriane');
+INSERT INTO InfoPersonne VALUES (6, 'DUPONT', '1995-01-01', 'A', 'dpdu2222@gmail.com', '063598742', 'Dupont');
 
 -- Administrateur (idPersonne, identifiant, mdp)
 INSERT INTO Administrateur VALUES (1, 'gabriel9854@gmail.com', 'd269d30513bca41eb810eb899dcbf87b6bf00f8e'); -- yRTX7pf6
