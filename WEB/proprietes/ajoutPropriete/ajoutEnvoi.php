@@ -1,7 +1,7 @@
 <?php
-$ROOT = "../";
-require_once("../common/main.php");
-require_once("../common/fonctions.php");
+$ROOT = "../../";
+require_once("{$ROOT}common/main.php");
+require_once("{$ROOT}common/fonctions.php");
 
 // Données du POST :
 // type, nbAppartements,

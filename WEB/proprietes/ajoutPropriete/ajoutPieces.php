@@ -1,5 +1,5 @@
 <?php
-$ROOT = '../';
+$ROOT = '../../';
 ?>
 
 <!DOCTYPE html>
@@ -16,12 +16,12 @@ $ROOT = '../';
 		}
 	</style>
 
-	<?php require('../common/header.php') ?>
+	<?php require("{$ROOT}common/header.php") ?>
 
 	<?php
 	if (empty($_POST)) {
 		echo "<p>Vous devez d'abord ajouter une propriété.</p>";
-		echo "<a href='ajoutPropriete.php'>Ajouter une propriété</a>";
+		echo "<a href='./ajoutPropriete.php'>Ajouter une propriété</a>";
 		exit();
 	}
 
@@ -156,7 +156,7 @@ $ROOT = '../';
 		<input type="submit" value="Ajouter">
 	</form>
 
-	<?php require('../common/footer.php') ?>
+	<?php require("{$ROOT}common/footer.php") ?>
 	</body>
 
 </html>
