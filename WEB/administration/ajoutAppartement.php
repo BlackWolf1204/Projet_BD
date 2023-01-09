@@ -1,41 +1,5 @@
 <?php
 $ROOT = '../';
-
-// Enregistrer les appartements d'une seule fois
-if (!empty($_POST)) {
-	// Connexion à la base de données
-	require('../common/main.php');
-
-	$idPropriete = $_POST['idPropriete'];
-	$nbApparts = $_POST['nbApparts'];
-	$appartements = array();
-	for ($i = 1; $i <= $nbApparts; $i++) {
-		$appartements[] = array(
-			'numAppartement' => $_POST["numAppartement_$i"],
-			'degreSecurite' => $_POST["degreSecurite_$i"],
-			'typeAppart' => $_POST["typeAppart_$i"],
-		);
-	}
-
-	// Ajouter les appartements
-	$sql = "INSERT INTO appartement (idPropriete, numAppart, degreSecurite, typeAppart) VALUES ";
-	$first = true;
-	foreach ($appartements as $appartement) {
-		if (!$first)
-			$sql .= ", ";
-		$sql .= "($idPropriete, {$appartement['numAppartement']}, {$appartement['degreSecurite']}, '{$appartement['typeAppart']}')";
-		$first = false;
-	}
-	$result = $bdd->query($sql);
-	if (!$result) {
-		echo "Error: " . $sql . "<br>" . $bdd->error;
-		die();
-	} else {
-		// Ajouter les pièces
-		header("Location: ajoutPieces.php?idPropriete=$idPropriete&nbApparts=$nbApparts");
-	}
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -55,54 +19,44 @@ if (!empty($_POST)) {
 	<?php require('../common/header.php') ?>
 
 	<?php
-	if (isset($_GET['idPropriete']))
-		$idPropriete = $_GET['idPropriete'];
-	else if (isset($_GET['debug_dont_redirect'])) {
-		$idPropriete = 1;
-	} else {
+	if (empty($_POST)) {
 		echo "<p>Vous devez d'abord ajouter une propriété.</p>";
 		echo "<a href='ajoutPropriete.php'>Ajouter une propriété</a>";
 		exit();
 	}
 
-	$nbApparts = isset($_GET['nbApparts']) ? $_GET['nbApparts'] : 1;
-	$type = isset($_GET['type']) ? $_GET['type'] : "immeuble";
+	// Données du POST :
+	// type, nbAppartements,
+	// numéroRue, nomRue, codePostal, ville, nomPropriete
+	// degreIsolation
 
+	$propriete = proprieteFromPost();
+	$type = $_POST['type'];
+	$nbAppartements = $_POST['nbAppartements'];
 	if ($type == "maison")
-		$nbApparts = 1;
+		$nbAppartements = 1;
 
-	$proprieteQuery = $bdd->query("SELECT * FROM propriete WHERE idPropriete = $idPropriete");
-	if ($proprieteQuery) {
-		$propriete = $proprieteQuery->fetch();
-	} else {
-		echo "Error: " . $sql . "<br>" . $bdd->error;
-		exit();
-	}
 
 	if ($type == "maison") {
 		echo "<h2>Configuration de la maison</h2>";
-	} else if ($nbApparts == 1) {
+	} else if ($nbAppartements == 1) {
 		echo "<h2>Configuration de l'appartement</h2>";
 	} else {
-		echo "<h2>Configuration des $nbApparts appartements</h2>";
-	}
-
-	// Si appartements déjà dans la base de données, informer l'utilisateur et lui proposer de passer à l'étape suivante
-	$nbAppartsInDB = $bdd->query("SELECT COUNT(*) FROM appartement WHERE idPropriete = $idPropriete")->fetch()[0];
-	if ($nbAppartsInDB > 0) {
-		echoLabelPropriete($propriete);
-		echo "<p>Vous avez déjà ajouté $nbAppartsInDB appartement(s) à cette propriété.</p>";
-		echo "<a href='ajoutPieces.php?idPropriete=$idPropriete&nbApparts=$nbApparts'>Ajouter les pièces</a>";
-		exit();
+		echo "<h2>Configuration des $nbAppartements appartements</h2>";
 	}
 
 	?>
 
-	<form action="ajoutAppartement.php" method="post">
-		<!-- idPropriete/nomPropriete/adresse -->
+	<form action="ajoutPieces.php" method="post">
 		<?php echoLabelPropriete($propriete); ?>
-		<input type="hidden" name="idPropriete" value="<?= $propriete['idPropriete'] ?>">
-		<input type="hidden" name="nbApparts" value="<?= $nbApparts ?>">
+		<input type="hidden" name="type" value="<?= $type ?>">
+		<input type="hidden" name="nbAppartements" value="<?= $nbAppartements ?>">
+		<input type="hidden" name="numéroRue" value="<?= $propriete['numéroRue'] ?>">
+		<input type="hidden" name="nomRue" value="<?= $propriete['nomRue'] ?>">
+		<input type="hidden" name="codePostal" value="<?= $propriete['codePostal'] ?>">
+		<input type="hidden" name="ville" value="<?= $propriete['ville'] ?>">
+		<input type="hidden" name="nomPropriete" value="<?= $propriete['nomPropriete'] ?>">
+		<input type="hidden" name="degreIsolation" value="<?= $_POST['degreIsolation'] ?>">
 
 		<!-- Pour une maison (1 ppartment) : degreSecurité (faible, moyen, fort), typeAppartement (select récup de la table typeappartement : T1, T2...) -->
 		<!-- Pour les n appartements => numAppartement, degreSecurité (faible, moyen, fort), typeAppartement (select récup de la table typeappartement : T1, T2...) -->
@@ -112,7 +66,7 @@ if (!empty($_POST)) {
 		$TypeAppartement = $bdd->query("SELECT * FROM TypeAppartement");
 		$TypeAppartement = $TypeAppartement->fetchAll();
 
-		for ($i = 1; $i <= $nbApparts; $i++) {
+		for ($i = 1; $i <= $nbAppartements; $i++) {
 		?>
 
 			<div class="infoAppart" appartNum=<?= $i ?>>
@@ -139,9 +93,9 @@ if (!empty($_POST)) {
 					</select>
 				</div>
 
-				<div id="typeAppart_<?= $i ?>">
-					<label for="typeAppart_<?= $i ?>">Type de logement</label>
-					<select name="typeAppart_<?= $i ?>">
+				<div id="typeAppartement_<?= $i ?>">
+					<label for="typeAppartement_<?= $i ?>">Type de logement</label>
+					<select name="typeAppartement_<?= $i ?>">
 						<?php
 						foreach ($TypeAppartement as $TypeAppart) {
 							echo "<option value='" . $TypeAppart['typeAppart'] . "'>" . $TypeAppart['libTypeAppart'] . "</option>";

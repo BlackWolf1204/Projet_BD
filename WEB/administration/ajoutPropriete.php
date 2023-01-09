@@ -1,38 +1,5 @@
 <?php
 $ROOT = '../';
-
-// Si paramètres POST non vides
-if (!empty($_POST)) {
-	// Connexion à la base de données
-	require('../common/main.php');
-
-	// Récupération des paramètres POST
-	$type = $_POST['type'];
-	$nbAppartements = $_POST['nbAppartements'];
-	$numéroRue = $_POST['numéroRue'];
-	$nomRue = $_POST['nomRue'];
-	$codePostal = $_POST['codePostal'];
-	$ville = $_POST['ville'];
-	$nomImmeuble = $_POST['nomImmeuble'];
-	$degreIsolation = $_POST['degreIsolation'];
-
-	// Requête SQL
-	$sql = "INSERT INTO propriete (numeroRue, nomRue, codePostal, ville, nomPropriete, degreIsolation) VALUES ('$numéroRue', '$nomRue', '$codePostal', '$ville', '$nomImmeuble', '$degreIsolation')";
-
-	// Exécution de la requête
-	$result = $bdd->query($sql);
-
-	// Si la requête a échoué
-	if (!$result) {
-		// Affichage de l'erreur
-		echo "Error: " . $sql . "<br>" . $bdd->error;
-		die();
-	} else {
-		// Rediriger vers ajoutAppartement.php
-		$idPropriete = $bdd->lastInsertId();
-		header("Location: ajoutAppartement.php?type=$type&idPropriete=$idPropriete&nbApparts=$nbAppartements");
-	}
-}
 ?>
 
 <!DOCTYPE html>
@@ -92,7 +59,7 @@ if (!empty($_POST)) {
 
 	<a href="../Page_accueil/Page_accueil.php">Retour</a>
 
-	<form action="ajoutPropriete.php" method="post">
+	<form action="ajoutAppartement.php" method="post">
 		<!-- radio box : maison ou immeuble -->
 		<div id="type">
 			<label for="type">Type</label>
@@ -118,10 +85,10 @@ if (!empty($_POST)) {
 			<input type="text" name="ville" placeholder="Paris" id="ville" onchange="chercherCodePostalParVille()">
 		</div>
 
-		<!-- nom de l'immeuble et degré d'isolation -->
-		<div id="immeuble">
-			<label for="nomImmeuble">Nom de l'immeuble</label>
-			<input type="text" name="nomImmeuble" placeholder="Immeuble 1">
+		<!-- nom de la propriete et degré d'isolation -->
+		<div id="propriete">
+			<label for="nomPropriete">Nom de la propriété</label>
+			<input type="text" name="nomPropriete" placeholder="Propriété 1">
 			<label for="degreIsolation">Degré d'isolation</label>
 			<select name="degreIsolation">
 				<option value="A">A</option>
