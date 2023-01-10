@@ -36,6 +36,7 @@ if(isset($_SESSION['Id']))
     // on modifie l'identifiant de l'utilisateur et de l'administrateur si il est connecté en tant qu'administrateur
     if(isset($_POST['newidentifiant']) AND !empty($_POST['newidentifiant']) AND $_POST['newidentifiant'] != $userinfo['identifiant'])
     {
+<<<<<<< HEAD
         $newidentifiant = htmlspecialchars($_POST['newidentifiant']);
         $insertidentifiant = $bdd->prepare("UPDATE Utilisateur SET identifiant = ? WHERE idPersonne = ?");
         $insertidentifiant->execute(array($newidentifiant, $getid));
@@ -47,6 +48,19 @@ if(isset($_SESSION['Id']))
         $insertidentifiant = $bdd->prepare("UPDATE Administrateur SET identifiant = ? WHERE idPersonne = ?");
         $insertidentifiant->execute(array($newidentifiant, $getid));
         header('Location: edition_profil.php?id='.$_SESSION['Id']);
+=======
+        $newmail = htmlspecialchars($_POST['newmail']);
+        $insertmail = $bdd->prepare("UPDATE InfoPersonne SET mail = ? WHERE idPersonne = ?");
+        $insertmail->execute(array($newmail, $getid));
+        header('Location: edition_profil.php');
+        
+        $insertmbr = $bdd->prepare("UPDATE INTO Utilisateur(idPersonne,identifiant,mdp) VALUES(?,?,?)");
+        $insertmbr->execute(array($_SESSION['Id'], $newmail, $Mdp));
+
+
+            
+        header('Location: edition_profil.php');
+>>>>>>> d8bad36e17c3399ea29c4ef16e4100f5833f4c6f
     }
     if(isset($_POST['newmdp1']) AND !empty($_POST['newmdp1']) AND isset($_POST['newmdp2']) AND !empty($_POST['newmdp2']))
     {

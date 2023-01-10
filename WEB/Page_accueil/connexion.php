@@ -33,7 +33,6 @@ if(isset($_POST['connexion']))
             $_SESSION['DateNaissance'] = $userinfo['dateNais'];
             $_SESSION['Nom'] = $userinfo['nom'];
             $_SESSION['Prenom'] = $userinfo['prenom'];
-            setcookie('Id', $userinfo['idPersonne'], time() + 3600); // expire dans 1 heure
             
             //On affiche une image de validation au premier plan (C:\xampp\htdocs\xampp\Projet_BD\Page_accueil\Validation.png)
             

@@ -11,7 +11,6 @@
 
     session_start();
     $_SESSION=array(); //array c'est une fonction qui vide le tableau
-    setcookie('Id', '', 0); // expire immédiatement
     session_destroy();
     header('Location: Page_accueil.php');
 

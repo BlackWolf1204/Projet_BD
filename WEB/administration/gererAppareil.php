@@ -34,58 +34,69 @@ require_once("../common/main.php");
     echo "<table>
             <thead>
                 <tr>
+                    <th>Status</th>
                     <th>Appareil</th>
                     <th>Type appareil</th>
-                    <th>Ressource(s)/Substance(s) consommée(s)</th>
+                    <th>Ressource(s)/Substance(s) concernée(s)</th>
                     <th>Consommation/Production par heure</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>";
+            
     foreach ($data as $ligne) {
-        echo "<tr>
-                <th>$ligne->nomAppareil</th>
-                <th>$ligne->libTypeAppareil</th>
-                <th>ON/OFF</th>
-                <th><a href='../Page_accueil/Page_accueil.html'>Modification<a></th>
-              </tr>";   //changer Modification pour garder en memoire l'id de l'appareil a modifier
-        
         // requete pour la base
         $req2 = "SELECT libTypeRessource, quantiteAllume
-                FROM TypeAppareil NATURAL JOIN Consommer NATURAL JOIN TypeRessource
-                WHERE idType = $ligne->idTypeAppareil";   //quantiteAllume est la quantite par heure ?
-
-        // exécution de la requête
-        $data2 = $bdd->query($req2);
-        // si erreur
-        if ($data2 == NULL)
-        die("Problème d'exécution de la requête \n");
-
-        foreach ($data2 as $ligne2) {
-                echo "<tr>
-                        <th></th>
-                        <th></th>
-                        <th>$ligne2->libTypeRessource</th>
-                        <th>$ligne2->quantiteAllume</th>
-                      </tr>";       
-        }
-
+                FROM Consommer NATURAL JOIN TypeRessource
+                WHERE idTypeAppareil = {$ligne['idTypeAppareil']}";   //quantiteAllume est la quantite par heure ?
+        
         // requete pour la base
         $req3 = "SELECT libTypeSubstance, quantiteAllume
-                FROM TypeAppareil NATURAL JOIN Produire NATURAL JOIN TypeSubstance
-                WHERE idType = $ligne->idTypeAppareil";   //quantiteAllume est la quantite par heure ?
+                FROM Produire NATURAL JOIN TypeSubstance
+                WHERE idTypeAppareil = {$ligne['idTypeAppareil']}";   //quantiteAllume est la quantite par heure ?
+
+        $nbP = "SELECT COUNT(*) AS nbP
+                FROM Produire
+                WHERE idTypeAppareil = {$ligne['idTypeAppareil']}";
+        
+        $nbC = "SELECT COUNT(*) AS nbC
+                FROM Consommer
+                WHERE idTypeAppareil = {$ligne['idTypeAppareil']}";
 
         // exécution de la requête
         $data3 = $bdd->query($req3);
+        $data2 = $bdd->query($req2);
+        $nbPL = $bdd->query($nbP);
+        $nbCL = $bdd->query($nbC);
         // si erreur
-        if ($data3 == NULL)
+        if ($data3 == NULL || $data2 == NULL || $nbPL ==  NULL || $nbCL == NULL)
         die("Problème d'exécution de la requête \n");
 
-        foreach ($data as $ligne3) {
+        foreach ($nbPL as $nbPLignes) {
+                foreach ($nbCL as $nbCLignes) {
+                        $nb = (int)$nbPLignes['nbP']+(int)$nbCLignes['nbC']+1;
+                }
+        }
+        echo "<tr>
+                <th rowspan = $nb>ON/OFF</th>
+                <th rowspan = $nb>{$ligne['nomAppareil']}</th>
+                <th rowspan = $nb>{$ligne['libTypeAppareil']}</th>
+                <th></th>
+                <th></th>
+                <th rowspan = $nb><a href='../Page_accueil/Page_accueil.html'>Modification</a></th>
+              </tr>";   //changer Modification pour garder en memoire l'id de l'appareil a modifier
+        
+        foreach ($data2 as $ligne2) {
                 echo "<tr>
-                        <th></th>
-                        <th></th>
-                        <th>$ligne3->libTypeSubstance</th>
-                        <th>$ligne3->quantiteAllume</th>
+                        <th>{$ligne2['libTypeRessource']}</th>
+                        <th>{$ligne2['quantiteAllume']} k../h</th>
+                      </tr>";       
+        }
+
+        foreach ($data3 as $ligne3) {
+                echo "<tr>
+                        <th>{$ligne3['libTypeSubstance']}</th>
+                        <th>{$ligne3['quantiteAllume']} k../h</th>
                       </tr>";       
         }
     }
@@ -93,36 +104,36 @@ require_once("../common/main.php");
         </table>";
     ?>
 <!----------------------------------------------------------------
-    <tr>
-                <th>appareil numero 1</th>
-                <th>type de l'appareil</th>
-                <th>ON/OFF</th>
-                <th><a href='../Page_accueil/Page_accueil.html'>Modification<a></th>
-              </tr>
-              <tr>
-                        <th></th>
-                        <th></th>
-                        <th>Ressource</th>
-                        <th>quantite Ressource</th>
-                      </tr>
-              <tr>
-                        <th></th>
-                        <th></th>
-                        <th>Ressource</th>
-                        <th>quantite Ressource</th>
-                      </tr>
-              <tr>
-                        <th></th>
-                        <th></th>
-                        <th>substance</th>
-                        <th>quantite Substance</th>
-                      </tr>
-                      <tr>
-                        <th></th>
-                        <th></th>
-                        <th>substance</th>
-                        <th>quantite Substance</th>
-                      </tr>
+<tr>
+        <th>appareil numero 1</th>
+        <th>type de l'appareil</th>
+        <th>ON/OFF</th>
+        <th><a href='../Page_accueil/Page_accueil.html'>Modification<a></th>
+</tr>
+<tr>
+        <th></th>
+        <th></th>
+        <th>Ressource</th>
+        <th>quantite Ressource</th>
+</tr>
+<tr>
+        <th></th>
+        <th></th>
+        <th>Ressource</th>
+        <th>quantite Ressource</th>
+</tr>
+<tr>
+        <th></th>
+        <th></th>
+        <th>substance</th>
+        <th>quantite Substance</th>
+</tr>
+<tr>
+        <th></th>
+        <th></th>
+        <th>substance</th>
+        <th>quantite Substance</th>
+</tr>
 ---------------------------------------------------------------->
         </tbody>
     </table>

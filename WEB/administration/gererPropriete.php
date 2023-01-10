@@ -18,13 +18,13 @@ require_once("../common/main.php");
     <a href="../Page_accueil/Page_accueil.php">Retour</a>
 
     <table>
-        <tbody>
+        <thead>
             <tr>
                 <td>Immeuble</td>
                 <td colspan = "2">Adresse (+nom)</td>
                 <td>Isolation</td>
                 <td colspan = "2">Date acquisition de la propriété</td>
-                <td rowspan = "3">Modifier</td>
+                <td rowspan = "3">Modifications</td>
             </tr>
             <tr>
                 <td>Numéro appartement</td>
@@ -36,18 +36,18 @@ require_once("../common/main.php");
             <tr>
                 <td>Numéro appartement</td>
                 <td>Type sécurité</td>
-                <td>Locataire (Date Debut)</td>
+                <td>Locataire (Date de début de location)</td>
                 <td>Type appartement/maison</td>
                 <td>Pièce(s)</td>
             </tr>
-        </tbody>
+        </thead>
     </table>
 
     <?php
     
     // requete pour la base
-    $req = 'SELECT idPropriete, numeroRue, nomRue, codePostal, ville, degreIsolation, nomPropriete 
-            FROM Propriete ';   //restreindre aux propriétés de l'utilisateur
+    $req = 'SELECT numeroRue, nomRue, codePostal, ville, degreIsolation, nomPropriete , idPropriete, DATE(dateDebutProp) AS dateDProp
+            FROM Propriete NATURAL JOIN Proprietaire';   //restreindre aux propriétés de l'utilisateur
 
     // exécution de la requête
     $data = $bdd->query($req);
@@ -57,78 +57,104 @@ require_once("../common/main.php");
     
     foreach ($data as $ligne) {
         // requete pour la base
-        $req2 = "SELECT numAppart, libTypeAppart, nomSecurite, DATE_FORMAT(datedebutprop, %d %b %Y)
-        FROM (((Appartment NATURAL JOIN Proprietaire) NATURAL JOIN TypeAppartement) NATURAL JOIN TypeSecurite) NATURAL JOIN Locataire 
-        WHERE idPropriete = $ligne->idPropriete";
+        $req2 = "SELECT idAppartement, numAppart, libTypeAppart, nomSecurite
+        FROM (((Appartement NATURAL JOIN Propriete) NATURAL JOIN TypeAppartement) NATURAL JOIN TypeSecurite) NATURAL JOIN Locataire 
+        WHERE idPropriete =".$ligne['idPropriete'];
+
+        $nb = "SELECT COUNT(*) AS nbLigne
+        FROM Appartement
+        WHERE idPropriete = {$ligne['idPropriete']}";
 
         // exécution de la requête
         $data2 = $bdd->query($req2);
+        $nbL = $bdd->query($nb);
         // si erreur
-        if ($data2 == NULL)
+        if ($data2 == NULL || $nbL == NULL)
         die("Problème d'exécution de la requête \n");
+
+        foreach($nbL as $l) {
+            $nbAppart = $l['nbLigne'];
+        }
 
         echo "<table>
                 <tbody>
                     <tr>
                         <th>";
 
-        $nbAppart = mysql_num_rows($data2);
         if ($nbAppart == 1) echo "Maison";
         else echo "Immeuble";
         echo "  </th>
-                <th colspan = \"2\">$ligne->numeroRue $ligne->nomRue $ligne->codepostal $ligne->ville";
-        if ($ligne->nomPropriete != NULL) echo"($ligne->nomPropriete)";
+                <th colspan = \"2\">".$ligne['numeroRue']." ".$ligne['nomRue']." ".$ligne['codePostal']." ".$ligne['ville'];
+        if ($ligne['nomPropriete'] != NULL) echo " ({$ligne['nomPropriete']})";
         echo "  </th>
-                <th>$ligne->degreIsolation</th>
-                <th>$ligne->datedebutprop</th>
-                <th rowspan = \"$nbAppart\"><a href='../ajoutPropriete.php'>Modifier<a></th>
+                <th>{$ligne['degreIsolation']}</th>
+                <th>{$ligne['dateDProp']}</th>
+                <th rowspan = \"$nbAppart\"><a href='{$ROOT}proprietes/ajoutPropriete/ajoutPropriete.php'>Modifier<a></th>
             </tr>";   //changer Modification pour garder en memoire l'id de la propriété a modifier
         
         foreach ($data2 as $ligne2) {
             echo "<tr>
-                    <td>$ligne2->numAppart</td>
-                    <td>$ligne2->nomSecurite</td>";
+                    <td>{$ligne2['numAppart']}</td>
+                    <td>{$ligne2['nomSecurite']}</td>";
 
             // requete pour la base
-            $req3 = "SELECT DATE_FORMAT(datedebutloc, %d %b %Y), nom, prenom
+            $req3 = "SELECT DATE(datedebutloc) AS dateDLoc, nom, prenom
             FROM (Locataire NATURAL JOIN Utilisateur) NATURAL JOIN InfoPersonne
-            WHERE idAppartement = $ligne->idAppartement AND dateFinLoc IS NULL";
+            WHERE idAppartement = {$ligne2['idAppartement']} AND dateFinLoc IS NULL";
+
+            $nb = "SELECT COUNT(*) AS nbLignes
+            FROM Locataire
+            WHERE idAppartement = {$ligne2['idAppartement']} AND dateFinLoc IS NULL";
 
             // exécution de la requête
             $data3 = $bdd->query($req3);
+            $nbL = $bdd->query($nb);
             // si erreur
-            if ($data3 == NULL)
+            if ($data3 == NULL || $nbL == NULL)
             die("Problème d'exécution de la requête \n");
 
-            if (mysql_num_rows($data3) == 1) {
+            foreach($nbL as $l) {
+                $nbLocataire = $l['nbLignes'];
+            }
+
+            if ($nbLocataire == 1) {
                 foreach ($data3 as $ligne3) {
-                    echo "<td>$ligne3->prenom $ligne3->nom ($ligne3->datedebutloc)</td>";
+                    echo "<td>{$ligne3['prenom']} {$ligne3['nom']} ({$ligne3['dateDLoc']})</td>";
                 }
             }
-            else if (mysql_num_rows($data3) == 0) {
+            else if ($nbLocataire == 0) {
                 echo "<td>Pas de locataire</td>";
             }
             else {
                 echo "<td>Problème au niveau de la location de l'appartement</td>";
             }
-            echo "  <td>$ligne->libTypeAppart</td>
+            echo "  <td>{$ligne2['libTypeAppart']}</td>
                     <td>";
             
             // requete pour la base
             $req4 = "SELECT  libTypePiece
-            FROM (Appartment NATURAL JOIN Piece) NATURAL JOIN TypePiece 
-            WHERE idPropriete = $ligne->idPropriete";
+            FROM Piece NATURAL JOIN TypePiece 
+            WHERE idAppartement = {$ligne2['idAppartement']}";
+
+            $nb = "SELECT COUNT(*) AS nbLignes
+            FROM Piece
+            WHERE idAppartement = {$ligne2['idAppartement']}";
 
             // exécution de la requête
             $data4 = $bdd->query($req4);
+            $nbL = $bdd->query($nb);
             // si erreur
-            if ($data4 == NULL)
+            if ($data4 == NULL || $nbL == NULL)
             die("Problème d'exécution de la requête \n");
+
+            foreach($nbL as $l) {
+                $nbPiece = $l['nbLignes'];
+            }
 
             $i = 0;
             foreach ($data4 as $ligne4) {
-                echo "$ligne4->libTypePiece";
-                if ($i < mysql_num_rows($data4)) {
+                echo $ligne4['libTypePiece'];
+                if ($i < $nbPiece) {
                     echo ", ";
                 }
                 $i++;
@@ -172,7 +198,7 @@ require_once("../common/main.php");
 ---------------------------------------------------------------->
         </tbody>
     </table>
-    <a href="ajoutPropriete.php">Ajouter propiété</a>
+    <a href="../proprietes/ajoutPropriete/ajoutPropriete.php">Ajouter propiété</a>
  </body>
 
  <?php require "../common/footer.php"; ?>

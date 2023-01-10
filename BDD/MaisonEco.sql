@@ -15,7 +15,7 @@ CREATE TABLE InfoPersonne(
    dateNais DATE,
    genre CHAR(1) ,
    mail VARCHAR(50)  NOT NULL,
-   numTel DECIMAL(10,0)  ,
+   numTel CHAR(10) ,
    prenom VARCHAR(50) ,
    PRIMARY KEY(idPersonne),
    UNIQUE(mail)
