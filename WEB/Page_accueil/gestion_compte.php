@@ -10,11 +10,9 @@ session_start();//On démarre la session
 // On se connecte à la base de données
 $bdd = new PDO('mysql:host=127.0.0.1;dbname=MaisonEco;charset=utf8', 'root', '');
 
-<<<<<<< HEAD
-if(isset($_SESSION['Id']))
-=======
+
 if(isset($_SESSION['Id']) AND !empty($_SESSION['Id']))
->>>>>>> d8bad36e17c3399ea29c4ef16e4100f5833f4c6f
+
 {
     $getid = intval($_SESSION['Id']);
     $requser = $bdd->prepare('SELECT * FROM InfoPersonne WHERE idPersonne = ?');
