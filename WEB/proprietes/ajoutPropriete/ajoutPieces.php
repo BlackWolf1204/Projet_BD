@@ -49,36 +49,21 @@ $ROOT = '../../';
 		$appartement = array();
 		$appartement['numAppartement'] = 0;
 		$appartement['degreSecurite'] = $_POST['degreSecurite_1'];
-		$appartement['typeAppart'] = $_POST['typeAppartement_1'];
+		$appartement['typeAppart'] = trouveTypeAppartement($typeAppartements, $_POST['typeAppartement_1']);
 		$appartements[] = $appartement;
 	} else {
 		for ($i = 1; $i <= $nbAppartements; $i++) {
 			$appartement = array();
 			$appartement['numAppartement'] = $_POST["numAppartement_$i"];
 			$appartement['degreSecurite'] = $_POST["degreSecurite_$i"];
-			foreach ($typeAppartements as $typeAppartement) {
-				if ($typeAppartement['typeAppart'] == $_POST["typeAppartement_$i"]) {
-					$appartement['typeAppart'] = $typeAppartement;
-					break;
-				}
-			}
-			if (empty($appartement['typeAppart'])) {
-				echo "<p>Erreur : type d'appartement {$typeAppart['typeAppart']} inconnu.</p>";
-				exit();
-			}
+			$appartement['typeAppart'] = trouveTypeAppartement($typeAppartements, $_POST["typeAppartement_$i"]);
 			$appartements[] = $appartement;
 		}
 	}
 
 	$nbPieces = 0;
 	foreach ($appartements as $appartement) {
-		foreach ($typeAppartements as $typeAppartement) {
-			if ($typeAppartement['typeAppart'] == $appartement['typeAppart']['typeAppart']) {
-				$nbPiecesAppart = $typeAppartement['nbPieces'];
-				break;
-			}
-		}
-		$nbPieces += $nbPiecesAppart;
+		$nbPieces += $appartement['typeAppart']['nbPieces'];
 	}
 
 	if ($nbAppartements == 1) {
@@ -108,12 +93,7 @@ $ROOT = '../../';
 
 		for ($i = 1; $i <= $nbAppartements; $i++) {
 			$appartement = $appartements[$i - 1];
-			foreach ($typeAppartements as $typeAppart) {
-				if ($typeAppart['typeAppart'] == $appartement['typeAppart']['typeAppart']) {
-					$typeAppartement = $typeAppart;
-					break;
-				}
-			}
+			$typeAppartement = trouveTypeAppartement($typeAppartements, $appartement['typeAppart']['typeAppart']);
 		?>
 
 			<div class="infoAppart" appartNum=<?= $i ?>>
