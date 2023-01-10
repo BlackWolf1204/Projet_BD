@@ -73,7 +73,7 @@ $ROOT = '../../';
 	$nbPieces = 0;
 	foreach ($appartements as $appartement) {
 		foreach ($typeAppartements as $typeAppartement) {
-			if ($typeAppartement['typeAppart'] == $appartement['typeAppart']['typeAppart']) {
+			if ($typeAppartement['typeAppart'] == $appartement['typeAppart']) {
 				$nbPiecesAppart = $typeAppartement['nbPieces'];
 				break;
 			}
@@ -109,7 +109,7 @@ $ROOT = '../../';
 		for ($i = 1; $i <= $nbAppartements; $i++) {
 			$appartement = $appartements[$i - 1];
 			foreach ($typeAppartements as $typeAppart) {
-				if ($typeAppart['typeAppart'] == $appartement['typeAppart']['typeAppart']) {
+				if ($typeAppart['typeAppart'] == $appartement['typeAppart']) {
 					$typeAppartement = $typeAppart;
 					break;
 				}
