@@ -41,3 +41,14 @@ function trouveTypeAppartement($listeTypeAppartements, $typeAppart)
 	echo "<p>Erreur : type d'appartement {$typeAppart} inconnu.</p>";
 	exit();
 }
+
+function trouveTypePiece($listeTypePieces, $idTypePiece)
+{
+	foreach ($listeTypePieces as $typePiece) {
+		if ($typePiece['typePiece'] == $idTypePiece) {
+			return $typePiece;
+		}
+	}
+	echo "<p>Erreur : type de pièce {$idTypePiece} inconnu.</p>";
+	exit();
+}

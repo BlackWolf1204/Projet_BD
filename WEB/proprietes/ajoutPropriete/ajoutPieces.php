@@ -38,27 +38,22 @@ $ROOT = '../../';
 	if ($type == "maison")
 		$nbAppartements = 1;
 
+	// Chargement des types d'appartements une fois
 	$typeAppartements = $bdd->query("SELECT * FROM typeappartement");
 	$typeAppartements = $typeAppartements->fetchAll();
 
+	// Chargement des types de pièces une fois
 	$typePieces = $bdd->query("SELECT * FROM typepiece");
 	$typePieces = $typePieces->fetchAll();
 
+	// Récupération des données des appartements
 	$appartements = array();
-	if ($type == "maison") {
+	for ($i = 1; $i <= $nbAppartements; $i++) {
 		$appartement = array();
-		$appartement['numAppartement'] = 0;
-		$appartement['degreSecurite'] = $_POST['degreSecurite_1'];
-		$appartement['typeAppart'] = trouveTypeAppartement($typeAppartements, $_POST['typeAppartement_1']);
+		$appartement['numAppartement'] = $_POST["numAppartement_$i"];
+		$appartement['degreSecurite'] = $_POST["degreSecurite_$i"];
+		$appartement['typeAppart'] = trouveTypeAppartement($typeAppartements, $_POST["typeAppartement_$i"]);
 		$appartements[] = $appartement;
-	} else {
-		for ($i = 1; $i <= $nbAppartements; $i++) {
-			$appartement = array();
-			$appartement['numAppartement'] = $_POST["numAppartement_$i"];
-			$appartement['degreSecurite'] = $_POST["degreSecurite_$i"];
-			$appartement['typeAppart'] = trouveTypeAppartement($typeAppartements, $_POST["typeAppartement_$i"]);
-			$appartements[] = $appartement;
-		}
 	}
 
 	$nbPieces = 0;

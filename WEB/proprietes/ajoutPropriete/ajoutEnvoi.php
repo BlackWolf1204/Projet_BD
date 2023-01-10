@@ -18,44 +18,28 @@ $nbAppartements = $_POST['nbAppartements'];
 if ($type == "maison")
 	$nbAppartements = 1;
 
+// Chargement des types d'appartements une fois
 $typeAppartements = $bdd->query("SELECT * FROM typeappartement");
 $typeAppartements = $typeAppartements->fetchAll();
 
+// Chargement des types de pièces une fois
 $typePieces = $bdd->query("SELECT * FROM typepiece");
 $typePieces = $typePieces->fetchAll();
 
+// Récupération des données des appartements
 $appartements = array();
 for ($i = 1; $i <= $nbAppartements; $i++) {
 	$appartement = array();
 	$appartement['numAppartement'] = $_POST["numAppartement_$i"];
 	$appartement['degreSecurite'] = $_POST["degreSecurite_$i"];
-	foreach ($typeAppartements as $typeAppartement) {
-		if ($typeAppartement['typeAppart'] == $_POST["typeAppartement_$i"]) {
-			$appartement['typeAppart'] = $typeAppartement;
-			break;
-		}
-	}
-	if (empty($appartement['typeAppart'])) {
-		echo "<p>Erreur : type d'appartement {$typeAppart['typeAppart']} inconnu.</p>";
-		exit();
-	}
-
+	$appartement['typeAppart'] = trouveTypeAppartement($typeAppartements, $_POST["typeAppartement_$i"]);
 	$nbPiecesAppart = $appartement['typeAppart']['nbPieces'];
 	$pieces = array();
 	for ($j = 1; $j <= $nbPiecesAppart; $j++) {
 		$i_j = $i . "_" . $j;
 		$piece = array();
 		$piece['numPiece'] = $_POST["numPiece_$i_j"];
-		foreach ($typePieces as $typePiece) {
-			if ($typePiece['typePiece'] == $_POST["typePiece_$i_j"]) {
-				$piece['typePiece'] = $typePiece;
-				break;
-			}
-		}
-		if (empty($piece['typePiece'])) {
-			echo "<p>Erreur : type de pièce {$typePiece['typePiece']} inconnu.</p>";
-			exit();
-		}
+		$piece['typePiece'] = trouveTypePiece($typePieces, $_POST["typePiece_$i_j"]);
 		$pieces[] = $piece;
 	}
 	$appartement['pieces'] = $pieces;

@@ -61,6 +61,7 @@ $ROOT = '../../';
 		<!-- Pour une maison (1 ppartment) : degreSecurité (faible, moyen, fort), typeAppartement (select récup de la table typeappartement : T1, T2...) -->
 		<!-- Pour les n appartements => numAppartement, degreSecurité (faible, moyen, fort), typeAppartement (select récup de la table typeappartement : T1, T2...) -->
 		<?php
+		// Chargement des types d'appartements et types de sécurité une fois
 		$TypeSecurite = $bdd->query("SELECT * FROM TypeSecurite");
 		$TypeSecurite = $TypeSecurite->fetchAll();
 		$TypeAppartement = $bdd->query("SELECT * FROM TypeAppartement");
@@ -72,12 +73,14 @@ $ROOT = '../../';
 			<div class="infoAppart" appartNum=<?= $i ?>>
 
 				<?php
-				if ($type != "maison") {
-					echo "<div id=\"numAppartement_$i\">";
-					echo "<label for=\"numAppartement_$i\">Numéro d'appartement</label> ";
-					echo "<input type=\"text\" name=\"numAppartement_$i\" placeholder=\"$i\" value=\"$i\" size=4>";
-					echo "</div>";
+				$style = "";
+				if ($type == "maison") {
+					$style = "style=\"display: none;\"";
 				}
+				echo "<div id=\"numAppartement_$i\" $style>";
+				echo "<label for=\"numAppartement_$i\">Numéro d'appartement</label> ";
+				echo "<input type=\"text\" name=\"numAppartement_$i\" placeholder=\"$i\" value=\"$i\" size=4>";
+				echo "</div>";
 				?>
 
 				<div id="degreSecurite_<?= $i ?>">
