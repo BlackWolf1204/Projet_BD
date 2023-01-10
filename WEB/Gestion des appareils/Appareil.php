@@ -1,16 +1,27 @@
 <?php 
 
-/*CREATE TABLE TypeAppareil(
-   idTypeAppareil INT,
-   libTypeAppareil VARCHAR(50) ,
-   PRIMARY KEY(idTypeAppareil)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8; */
-
+/*CREATE TABLE Appareil(
+  idAppareil INT AUTO_INCREMENT,
+  nomAppareil VARCHAR(20)  NOT NULL,
+  emplacement VARCHAR(50) ,
+  idTypeAppareil INT NOT NULL,
+  idPiece INT NOT NULL,
+  PRIMARY KEY(idAppareil),
+  FOREIGN KEY(idTypeAppareil) REFERENCES TypeAppareil(idTypeAppareil),
+  FOREIGN KEY(idPiece) REFERENCES Piece(idPiece)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;*/
 session_start();//On démarre la session
 
+if (!empty($_POST)) {
+  require('../common/main.php');
 
+  $nomAppareil = htmlspecialchars($_POST['nomAppareil']);
+  $TypeAppareil = htmlspecialchars($_POST['TypeAppareil']);
+  $emplacement = htmlspecialchars($_POST['emplacement']);
 
-
+  // Requête SQL
+	$sql = "INSERT INTO Appareil (nomAppareil, TypeAppareil,emplacement) VALUES ('$nomAppareil', '$TypeAppareil','$emplacement')";
+}
 ?>
 
 
@@ -18,11 +29,14 @@ session_start();//On démarre la session
 
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title> Ajouter un apparreil</title>
+   <script>
+
+   </script>
    <style>
       body 
       {
@@ -67,13 +81,36 @@ session_start();//On démarre la session
                     <div class="row">
                     <div class="col-sm-8 offset-sm-2"><!-- col-sm-8 offset-sm-2 c'est pour le centrage avec un espace de 2 -->
                     <!--on affiche le infos d'appareil nom,  -->
-                    <h3>Profil de <?php echo $userinfo['Prenom']; ?></h3>
-                        <br /><br />
-                        <p>Nom d'appareil : <?php echo $userinfo['Nom']; ?></p>
-                        <p>Type d'appareil : <?php echo $userinfo["Type d'appareil"]; ?></p>
-                        <p>Description : <?php echo $userinfo['Description']; ?></p>
-
-                        <br /><br />
-                        <a href="Supprimer.php">Supprimer</a>
+                    <h2>Profil de <?php echo $userinfo['Prenom']; ?></h2>
+                    <a href="../Page_accueil/Page_accueil.php">Retour</a>
+         <form action="Appareil.php" method="post">
+                    <!-- Non d'appareil --> 
+                    <div>
+                        <label for="nomApareil"">Nom d'appareril</label>
+                        <input type="text" name="nomAppareil" placeholder="ex: Lampe">
+                    </div>
+                    <!-- Type d'appareil --> 
+                    <div>
+                        <label for="TypeAppareil"">Type d'appareril</label>
+                        <select name="TypeAppareil">
+                          <option value="A">choisissez le type de votre appareil</option>
+                          <option value="B">chauffage éléctrique</option>
+			                  	<option value="C">réfrigérateur</option>
+			                  	<option value="D">lampe</option>
+			                  	<option value="E">aspirateur</option>
+		                  		<option value="F">plaques de cuisson</option>
+		                  		<option value="G">télévision</option> 
+                          <option value="H">chauffage au gaz</option> 
+                        </select>
+                    </div>
+                     <!-- Description --> 
+                     <div>
+                        <label for="emplacement"">Description</label>
+                        <input type="text" name="emplacement" placeholder="Indiquez l'emplacement de votre appareil">
+                    </div>
+                    <a href="Supprimer.php">Supprimer</a>
+                    <input type="submit" value="Ajouter">
+          </form>
+          <?php require('../common/footer.php') ?>
 </body>
 </html>
