@@ -13,7 +13,7 @@ if(isset($_SESSION['Id']))
     $requser = $bdd->prepare('SELECT * FROM InfoPersonne JOIN Utilisateur ON InfoPersonne.idPersonne = Utilisateur.idPersonne WHERE InfoPersonne.idPersonne = ?');
     $requser->execute(array($getid));
     $userinfo = $requser->fetch();
-    // <!-- on ajoutera la possibilité de faire la modification de l'identifiant sur l'edition de profil ! -->
+    // 
     /*
 
     CREATE TABLE Utilisateur(
