@@ -114,8 +114,8 @@ CREATE TABLE Piece(
 
 CREATE TABLE Appareil(
    idAppareil INT AUTO_INCREMENT,
-   nomAppareil VARCHAR(20)  NOT NULL,
-   emplacement VARCHAR(50) ,
+   nomAppareil VARCHAR(50)  NOT NULL,
+   emplacement VARCHAR(200) ,
    idTypeAppareil INT NOT NULL,
    idPiece INT NOT NULL,
    PRIMARY KEY(idAppareil),

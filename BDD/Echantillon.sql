@@ -142,56 +142,57 @@ INSERT INTO Produire VALUES (7, 2, 0, 1000, 500); -- chauffage au gaz, dioxyde d
 
 -- HistoriqueConsommation (idConso, dateOn, dateOff, idAppareil)
 -- chauffage électrique 1 allumé de novembre à mars tous les ans depuis 2020 jusqu'à 2022
-INSERT INTO HistoriqueConsommation VALUES (0, '2020-11-01', '2021-03-31', 1); -- chauffage éléctrique
-INSERT INTO HistoriqueConsommation VALUES (0, '2021-11-01', '2022-03-31', 1); -- chauffage éléctrique
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-11-01', '2022-12-31', 1); -- chauffage éléctrique
+INSERT INTO HistoriqueConsommation VALUES (1, CAST('2020-11-01' AS DATETIME), CAST('2021-03-31' AS DATETIME), 1); -- chauffage éléctrique
+INSERT INTO HistoriqueConsommation VALUES (2, CAST('2021-11-01' AS DATETIME), CAST('2022-03-31' AS DATETIME), 1); -- chauffage éléctrique
+INSERT INTO HistoriqueConsommation VALUES (3, CAST('2022-11-01' AS DATETIME), NULL, 1); -- chauffage éléctrique (toujours en fonctionnement)
 
 -- lampe 2 allumée tous les soirs du 10 décembre 2022 au 17 décembre 2022
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-12-10 18:00:00', '2022-12-11 23:00:00', 2); -- lampe
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-12-11 18:00:00', '2022-12-12 23:00:00', 2); -- lampe
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-12-12 18:00:00', '2022-12-13 23:00:00', 2); -- lampe
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-12-13 18:00:00', '2022-12-14 23:00:00', 2); -- lampe
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-12-14 18:00:00', '2022-12-15 23:00:00', 2); -- lampe
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-12-15 18:00:00', '2022-12-16 23:00:00', 2); -- lampe
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-12-16 18:00:00', '2022-12-17 23:00:00', 2); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (4, CAST('2022-12-10 18:00:00' AS DATETIME), CAST('2022-12-11 23:00:00' AS DATETIME), 2); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (5, CAST('2022-12-11 18:00:00' AS DATETIME), CAST('2022-12-12 23:00:00' AS DATETIME), 2); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (6, CAST('2022-12-12 18:00:00' AS DATETIME), CAST('2022-12-13 23:00:00' AS DATETIME), 2); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (7, CAST('2022-12-13 18:00:00' AS DATETIME), CAST('2022-12-14 23:00:00' AS DATETIME), 2); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (8, CAST('2022-12-14 18:00:00' AS DATETIME), CAST('2022-12-15 23:00:00' AS DATETIME), 2); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (9, CAST('2022-12-15 18:00:00' AS DATETIME), CAST('2022-12-16 23:00:00' AS DATETIME), 2); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (10, CAST('2022-12-16 18:00:00' AS DATETIME), CAST('2022-12-17 23:00:00' AS DATETIME), 2); -- lampe
 
 -- aspirateur 3 allumé une fois toutes les deux semaines depuis 2021 pour une durée d'une heure
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-01-03 19:00:00', '2022-01-03 20:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-01-17 16:00:00', '2022-01-17 17:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-01-31 10:00:00', '2022-01-31 11:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-02-14 13:00:00', '2022-02-14 14:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-02-28 18:00:00', '2022-02-28 19:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-03-14 21:00:00', '2022-03-14 22:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-03-28 23:00:00', '2022-03-29 00:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-04-11 08:00:00', '2022-04-11 09:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-04-25 11:00:00', '2022-04-25 12:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-05-09 14:00:00', '2022-05-09 15:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-05-23 17:00:00', '2022-05-23 18:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-06-06 20:00:00', '2022-06-06 21:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-06-20 23:00:00', '2022-06-21 00:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-07-05 12:00:00', '2022-07-05 13:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-07-19 05:00:00', '2022-07-19 06:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-08-02 08:00:00', '2022-08-02 09:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-08-16 11:00:00', '2022-08-16 12:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-08-30 14:00:00', '2022-08-30 15:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-09-13 17:00:00', '2022-09-13 18:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-09-27 17:00:00', '2022-09-27 18:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-10-11 17:00:00', '2022-10-11 18:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-10-25 16:00:00', '2022-10-25 17:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-11-08 15:00:00', '2022-11-08 16:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-11-22 14:00:00', '2022-11-22 15:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-12-06 15:00:00', '2022-12-06 16:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2022-12-20 16:00:00', '2022-12-20 17:00:00', 3); -- aspirateur
-INSERT INTO HistoriqueConsommation VALUES (0, '2023-01-03 17:00:00', '2023-01-03 18:00:00', 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (11, CAST('2022-01-03 19:00:00' AS DATETIME), CAST('2022-01-03 20:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (12, CAST('2022-01-17 16:00:00' AS DATETIME), CAST('2022-01-17 17:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (13, CAST('2022-01-31 10:00:00' AS DATETIME), CAST('2022-01-31 11:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (14, CAST('2022-02-14 13:00:00' AS DATETIME), CAST('2022-02-14 14:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (15, CAST('2022-02-28 18:00:00' AS DATETIME), CAST('2022-02-28 19:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (16, CAST('2022-03-14 21:00:00' AS DATETIME), CAST('2022-03-14 22:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (17, CAST('2022-03-28 23:00:00' AS DATETIME), CAST('2022-03-29 00:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (18, CAST('2022-04-11 08:00:00' AS DATETIME), CAST('2022-04-11 09:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (19, CAST('2022-04-25 11:00:00' AS DATETIME), CAST('2022-04-25 12:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (20, CAST('2022-05-09 14:00:00' AS DATETIME), CAST('2022-05-09 15:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (21, CAST('2022-05-23 17:00:00' AS DATETIME), CAST('2022-05-23 18:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (22, CAST('2022-06-06 20:00:00' AS DATETIME), CAST('2022-06-06 21:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (23, CAST('2022-06-20 23:00:00' AS DATETIME), CAST('2022-06-21 00:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (24, CAST('2022-07-05 12:00:00' AS DATETIME), CAST('2022-07-05 13:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (25, CAST('2022-07-19 05:00:00' AS DATETIME), CAST('2022-07-19 06:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (26, CAST('2022-08-02 08:00:00' AS DATETIME), CAST('2022-08-02 09:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (27, CAST('2022-08-16 11:00:00' AS DATETIME), CAST('2022-08-16 12:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (28, CAST('2022-08-30 14:00:00' AS DATETIME), CAST('2022-08-30 15:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (29, CAST('2022-09-13 17:00:00' AS DATETIME), CAST('2022-09-13 18:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (30, CAST('2022-09-27 17:00:00' AS DATETIME), CAST('2022-09-27 18:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (31, CAST('2022-10-11 17:00:00' AS DATETIME), CAST('2022-10-11 18:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (32, CAST('2022-10-25 16:00:00' AS DATETIME), CAST('2022-10-25 17:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (33, CAST('2022-11-08 15:00:00' AS DATETIME), CAST('2022-11-08 16:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (34, CAST('2022-11-22 14:00:00' AS DATETIME), CAST('2022-11-22 15:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (35, CAST('2022-12-06 15:00:00' AS DATETIME), CAST('2022-12-06 16:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (36, CAST('2022-12-20 16:00:00' AS DATETIME), CAST('2022-12-20 17:00:00' AS DATETIME), 3); -- aspirateur
+INSERT INTO HistoriqueConsommation VALUES (37, CAST('2023-01-03 17:00:00' AS DATETIME), CAST('2023-01-03 18:00:00' AS DATETIME), 3); -- aspirateur
 
 -- autres appareils :
-INSERT INTO HistoriqueConsommation VALUES (3, '2015-01-04', '2019-08-19', 4); -- télévision
-INSERT INTO HistoriqueConsommation VALUES (3, '2019-10-20', '2020-01-01', 5); -- réfrigérateur
-INSERT INTO HistoriqueConsommation VALUES (3, '2019-10-20', '2020-01-01', 6); -- plaques de cuisson
-INSERT INTO HistoriqueConsommation VALUES (3, '2019-10-20', '2020-01-01', 7); -- chauffage au gaz
-INSERT INTO HistoriqueConsommation VALUES (3, '2019-10-20', '2020-01-01', 8); -- lampe
-INSERT INTO HistoriqueConsommation VALUES (3, '2019-10-20', '2020-01-01', 10); -- lampe
-INSERT INTO HistoriqueConsommation VALUES (3, '2019-10-20', '2020-01-01', 11); -- chauffage au gaz
-INSERT INTO HistoriqueConsommation VALUES (3, '2019-10-20', '2020-01-01', 12); -- lampe
-INSERT INTO HistoriqueConsommation VALUES (3, '2019-10-20', '2020-01-01', 13); -- chauffage au gaz
-INSERT INTO HistoriqueConsommation VALUES (3, '2019-10-20', '2020-01-01', 14); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (38, CAST('2022-01-04' AS DATETIME), CAST('2022-08-19' AS DATETIME), 4); -- télévision
+INSERT INTO HistoriqueConsommation VALUES (39, CAST('2022-05-20' AS DATETIME), CAST('2022-07-01' AS DATETIME), 5); -- réfrigérateur
+INSERT INTO HistoriqueConsommation VALUES (40, CAST('2022-05-08' AS DATETIME), CAST('2023-01-01' AS DATETIME), 6); -- plaques de cuisson
+INSERT INTO HistoriqueConsommation VALUES (41, CAST('2019-08-06' AS DATETIME), NULL, 7); -- chauffage au gaz
+INSERT INTO HistoriqueConsommation VALUES (42, CAST('2021-08-02' AS DATETIME), CAST('2022-06-01' AS DATETIME), 8); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (43, CAST('2019-08-08' AS DATETIME), CAST('2020-04-01' AS DATETIME), 10); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (44, CAST('2021-04-04' AS DATETIME), CAST('2022-11-01' AS DATETIME), 11); -- chauffage au gaz
+INSERT INTO HistoriqueConsommation VALUES (45, CAST('2021-09-06' AS DATETIME), CAST('2022-07-01' AS DATETIME), 12); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (46, CAST('2019-07-26' AS DATETIME), NULL, 13); -- chauffage au gaz (toujours en cours)
+INSERT INTO HistoriqueConsommation VALUES (47, CAST('2019-12-10' AS DATETIME), CAST('2020-01-01' AS DATETIME), 14); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (48, CAST('2023-06-01' AS DATETIME), NULL, 14); -- lampe
