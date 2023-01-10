@@ -9,11 +9,12 @@ $bdd = new PDO('mysql:host=127.0.0.1;dbname=MaisonEco;charset=utf8', 'root', '')
 
 if(isset($_SESSION['Id']))
 {
+
     $getid = intval($_SESSION['Id']);
     $requser = $bdd->prepare('SELECT * FROM InfoPersonne JOIN Utilisateur ON InfoPersonne.idPersonne = Utilisateur.idPersonne WHERE InfoPersonne.idPersonne = ?');
     $requser->execute(array($getid));
-    $userinfo = $requser->fetch();
-    // 
+    $userinfo = $requser->fetch();  
+
     /*
 
     CREATE TABLE Utilisateur(
@@ -33,6 +34,7 @@ if(isset($_SESSION['Id']))
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
     */
+
     // on modifie l'identifiant de l'utilisateur et de l'administrateur si il est connecté en tant qu'administrateur
     if(isset($_POST['newidentifiant']) AND !empty($_POST['newidentifiant']) AND $_POST['newidentifiant'] != $userinfo['identifiant'])
     {
@@ -48,6 +50,7 @@ if(isset($_SESSION['Id']))
         $insertidentifiant->execute(array($newidentifiant, $getid));
         header('Location: edition_profil.php?id='.$_SESSION['Id']);
     }
+
     if(isset($_POST['newmdp1']) AND !empty($_POST['newmdp1']) AND isset($_POST['newmdp2']) AND !empty($_POST['newmdp2']))
     {
         $mdp1 = sha1($_POST['newmdp1']);
@@ -168,7 +171,7 @@ else
                     <label>Genre :</label>
                     <input type="text" name="newgenre" placeholder="Genre" value="<?php echo $userinfo['genre']; ?>" /><br /><br />
                     <label>Identifiant :</label>
-                    <input type="text" name="newidentifiant" placeholder="Identifiant" value="<?php echo "Identifiant : ".$userinfo['identifiant']; ?>" /><br /><br />
+                    <input type="text" name="newidentifiant" placeholder="Identifiant" value="<?php echo $userinfo['identifiant']; ?>" /><br /><br />
                     <input type="submit" value="Mettre à jour mon profil !" />
 
                 </form>
