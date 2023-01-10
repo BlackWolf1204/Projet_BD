@@ -31,7 +31,10 @@
                 <h3>";
         
         if ($ligne['numAppart'] != NULL) echo "Appartement {$ligne['numAppart']} ";
-        if ($ligne['nomPropriete'] != NULL) echo "{$ligne['nomPropriete']} ";
+        if ($ligne['nomPropriete'] != NULL) {
+            $nomPropriete = iconv('ISO-8859-1', 'UTF-8', $ligne['nomPropriete']);
+            echo "$nomPropriete ";
+        }
         echo "{$ligne['numeroRue']} {$ligne['nomRue']} {$ligne['codePostal']} {$ligne['ville']}</h3>";
 
         // requete pour la base
@@ -91,9 +94,10 @@
             else {            
                 $somme = $somme/((int)$ligne['dayDebutCurrent']*24);
             }
+            $libTypeRessource = iconv('ISO-8859-1', 'UTF-8', $ligne2['libTypeRessource']);
             echo "<tr>
-                    <th>{$ligne2['libTypeRessource']}</th>
-                    <th>".round($somme,3)." k..../j</th>
+                    <th>$libTypeRessource</th>
+                    <th>".round($somme,3)." k..../h</th>
                     <th>{$ligne2['valIdealeConsoAppart']}</th>
                     <th>{$ligne2['valCritiqueConsoAppart']}</th>";
 
@@ -175,7 +179,8 @@
             echo "</tr>";
         }
         echo "</tbody>
-            </table>";
+            </table>
+            </div>";
     }
     ?>
         </tbody>

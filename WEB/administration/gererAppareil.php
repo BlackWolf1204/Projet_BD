@@ -45,12 +45,12 @@ require_once("../common/main.php");
             <tbody>";
             
     foreach ($data as $ligne) {
-        // requete pour la base
+        // requete pour la base : ressources consommées
         $req2 = "SELECT libTypeRessource, quantiteAllume
                 FROM Consommer NATURAL JOIN TypeRessource
                 WHERE idTypeAppareil = {$ligne['idTypeAppareil']}";   //quantiteAllume est la quantite par heure ?
         
-        // requete pour la base
+        // requete pour la base : substances produites
         $req3 = "SELECT libTypeSubstance, quantiteAllume
                 FROM Produire NATURAL JOIN TypeSubstance
                 WHERE idTypeAppareil = {$ligne['idTypeAppareil']}";   //quantiteAllume est la quantite par heure ?
@@ -64,8 +64,8 @@ require_once("../common/main.php");
                 WHERE idTypeAppareil = {$ligne['idTypeAppareil']}";
 
         // exécution de la requête
-        $data3 = $bdd->query($req3);
-        $data2 = $bdd->query($req2);
+        $data3 = $bdd->query($req3); // produire
+        $data2 = $bdd->query($req2); // consommer
         $nbPL = $bdd->query($nbP);
         $nbCL = $bdd->query($nbC);
         // si erreur
@@ -77,26 +77,30 @@ require_once("../common/main.php");
                         $nb = (int)$nbPLignes['nbP']+(int)$nbCLignes['nbC']+1;
                 }
         }
+        $nomAppareil = iconv('ISO-8859-1', 'UTF-8', $ligne['nomAppareil']);
+        $libTypeAppareil = iconv('ISO-8859-1', 'UTF-8', $ligne['libTypeAppareil']);
         echo "<tr>
                 <th rowspan = $nb>ON/OFF</th>
-                <th rowspan = $nb>{$ligne['nomAppareil']}</th>
-                <th rowspan = $nb>{$ligne['libTypeAppareil']}</th>
+                <th rowspan = $nb>$nomAppareil</th>
+                <th rowspan = $nb>$libTypeAppareil</th>
                 <th></th>
                 <th></th>
-                <th rowspan = $nb><a href='../Page_accueil/Page_accueil.html'>Modification</a></th>
+                <th rowspan = $nb><a href='../Page_accueil/Page_accueil.php'>Modification</a></th>
               </tr>";   //changer Modification pour garder en memoire l'id de l'appareil a modifier
         
         foreach ($data2 as $ligne2) {
+                $libTypeRessource = iconv('ISO-8859-1', 'UTF-8', $ligne2['libTypeRessource']);
                 echo "<tr>
-                        <th>{$ligne2['libTypeRessource']}</th>
-                        <th>{$ligne2['quantiteAllume']} k../h</th>
+                        <th>$libTypeRessource</th>
+                        <th>{$ligne2['quantiteAllume']} kW</th>
                       </tr>";       
         }
 
         foreach ($data3 as $ligne3) {
+                $libTypeSubstance = iconv('ISO-8859-1', 'UTF-8', $ligne3['libTypeSubstance']);
                 echo "<tr>
-                        <th>{$ligne3['libTypeSubstance']}</th>
-                        <th>{$ligne3['quantiteAllume']} k../h</th>
+                        <th>$libTypeSubstance</th>
+                        <th>{$ligne3['quantiteAllume']} kW</th>
                       </tr>";       
         }
     }
@@ -108,7 +112,7 @@ require_once("../common/main.php");
         <th>appareil numero 1</th>
         <th>type de l'appareil</th>
         <th>ON/OFF</th>
-        <th><a href='../Page_accueil/Page_accueil.html'>Modification<a></th>
+        <th><a href='../Page_accueil/Page_accueil.php'>Modification<a></th>
 </tr>
 <tr>
         <th></th>
