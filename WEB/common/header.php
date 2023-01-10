@@ -37,7 +37,7 @@ if (isset($_SESSION['Id'])) {
 <body>
 
     <header style="background-color: lightgreen;">
-        <h1><a href="<?= $ROOT ?>" title="Accueil" style="text-decoration: none;">Projet Maison Économe</a></h1>
+        <h1><a href="<?= $ROOT ?>Page_accueil/Page_accueil.php" title="Accueil" style="text-decoration: none;">Projet Maison Économe</a></h1>
 
         <div class="header-left">
             <img src="<?= $ROOT ?>images/logo.webp" alt="logo" class="logo">
