@@ -18,8 +18,10 @@ $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="icon" href="<?= $ROOT ?>images/logo.webp" type="image/x-icon" />
+<link rel="icon" href="<?= $ROOT ?>common/images/favicon.ico" type="image/x-icon" />
 <link rel='stylesheet' type='text/css' media='screen' href='<?= $ROOT ?>style/main.css'>
+<script src="<?= $ROOT ?>common/vanta/p5.min.js"></script>
+<script src="<?= $ROOT ?>common/vanta/vanta.topology.min.js"></script>
 
 </head>
 
@@ -29,7 +31,7 @@ $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         <h1><a href="<?= $ROOT ?>Page_accueil/Page_accueil.php" title="Accueil" style="text-decoration: none;">Projet Maison Économe</a></h1>
 
         <div class="header-left">
-            <img src="<?= $ROOT ?>images/logo.webp" alt="logo" class="logo">
+            <img src="<?= $ROOT ?>common/images/logo.webp" alt="logo" class="logo">
         </div>
 
         <div class="header-right">
@@ -47,3 +49,4 @@ $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
         </div>
 
     </header>
+    <div class="vantatopologymin" id="vantatopologymin_1"></div>

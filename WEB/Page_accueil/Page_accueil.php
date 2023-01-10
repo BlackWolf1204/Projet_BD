@@ -46,19 +46,8 @@
             align-items: center;
             justify-content: center;
         }
-
-        .vantatopologymin {
-            height: 77px;
-            position: initial !important;
-        }
-        .vanta-canvas {
-            position: unset !important;
-        }
     </style>
-    <script src="p5.min.js"></script>
-    <script src="vanta.topology.min.js"></script>
-
-    <div class="vantatopologymin" id="vantatopologymin_1"></div>
+    
     <div class="body-right">
         <h2>BIENVENUE SUR NOTRE SITE</h2>
         
@@ -69,25 +58,7 @@
         <a href="../proprietes/ajoutPropriete/ajoutPropriete.php" class="bouton">Ajouter une propriété</a>
         <!-- <a href="statistiques.php" class="bouton">Statistiques</a>  seulement pour admins -->
     </div>
-    <!-- fin du corps de la page -->
-    <!-- juste en dessous du body on ajoute le script pour l'effet d'image dynamique de fond -->
-    <div class="vantatopologymin" id="vantatopologymin_2"></div>
-
-    <script>
-        // Ajout de l'effet d'image dynamique de fond
-        vantaConfig = {
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 77.00,
-            minWidth: 100.00,
-            scale: 1.00,
-            scaleMobile: 1.00
-        }
-        VANTA.TOPOLOGY({ ...vantaConfig, el: "#vantatopologymin_1" });
-        VANTA.TOPOLOGY({ ...vantaConfig, el: "#vantatopologymin_2" });
-    </script>       
-
+    
 <?php require "../common/footer.php"; ?>
 
 </html><!-- fin de la page -->
