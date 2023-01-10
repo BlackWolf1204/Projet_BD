@@ -95,7 +95,7 @@
             $libTypeRessource = iconv('ISO-8859-1', 'UTF-8', $ligne2['libTypeRessource']);
             echo "<tr>
                     <td>$libTypeRessource</td>
-                    <td>".round($somme,3)." k..../h</td>
+                    <td>".round($somme,3)." kW</td>
                     <td>{$ligne2['valIdealeConsoAppart']}</td>
                     <td>{$ligne2['valCritiqueConsoAppart']}</td>";
 
