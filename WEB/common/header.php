@@ -12,17 +12,6 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
     $url = 'http';
 }
 $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-if (isset($_SESSION['Id'])) {
-    $co_deco = "Deconnexion";
-    $url_co_deco = "{$ROOT}Page_accueil/deconnexion.php";
-    $sign_gerer = "Gérer compte";
-    $url_sign_gerer = "{$ROOT}Page_accueil/gestion_compte.php";
-} else {
-    $co_deco = "Se connecter";
-    $url_co_deco = "{$ROOT}Page_accueil/connexion.php";
-    $sign_gerer = "S'inscrire";
-    $url_sign_gerer = "{$ROOT}Page_accueil/inscription.php";
-}
 ?>
 
 <meta charset="utf-8">
@@ -44,11 +33,14 @@ if (isset($_SESSION['Id'])) {
         </div>
 
         <div class="header-right">
-            <a id="signup" href=<?php echo $url_co_deco; ?>><?php echo $co_deco; ?></a>
-            <a id="login" href=<?php echo $url_sign_gerer; ?>><?php echo $sign_gerer; ?></a>
             <?php
             if (!isset($_SESSION['Id'])) {
+                echo "<a id=\"signup\" href=\"{$ROOT}Page_accueil/inscription.php\">S'inscrire</a>";
+                echo "<a id=\"login\" href=\"{$ROOT}Page_accueil/connexion.php\">Se connecter</a>";
                 echo "<a id=\"login_admin\" href=\"{$ROOT}Page_accueil/connexion_administrateur.php\">Se connecter en tant qu'administrateur</a>";
+            } else {
+                echo "<a id=\"logout\" href=\"{$ROOT}Page_accueil/deconnexion.php\">Se déconnecter</a>";
+                echo "<a id=\"manage_account\" href=\"{$ROOT}Page_accueil/gestion_compte.php\">Gérer son compte</a>";
             }
             ?>
         </div>

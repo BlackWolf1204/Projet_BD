@@ -5,7 +5,6 @@
 <?php
 $ROOT="../";
 include("../common/main.php");
-session_start();//On démarre la session
 
 
 if(isset($_POST['connexion']))
