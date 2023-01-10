@@ -18,13 +18,13 @@ require_once("../common/main.php");
     <a href="../Page_accueil/Page_accueil.php">Retour</a>
 
     <table>
-        <tbody>
+        <thead>
             <tr>
                 <td>Immeuble</td>
                 <td colspan = "2">Adresse (+nom)</td>
                 <td>Isolation</td>
                 <td colspan = "2">Date acquisition de la propriété</td>
-                <td rowspan = "3">Modifier</td>
+                <td rowspan = "3">Modifications</td>
             </tr>
             <tr>
                 <td>Numéro appartement</td>
@@ -40,13 +40,13 @@ require_once("../common/main.php");
                 <td>Type appartement/maison</td>
                 <td>Pièce(s)</td>
             </tr>
-        </tbody>
+        </thead>
     </table>
 
     <?php
     
     // requete pour la base
-    $req = 'SELECT numeroRue, nomRue, codePostal, ville, degreIsolation, nomPropriete , idPropriete, dateDebutProp
+    $req = 'SELECT numeroRue, nomRue, codePostal, ville, degreIsolation, nomPropriete , idPropriete, DATE(dateDebutProp) AS dateDProp
             FROM Propriete NATURAL JOIN Proprietaire';   //restreindre aux propriétés de l'utilisateur
 
     // exécution de la requête
@@ -85,10 +85,10 @@ require_once("../common/main.php");
         else echo "Immeuble";
         echo "  </th>
                 <th colspan = \"2\">".$ligne['numeroRue']." ".$ligne['nomRue']." ".$ligne['codePostal']." ".$ligne['ville'];
-        if ($ligne['nomPropriete'] != NULL) echo "({$ligne['nomPropriete']})";
+        if ($ligne['nomPropriete'] != NULL) echo " ({$ligne['nomPropriete']})";
         echo "  </th>
                 <th>{$ligne['degreIsolation']}</th>
-                <th>{$ligne['dateDebutProp']}</th>
+                <th>{$ligne['dateDProp']}</th>
                 <th rowspan = \"$nbAppart\"><a href='{$ROOT}proprietes/ajoutPropriete/ajoutPropriete.php'>Modifier<a></th>
             </tr>";   //changer Modification pour garder en memoire l'id de la propriété a modifier
         
@@ -98,7 +98,7 @@ require_once("../common/main.php");
                     <td>{$ligne2['nomSecurite']}</td>";
 
             // requete pour la base
-            $req3 = "SELECT datedebutloc, nom, prenom
+            $req3 = "SELECT DATE(datedebutloc) AS dateDLoc, nom, prenom
             FROM (Locataire NATURAL JOIN Utilisateur) NATURAL JOIN InfoPersonne
             WHERE idAppartement = {$ligne2['idAppartement']} AND dateFinLoc IS NULL";
 
@@ -119,7 +119,7 @@ require_once("../common/main.php");
 
             if ($nbLocataire == 1) {
                 foreach ($data3 as $ligne3) {
-                    echo "<td>{$ligne3['prenom']} {$ligne3['nom']} ({$ligne3['datedebutloc']})</td>";
+                    echo "<td>{$ligne3['prenom']} {$ligne3['nom']} ({$ligne3['dateDLoc']})</td>";
                 }
             }
             else if ($nbLocataire == 0) {
