@@ -83,6 +83,41 @@ button, .header-right > a {
   cursor: pointer; /* Change le curseur lorsque la souris passe sur le bouton */
 }
 
+table {
+  margin-top: 20px;
+  table-layout: auto;
+  width: 98%;
+  border-collapse: collapse;
+  border: solid green 4px;
+  text-align: center;
+}
+
+table thead *{
+  font-weight: bold;
+  padding: 10px;
+  font-size: 18pt;
+}
+
+table tr:not(.titre):nth-child(even) {
+  background: lightsteelblue;
+}
+
+table .titre {
+  font-weight: bold;
+  background: lightgreen;
+}
+
+table td:not(.ignore) {
+  border: solid green 1px;
+  padding: 5px;
+}
+
+.appart {
+  border: double #3dc7ab 5px;
+  margin: 7px;
+  padding: 5px;
+}
+
 /* Styles pour les boutons au survol de la souris */
 .bouton:hover, .header-right > a:hover {
   background-color: #3dc7ab;

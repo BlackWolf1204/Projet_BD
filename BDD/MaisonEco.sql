@@ -19,7 +19,7 @@ CREATE TABLE InfoPersonne(
    prenom VARCHAR(50) ,
    PRIMARY KEY(idPersonne),
    UNIQUE(mail)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Administrateur(
    idPersonne INT,
@@ -27,7 +27,7 @@ CREATE TABLE Administrateur(
    mdp VARCHAR(50) ,
    PRIMARY KEY(idPersonne),
    FOREIGN KEY(idPersonne) REFERENCES InfoPersonne(idPersonne)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Propriete(
    idPropriete INT AUTO_INCREMENT,
@@ -38,32 +38,33 @@ CREATE TABLE Propriete(
    nomPropriete VARCHAR(50) ,
    degreIsolation CHAR(1) ,
    PRIMARY KEY(idPropriete)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE TypeAppartement(
    typeAppart INT,
    libTypeAppart VARCHAR(50) ,
    nbPieces INT,
    PRIMARY KEY(typeAppart)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE TypePiece(
    typePiece INT,
    libTypePiece VARCHAR(50) ,
    PRIMARY KEY(typePiece)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE TypeSecurite(
    degreSecurite INT,
    nomSecurite VARCHAR(50) ,
    PRIMARY KEY(degreSecurite)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE TypeAppareil(
    idTypeAppareil INT AUTO_INCREMENT,
    libTypeAppareil VARCHAR(50) ,
+   VideoEconomie VARCHAR(150) ,
    PRIMARY KEY(idTypeAppareil)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE TypeRessource(
    typeRessource INT AUTO_INCREMENT,
@@ -72,7 +73,7 @@ CREATE TABLE TypeRessource(
    valIdealeConsoAppart FLOAT,
    description VARCHAR(50) ,
    PRIMARY KEY(typeRessource)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE TypeSubstance(
    typeSubstance INT AUTO_INCREMENT,
@@ -81,7 +82,7 @@ CREATE TABLE TypeSubstance(
    valIdealeProdAppart FLOAT,
    description VARCHAR(50) ,
    PRIMARY KEY(typeSubstance)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Utilisateur(
    idPersonne INT,
@@ -89,7 +90,7 @@ CREATE TABLE Utilisateur(
    mdp VARCHAR(50) ,
    PRIMARY KEY(idPersonne),
    FOREIGN KEY(idPersonne) REFERENCES InfoPersonne(idPersonne)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Appartement(
    idAppartement INT AUTO_INCREMENT,
@@ -101,7 +102,7 @@ CREATE TABLE Appartement(
    FOREIGN KEY(degreSecurite) REFERENCES TypeSecurite(degreSecurite),
    FOREIGN KEY(typeAppart) REFERENCES TypeAppartement(typeAppart),
    FOREIGN KEY(idPropriete) REFERENCES Propriete(idPropriete)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Piece(
    idPiece INT AUTO_INCREMENT,
@@ -110,7 +111,7 @@ CREATE TABLE Piece(
    PRIMARY KEY(idPiece),
    FOREIGN KEY(typePiece) REFERENCES TypePiece(typePiece),
    FOREIGN KEY(idAppartement) REFERENCES Appartement(idAppartement)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Appareil(
    idAppareil INT AUTO_INCREMENT,
@@ -121,7 +122,7 @@ CREATE TABLE Appareil(
    PRIMARY KEY(idAppareil),
    FOREIGN KEY(idTypeAppareil) REFERENCES TypeAppareil(idTypeAppareil),
    FOREIGN KEY(idPiece) REFERENCES Piece(idPiece)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE HistoriqueConsommation(
    idConsommation INT AUTO_INCREMENT,
@@ -130,7 +131,7 @@ CREATE TABLE HistoriqueConsommation(
    idAppareil INT NOT NULL,
    PRIMARY KEY(idConsommation),
    FOREIGN KEY(idAppareil) REFERENCES Appareil(idAppareil)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Consommer(
    idTypeAppareil INT,
@@ -141,7 +142,7 @@ CREATE TABLE Consommer(
    PRIMARY KEY(idTypeAppareil, typeRessource),
    FOREIGN KEY(idTypeAppareil) REFERENCES TypeAppareil(idTypeAppareil),
    FOREIGN KEY(typeRessource) REFERENCES TypeRessource(typeRessource)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Produire(
    idTypeAppareil INT,
@@ -152,7 +153,7 @@ CREATE TABLE Produire(
    PRIMARY KEY(idTypeAppareil, typeSubstance),
    FOREIGN KEY(idTypeAppareil) REFERENCES TypeAppareil(idTypeAppareil),
    FOREIGN KEY(typeSubstance) REFERENCES TypeSubstance(typeSubstance)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Proprietaire(
    idPropriete INT,
@@ -162,7 +163,7 @@ CREATE TABLE Proprietaire(
    PRIMARY KEY(idPropriete, datedebutprop),
    FOREIGN KEY(idPropriete) REFERENCES Propriete(idPropriete),
    FOREIGN KEY(idPersonne) REFERENCES Utilisateur(idPersonne)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Locataire(
    idAppartement INT,
@@ -172,4 +173,4 @@ CREATE TABLE Locataire(
    PRIMARY KEY(idAppartement, datedebutloc),
    FOREIGN KEY(idAppartement) REFERENCES Appartement(idAppartement),
    FOREIGN KEY(idPersonne) REFERENCES Utilisateur(idPersonne)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

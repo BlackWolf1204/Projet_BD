@@ -52,16 +52,14 @@
         die("Problème d'exécution de la requête \n");
 
         echo "<table>
-                <thead>
-                    <tr>
-                        <th>Ressource</th>
-                        <th>Votre consommation par jour</th>
-                        <th>Consommation idéale par jour</th>
-                        <th>Consommation critique par jour</th>
-                        <th>Avis</th>
-                    </tr>
-                </thead>
-                <tbody>";
+                <tbody>
+                    <tr class=\"titre\">
+                        <td>Ressource</td>
+                        <td>Votre consommation par jour</td>
+                        <td>Consommation idéale par jour</td>
+                        <td>Consommation critique par jour</td>
+                        <td>Avis</td>
+                    </tr>";
 
         foreach ($data2 as $ligne2) {
             $req3 = "SELECT DAY(dateOff) AS dayOff, HOUR(TIME(dateOff)) AS hourOff, DAY(dateOn) AS dayOn, HOUR(TIME(dateOn)) AS hourOn
@@ -96,14 +94,14 @@
             }
             $libTypeRessource = iconv('ISO-8859-1', 'UTF-8', $ligne2['libTypeRessource']);
             echo "<tr>
-                    <th>$libTypeRessource</th>
-                    <th>".round($somme,3)." k..../h</th>
-                    <th>{$ligne2['valIdealeConsoAppart']}</th>
-                    <th>{$ligne2['valCritiqueConsoAppart']}</th>";
+                    <td>$libTypeRessource</td>
+                    <td>".round($somme,3)." k..../h</td>
+                    <td>{$ligne2['valIdealeConsoAppart']}</td>
+                    <td>{$ligne2['valCritiqueConsoAppart']}</td>";
 
-            if ($ligne2['valIdealeConsoAppart']+5 >= $somme) echo "<th class=\"vert\">C'est très bien!</th>";
-            else if ($ligne2['valCritiqueConsoAppart']-5 > $somme) echo "<th class=\"orange\">C'est moyen</th>";
-            else echo "<th class=\"rouge\">C mauvais!</th>";
+            if ($ligne2['valIdealeConsoAppart']+5 >= $somme) echo "<td class=\"vert\">C'est très bien!</td>";
+            else if ($ligne2['valCritiqueConsoAppart']-5 > $somme) echo "<td class=\"orange\">C'est moyen</td>";
+            else echo "<td class=\"rouge\">C mauvais!</td>";
             echo "</tr>";
         }
         echo "</tbody>
@@ -125,16 +123,14 @@
         die("Problème d'exécution de la requête \n");
 
         echo "<table>
-                <thead>
-                    <tr>
-                        <th>Substance(s) nocive(s)</th>
-                        <th>Votre production par jour</th>
-                        <th>Produciton idéale par jour</th>
-                        <th>Production critique par jour</th>
-                        <th>Avis</th>
-                    </tr>
-                </thead>
-                <tbody>";
+                <tbody>
+                    <tr class=\"titre\">
+                        <td>Substance(s) nocive(s)</td>
+                        <td>Votre production par jour</td>
+                        <td>Produciton idéale par jour</td>
+                        <td>Production critique par jour</td>
+                        <td>Avis</td>
+                    </tr>";
 
         foreach ($data2 as $ligne2) {
             $req3 = "SELECT DAY(dateOff) AS dayOff, HOUR(TIME(dateOff)) AS hourOff, DAY(dateOn) AS dayOn, HOUR(TIME(dateOn)) AS hourOn
@@ -168,14 +164,14 @@
                 $somme = $somme/((int)$ligne['dayDebutCurrent']*24);
             }
             echo "<tr>
-                    <th>{$ligne2['libTypeRessource']}</th>
-                    <th>".round($somme,3)." k..../j</th>
-                    <th>{$ligne2['valIdealeConsoAppart']}</th>
-                    <th>{$ligne2['valCritiqueConsoAppart']}</th>";
+                    <td>{$ligne2['libTypeRessource']}</td>
+                    <td>".round($somme,3)." k..../j</td>
+                    <td>{$ligne2['valIdealeConsoAppart']}</td>
+                    <td>{$ligne2['valCritiqueConsoAppart']}</td>";
 
-            if ($ligne2['valIdealeProdAppart']+5 >= $somme) echo "<th class=\"vert\">C'est très bien!</th>";
-            else if ($ligne2['valCritiqueProdAppart']-5 > $somme) echo "<th class=\"orange\">C'est moyen</th>";
-            else echo "<th class=\"rouge\">C mauvais!</th>";
+            if ($ligne2['valIdealeProdAppart']+5 >= $somme) echo "<td class=\"vert\">C'est très bien!</td>";
+            else if ($ligne2['valCritiqueProdAppart']-5 > $somme) echo "<td class=\"orange\">C'est moyen</td>";
+            else echo "<td class=\"rouge\">C mauvais!</td>";
             echo "</tr>";
         }
         echo "</tbody>

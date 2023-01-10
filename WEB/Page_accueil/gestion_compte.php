@@ -1,6 +1,6 @@
 
 <!-- Page de gestion de compte -->
-<!--Notes du 23/12/2022 : Page partiellement fonctionnelle-->
+
 
 <?php
 
@@ -10,7 +10,9 @@ session_start();//On démarre la session
 // On se connecte à la base de données
 $bdd = new PDO('mysql:host=127.0.0.1;dbname=MaisonEco;charset=utf8', 'root', '');
 
+
 if(isset($_SESSION['Id']) AND !empty($_SESSION['Id']))
+
 {
     $getid = intval($_SESSION['Id']);
     $requser = $bdd->prepare('SELECT * FROM InfoPersonne WHERE idPersonne = ?');

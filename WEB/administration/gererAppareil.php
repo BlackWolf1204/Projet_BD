@@ -32,18 +32,16 @@ require_once("../common/main.php");
     die("Problème d'exécution de la requête \n");
     
     echo "<table>
-            <thead>
-                <tr>
-                    <th>Status</th>
-                    <th>Appareil</th>
-                    <th>Type appareil</th>
-                    <th>Ressource(s)/Substance(s) concernée(s)</th>
-                    <th>Consommation/Production par heure</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>";
-            
+            <tbody>
+                <tr class=\"titre\">
+                    <td>Status</td>
+                    <td>Appareil</td>
+                    <td>Type appareil</td>
+                    <td>Ressource(s)/Substance(s) concernée(s)</td>
+                    <td>Consommation/Production par heure</td>
+                    <td></td>
+                </tr>";
+
     foreach ($data as $ligne) {
         // requete pour la base : ressources consommées
         $req2 = "SELECT libTypeRessource, quantiteAllume
@@ -74,34 +72,48 @@ require_once("../common/main.php");
 
         foreach ($nbPL as $nbPLignes) {
                 foreach ($nbCL as $nbCLignes) {
-                        $nb = (int)$nbPLignes['nbP']+(int)$nbCLignes['nbC']+1;
+                        $nb = (int)$nbPLignes['nbP']+(int)$nbCLignes['nbC'];
                 }
         }
-        $nomAppareil = iconv('ISO-8859-1', 'UTF-8', $ligne['nomAppareil']);
-        $libTypeAppareil = iconv('ISO-8859-1', 'UTF-8', $ligne['libTypeAppareil']);
-        echo "<tr>
-                <th rowspan = $nb>ON/OFF</th>
-                <th rowspan = $nb>$nomAppareil</th>
-                <th rowspan = $nb>$libTypeAppareil</th>
-                <th></th>
-                <th></th>
-                <th rowspan = $nb><a href='../Page_accueil/Page_accueil.php'>Modification</a></th>
-              </tr>";   //changer Modification pour garder en memoire l'id de l'appareil a modifier
         
+        $numeroLigne = 0;
+              
         foreach ($data2 as $ligne2) {
+                $nomAppareil = iconv('ISO-8859-1', 'UTF-8', $ligne['nomAppareil']);
+                $libTypeAppareil = iconv('ISO-8859-1', 'UTF-8', $ligne['libTypeAppareil']);
+                echo "<tr>";
+                if ($numeroLigne == 0) {
+                        echo "<td rowspan = $nb>ON/OFF</td>
+                        <td rowspan = $nb>$nomAppareil</td>
+                        <td rowspan = $nb>$libTypeAppareil</td>";
+                }
                 $libTypeRessource = iconv('ISO-8859-1', 'UTF-8', $ligne2['libTypeRessource']);
-                echo "<tr>
-                        <th>$libTypeRessource</th>
-                        <th>{$ligne2['quantiteAllume']} kW</th>
-                      </tr>";       
+                echo "<td>$libTypeRessource</td>
+                        <td>{$ligne2['quantiteAllume']} k../h</td>";
+                if ($numeroLigne == 0) {
+                        echo "<td rowspan = $nb><a href='../Page_accueil/Page_accueil.php'>Modification</a></td>";   //changer Modification pour garder en memoire l'id de l'appareil a modifier
+                } 
+                echo "</tr>";
+                $numeroLigne++;
         }
 
         foreach ($data3 as $ligne3) {
+                $nomAppareil = iconv('ISO-8859-1', 'UTF-8', $ligne['nomAppareil']);
+                $libTypeAppareil = iconv('ISO-8859-1', 'UTF-8', $ligne['libTypeAppareil']);
+                echo "<tr>";
+                if ($numeroLigne == 0) {
+                        echo "<td rowspan = $nb>ON/OFF</td>
+                        <td rowspan = $nb>$nomAppareil</td>
+                        <td rowspan = $nb>$libTypeAppareil</td>";
+                }
                 $libTypeSubstance = iconv('ISO-8859-1', 'UTF-8', $ligne3['libTypeSubstance']);
-                echo "<tr>
-                        <th>$libTypeSubstance</th>
-                        <th>{$ligne3['quantiteAllume']} kW</th>
-                      </tr>";       
+                echo "<td>$libTypeSubstance</td>
+                        <td>{$ligne3['quantiteAllume']} k../h</td>"; 
+                if ($numeroLigne == 0) {
+                        echo "<td rowspan = $nb><a href='../Page_accueil/Page_accueil.php'>Modification</a></td>";   //changer Modification pour garder en memoire l'id de l'appareil a modifier
+                }
+                echo "</tr>";
+                $numeroLigne++; 
         }
     }
     echo "</tbody>
