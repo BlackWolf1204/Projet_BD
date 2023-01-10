@@ -20,8 +20,15 @@
       $Mail = htmlspecialchars($_POST['Mail']);
       $NumTel = htmlspecialchars($_POST['NumTel']);
 
+     if(!preg_match("#[0][6][- \.?]?([0-9][0-9][- \.?]?){4}$#", $NumTel)) 
+     {
+      $erreur = "Le numéro du portable est faux : $NumTel";
+     }
+
       // on veut maintenant vérifier que la taillé est >8
+
       $Mdp = htmlspecialchars($_POST['Mdp']);
+
       if(strlen($Mdp) <= 8)
       {
         $erreur = "Votre mot de passe doit contenir au moins 8 caractères !";
