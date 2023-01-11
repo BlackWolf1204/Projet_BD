@@ -145,6 +145,7 @@
 
           </head>
           <body>
+          <a href="../Page_accueil/Page_accueil.php">Retour</a>
               <!-- Ajout d'un "style de fond" -->
               <div style="background-image: url('https://www.example.com/image.jpg'); background-size: cover; height: 100vh;">
               <div class="container mt-5"> <!-- container c'est pour le centrage -->

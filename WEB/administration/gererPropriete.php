@@ -16,7 +16,6 @@ require_once("../common/main.php");
     <h2>Votre/Vos propriété(s)</h2>
 
     <a href="../Page_accueil/Page_accueil.php">Retour</a>
-    <div class="appart">
     <table>
         <tbody>
             <tr class="titre">
@@ -168,7 +167,6 @@ require_once("../common/main.php");
             </table>";
     }
     ?>
-    </div>
     
     </tbody>
     </table>
