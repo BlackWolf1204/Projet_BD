@@ -1,3 +1,4 @@
+</div> <!-- fin de la div .body -->
 <footer style="background-color: gray;">
 	<div class="vantatopologymin" id="vantatopologymin_2"></div>
 	<div class="footer"><!-- début de la classe footer -->

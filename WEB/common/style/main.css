@@ -13,6 +13,10 @@ body
   flex-direction: column;
 }
 
+.body {
+  padding: 1em;  
+}
+
 header {
   position: relative;
   min-height: fit-content;

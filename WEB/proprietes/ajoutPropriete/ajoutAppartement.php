@@ -3,7 +3,7 @@ $ROOT = '../../';
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
 	<title>Ajouter un appartement</title>
@@ -86,7 +86,7 @@ $ROOT = '../../';
 
 				<div id="degreSecurite_<?= $i ?>">
 					<label for="degreSecurite_<?= $i ?>">Degré de sécurité</label>
-					<select name="degreSecurite_<?= $i ?>">
+					<select name="degreSecurite_<?= $i ?>" title="Degré de sécurité du logement">
 						<?php
 						$default = 2;
 						foreach ($TypeSecurite as $TypeSec) {
@@ -99,7 +99,7 @@ $ROOT = '../../';
 
 				<div id="typeAppartement_<?= $i ?>">
 					<label for="typeAppartement_<?= $i ?>">Type de logement</label>
-					<select name="typeAppartement_<?= $i ?>">
+					<select name="typeAppartement_<?= $i ?>" title="Type et taille du logement">
 						<?php
 						foreach ($TypeAppartement as $TypeAppart) {
 							echo "<option value='" . $TypeAppart['typeAppart'] . "'>" . $TypeAppart['libTypeAppart'] . "</option>";

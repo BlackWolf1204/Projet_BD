@@ -50,3 +50,4 @@ $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
     </header>
     <div class="vantatopologymin" id="vantatopologymin_1"></div>
+    <div class="body">

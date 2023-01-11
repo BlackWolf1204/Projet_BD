@@ -3,7 +3,7 @@ $ROOT = '../../';
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
 	<title>Ajouter les pièces</title>
@@ -55,6 +55,16 @@ $ROOT = '../../';
 		$appartement['degreSecurite'] = $_POST["degreSecurite_$i"];
 		$appartement['typeAppart'] = trouveTypeAppartement($typeAppartements, $_POST["typeAppartement_$i"]);
 		$appartements[] = $appartement;
+	}
+
+	// Vérifier qu'aucun numéro d'appartement n'est en double
+	$numsAppartements = array();
+	foreach ($appartements as $appartement) {
+		$numsAppartements[] = $appartement['numAppartement'];
+	}
+	if (count($numsAppartements) != count(array_unique($numsAppartements))) {
+		echo "<p>Vous avez entré plusieurs fois le même numéro d'appartement.</p>";
+		exit();
 	}
 
 	$nbPieces = 0;

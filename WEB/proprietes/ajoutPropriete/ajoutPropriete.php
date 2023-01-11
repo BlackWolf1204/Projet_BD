@@ -3,10 +3,10 @@ $ROOT = '../../';
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
-	<title>Ajouter un immeuble</title>
+	<title>Ajouter une propriété</title>
 
 	<script>
 		function sendRequest(params, callback) {
@@ -64,26 +64,26 @@ $ROOT = '../../';
 		<!-- radio box : maison ou immeuble -->
 		<div id="type">
 			<label for="type">Type</label>
-			<span onclick="this.querySelector('input').click()"><input type="radio" name="type" value="maison" checked oninput="choixImmeuble(false)">Maison</span>
-			<span onclick="this.querySelector('input').click()"><input type="radio" name="type" value="immeuble" oninput="choixImmeuble(true)">Immeuble</span>
+			<span onclick="this.querySelector('input').click()"><input type="radio" name="type" value="maison" title="La propriété est une maison" checked oninput="choixImmeuble(false)">Maison</span>
+			<span onclick="this.querySelector('input').click()"><input type="radio" name="type" value="immeuble" title="La propriété est un immeuble" oninput="choixImmeuble(true)">Immeuble</span>
 		</div>
 
 		<!-- nombre d'appartements -->
 		<div id="nbAppartements" style="display: none;">
 			<label for="nbAppartements">Nombre d'appartements</label>
-			<input type="number" name="nbAppartements" min="1" max="100" value="1">
+			<input type="number" name="nbAppartements" min="1" max="100" value="1" title="Nombre d'appartements à enregistrer dans l'immeuble">
 		</div>
 
 		<!-- addresse : numéro, rue, code postal, ville -->
 		<div id="adresse">
 			<label for="numéroRue">Numéro de rue</label>
-			<input type="text" name="numéroRue" placeholder="123">
+			<input type="text" name="numéroRue" placeholder="123" title="Numéro de rue">
 			<label for="nomRue">Nom de rue</label>
-			<input type="text" name="nomRue" placeholder="Rue de la paix">
+			<input type="text" name="nomRue" placeholder="Rue de la paix" title="Nom de rue">
 			<label for="codePostal">Code postal</label>
-			<input type="text" name="codePostal" placeholder="12345" id="codePostal" onchange="chercherVilleParCodePostal()">
+			<input type="text" name="codePostal" placeholder="12345" id="codePostal" onchange="chercherVilleParCodePostal()" title="Code postal">
 			<label for="ville">Ville</label>
-			<input type="text" name="ville" placeholder="Paris" id="ville" onchange="chercherCodePostalParVille()">
+			<input type="text" name="ville" placeholder="Paris" id="ville" onchange="chercherCodePostalParVille()" title="Ville">
 		</div>
 
 		<!-- nom de la propriete et degré d'isolation -->
@@ -91,7 +91,7 @@ $ROOT = '../../';
 			<label for="nomPropriete">Nom de la propriété</label>
 			<input type="text" name="nomPropriete" placeholder="Propriété 1">
 			<label for="degreIsolation">Degré d'isolation</label>
-			<select name="degreIsolation">
+			<select name="degreIsolation" title="Le degré d'isolation sur une échelle de A à F">
 				<option value="A">A</option>
 				<option value="B">B</option>
 				<option value="C">C</option>
