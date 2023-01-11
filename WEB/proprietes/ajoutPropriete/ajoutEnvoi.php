@@ -2,6 +2,7 @@
 $ROOT = "../../";
 require_once("{$ROOT}common/main.php");
 require_once("{$ROOT}common/fonctions.php");
+require_once("{$ROOT}common/verif_est_connecte.php");
 
 // Données du POST :
 // type, nbAppartements,
@@ -11,6 +12,16 @@ require_once("{$ROOT}common/fonctions.php");
 // 		numAppartement_i, degreSecurite_i, typeAppartement_i
 //      pour chaque pièces :
 //      numPiece_i_j, typePiece_i_j
+
+if (
+	!isset($_POST['type']) || !isset($_POST['nbAppartements'])
+	|| !isset($_POST['numéroRue']) || !isset($_POST['nomRue']) || !isset($_POST['codePostal']) || !isset($_POST['ville']) || !isset($_POST['nomPropriete'])
+	|| !isset($_POST['degreIsolation'])
+	|| !isset($_POST['numAppartement_1']) || !isset($_POST['degreSecurite_1']) || !isset($_POST['typeAppartement_1'])
+	|| !isset($_POST['numPiece_1_1']) || !isset($_POST['typePiece_1_1'])
+) {
+	die("Erreur : données non valides.");
+}
 
 $propriete = proprieteFromPost(); // adresse...
 $type = $_POST['type'];

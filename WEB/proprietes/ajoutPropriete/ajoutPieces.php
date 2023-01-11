@@ -17,6 +17,7 @@ $ROOT = '../../';
 	</style>
 
 	<?php require("{$ROOT}common/header.php") ?>
+	<?php require("{$ROOT}common/verif_est_connecte.php") ?>
 
 	<?php
 	if (empty($_POST)) {
