@@ -103,7 +103,7 @@ else
 {
     $msg = "Votre Compte a bien été mis a jour !";
 
-  //  header("Location: Page_accueil.php?id=".$_SESSION['Id']);
+   header("Location: Page_accueil.php");
 }
 ?>
 

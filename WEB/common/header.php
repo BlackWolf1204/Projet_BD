@@ -19,7 +19,7 @@ $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="icon" href="<?= $ROOT ?>common/images/favicon.ico" type="image/x-icon" />
-<link rel='stylesheet' type='text/css' media='screen' href='<?= $ROOT ?>style/main.css'>
+<link rel='stylesheet' type='text/css' media='screen' href='<?= $ROOT ?>common/style/main.css'>
 <script src="<?= $ROOT ?>common/vanta/p5.min.js"></script>
 <script src="<?= $ROOT ?>common/vanta/vanta.topology.min.js"></script>
 
