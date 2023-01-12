@@ -2,10 +2,8 @@
 <!-- on ajoutera la possibilité de faire la modification de l'identifiant sur l'edition de profil ! -->
 
 <?php
-session_start();
-
-
-$bdd = new PDO('mysql:host=127.0.0.1;dbname=MaisonEco;charset=utf8', 'root', '');
+$ROOT = "../";
+require_once '../common/main.php';
 
 if(isset($_SESSION['Id']))
 {
@@ -161,17 +159,17 @@ else
                     <label>Prénom :</label>
                     <input type="text" name="newprenom" placeholder="Prénom" value="<?php echo $userinfo['prenom']; ?>" /><br /><br />
                     <label>Mail :</label>
-                    <input type="text" name="newmail" placeholder="Mail" value="<?php echo $userinfo['mail']; ?>" /><br /><br />
+                    <input type="text" name="newmail" placeholder="Mail" value="<?php echo $userinfo['mail']; ?>" autocomplete="email" /><br /><br />
                     <label>Mot de passe :</label>
-                    <input type="password" name="newmdp1" placeholder="Mot de passe"/><br /><br />
+                    <input type="password" name="newmdp1" placeholder="Mot de passe" autocomplete="new-password"/><br /><br />
                     <label>Confirmation - mot de passe :</label>
-                    <input type="password" name="newmdp2" placeholder="Confirmation du mot de passe" /><br /><br />
+                    <input type="password" name="newmdp2" placeholder="Confirmation du mot de passe" autocomplete="new-password" /><br /><br />
                     <label>Numéro de téléphone :</label>
                     <input type="text" name="newnumtel" placeholder="Numéro de téléphone" value="<?php echo $userinfo['numTel']; ?>" /><br /><br />
                     <label>Genre :</label>
                     <input type="text" name="newgenre" placeholder="Genre" value="<?php echo $userinfo['genre']; ?>" /><br /><br />
                     <label>Identifiant :</label>
-                    <input type="text" name="newidentifiant" placeholder="Identifiant" value="<?php echo $userinfo['identifiant']; ?>" /><br /><br />
+                    <input type="text" name="newidentifiant" placeholder="Identifiant" value="<?php echo $userinfo['identifiant']; ?>" disabled /><br /><br />
                     <input type="submit" value="Mettre à jour mon profil !" />
 
                 </form>

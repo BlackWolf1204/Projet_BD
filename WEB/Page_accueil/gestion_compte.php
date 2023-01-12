@@ -3,13 +3,8 @@
 
 
 <?php
-
-
-session_start();//On démarre la session
-
-// On se connecte à la base de données
-$bdd = new PDO('mysql:host=127.0.0.1;dbname=MaisonEco;charset=utf8', 'root', '');
-
+$ROOT = "../";
+require_once '../common/main.php';
 
 if(isset($_SESSION['Id']) AND !empty($_SESSION['Id']))
 
@@ -69,7 +64,6 @@ if(isset($_SESSION['Id']) AND !empty($_SESSION['Id']))
     </head>
             <body>
                 <!-- Ajout d'un "style de fond" -->
-                <div style="background-image: url('https://www.example.com/image.jpg'); background-size: cover; height: 100vh;">
                 <div class="container mt-5"> <!-- container c'est pour le centrage -->
 
                     <div class="row">
