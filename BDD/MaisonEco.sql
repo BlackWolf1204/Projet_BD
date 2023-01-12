@@ -11,33 +11,23 @@ DROP TABLE IF EXISTS InfoPersonne, Administrateur, Propriete,
 
 CREATE TABLE InfoPersonne(
    idPersonne INT AUTO_INCREMENT,
-   nom VARCHAR(50) ,
+   nom VARCHAR(50)  NOT NULL,
    dateNais DATE,
    genre CHAR(1) ,
    mail VARCHAR(50)  NOT NULL,
    numTel CHAR(10) ,
-   prenom VARCHAR(50) ,
+   prenom VARCHAR(50)  NOT NULL,
    PRIMARY KEY(idPersonne),
    UNIQUE(mail)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Administrateur(
    idPersonne INT,
-   identifiant VARCHAR(50) ,
-   mdp VARCHAR(50) ,
+   identifiant VARCHAR(50)  NOT NULL,
+   mdp VARCHAR(50)  NOT NULL,
+   dateCreation DATE NOT NULL,
    PRIMARY KEY(idPersonne),
    FOREIGN KEY(idPersonne) REFERENCES InfoPersonne(idPersonne)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE Propriete(
-   idPropriete INT AUTO_INCREMENT,
-   numeroRue INT,
-   nomRue VARCHAR(50) ,
-   codePostal INT,
-   ville VARCHAR(50) ,
-   nomPropriete VARCHAR(50) ,
-   degreIsolation CHAR(1) ,
-   PRIMARY KEY(idPropriete)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE TypeAppartement(
@@ -84,12 +74,63 @@ CREATE TABLE TypeSubstance(
    PRIMARY KEY(typeSubstance)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE Region(
+   idRegion INT,
+   nomRegion VARCHAR(50)  NOT NULL,
+   PRIMARY KEY(idRegion),
+   UNIQUE(nomRegion)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE Departement(
+   numDepartement INT,
+   nomDepartement VARCHAR(50)  NOT NULL,
+   idRegion INT NOT NULL,
+   PRIMARY KEY(numDepartement),
+   UNIQUE(nomDepartement),
+   FOREIGN KEY(idRegion) REFERENCES Region(idRegion)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE Ville(
+   idVille INT,
+   nomVille VARCHAR(50)  NOT NULL,
+   codePostal VARCHAR(5)  NOT NULL,
+   numDepartement INT NOT NULL,
+   PRIMARY KEY(idVille),
+   FOREIGN KEY(numDepartement) REFERENCES Departement(numDepartement)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE Rue(
+   idRue INT,
+   nomRue VARCHAR(50)  NOT NULL,
+   idVille INT NOT NULL,
+   PRIMARY KEY(idRue),
+   FOREIGN KEY(idVille) REFERENCES Ville(idVille)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE Adresse(
+   idAdresse INT,
+   numeroRue INT NOT NULL,
+   idRue INT NOT NULL,
+   PRIMARY KEY(idAdresse),
+   FOREIGN KEY(idRue) REFERENCES Rue(idRue)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE Utilisateur(
    idPersonne INT,
-   identifiant VARCHAR(50) ,
-   mdp VARCHAR(50) ,
+   identifiant VARCHAR(50)  NOT NULL,
+   mdp VARCHAR(50)  NOT NULL,
+   dateCreation DATE NOT NULL,
    PRIMARY KEY(idPersonne),
    FOREIGN KEY(idPersonne) REFERENCES InfoPersonne(idPersonne)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE Propriete(
+   idPropriete INT AUTO_INCREMENT,
+   nomPropriete VARCHAR(50) ,
+   degreIsolation CHAR(1) ,
+   idAdresse INT NOT NULL,
+   PRIMARY KEY(idPropriete),
+   FOREIGN KEY(idAdresse) REFERENCES Adresse(idAdresse)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Appartement(
@@ -170,6 +211,7 @@ CREATE TABLE Locataire(
    datedebutloc DATETIME,
    dateFinLoc DATETIME,
    idPersonne INT NOT NULL,
+   nbHabitants INT,
    PRIMARY KEY(idAppartement, datedebutloc),
    FOREIGN KEY(idAppartement) REFERENCES Appartement(idAppartement),
    FOREIGN KEY(idPersonne) REFERENCES Utilisateur(idPersonne)

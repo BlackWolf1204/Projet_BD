@@ -8,20 +8,45 @@ INSERT INTO InfoPersonne VALUES (4, 'LAURENT', '1999-01-01', 'M', 'Lucas22@gmail
 INSERT INTO InfoPersonne VALUES (5, 'PETIT', '1997-01-01', 'F', 'Doriane562@gmail.com', '0695847233', 'Doriane');
 INSERT INTO InfoPersonne VALUES (6, 'DUPONT', '1995-01-01', 'A', 'dpdu2222@gmail.com', '063598742', 'Dupont');
 
--- Administrateur (idPersonne, identifiant, mdp)
-INSERT INTO Administrateur VALUES (1, 'gabriel9854@gmail.com', 'd269d30513bca41eb810eb899dcbf87b6bf00f8e'); -- yRTX7pf6
-INSERT INTO Administrateur VALUES (4, 'Lucas22@gmail.com', 'adac4426a544473cd74a61a48f145cdbb38d1f07'); -- TgeiRD8v7
+-- Administrateur (idPersonne, identifiant, mdp, dateCreation)
+INSERT INTO Administrateur VALUES (1, 'gabriel9854', 'd269d30513bca41eb810eb899dcbf87b6bf00f8e', '2022-12-16'); -- yRTX7pf6
+INSERT INTO Administrateur VALUES (4, 'Lucas22', 'adac4426a544473cd74a61a48f145cdbb38d1f07', '2022-12-16'); -- TgeiRD8v7
 
 -- Utilisateur (idPersonne, login, mdp)
-INSERT INTO Utilisateur VALUES (2, 'Adam7474', '92229b4b0d3adbd8fb017a3281b382654dbe0ac1'); -- 97Edmf
-INSERT INTO Utilisateur VALUES (3, 'Alaine8', 'fe518362407a1723b8e8e14b7c4a7dbb47876ab2'); -- Ht5e9d
-INSERT INTO Utilisateur VALUES (4, 'Lucas', '63edb57989e8d3168e7c2e5f48dcd0f20b967b07'); -- zk2C8mM
-INSERT INTO Utilisateur VALUES (5, 'Doriane', '8b0a16c3fb5dc325cc51d2331f3d86bccac487ae'); -- rGh9L2m
+INSERT INTO Utilisateur VALUES (2, 'Adam7474', '92229b4b0d3adbd8fb017a3281b382654dbe0ac1', '2022-12-16'); -- 97Edmf
+INSERT INTO Utilisateur VALUES (3, 'Alaine8', 'fe518362407a1723b8e8e14b7c4a7dbb47876ab2', '2022-12-16'); -- Ht5e9d
+INSERT INTO Utilisateur VALUES (4, 'Lucas', '63edb57989e8d3168e7c2e5f48dcd0f20b967b07', '2022-12-16'); -- zk2C8mM
+INSERT INTO Utilisateur VALUES (5, 'Doriane', '8b0a16c3fb5dc325cc51d2331f3d86bccac487ae', '2022-12-16'); -- rGh9L2m
 
--- Propriété (idPropriete, numeroRue, nomRue, codePostal, ville, nom, degréIsolation)
-INSERT INTO Propriete VALUES (1, 4, 'BD de chinon', 3700, 'Tours', 'Tranquillité', 'C');
-INSERT INTO Propriete VALUES (2, 16, 'Rue Saint-Lazara', 70123, 'Paris', 'Laval', 'B');
-INSERT INTO Propriete VALUES (3, 10, 'Rue du Ressort', 63000, 'Clermont-Ferrand', 'Résidence du Parc', 'C');
+-- Région (idRegion, nomRegion)
+INSERT INTO Region VALUES (1, 'Centre-Val de Loire');
+INSERT INTO Region VALUES (2, 'Île-de-France');
+INSERT INTO Region VALUES (3, 'Auvergne-Rhône-Alpes');
+
+-- Département (numDepartement, nomDepartement, idRegion)
+INSERT INTO Departement VALUES (37, 'Indre-et-Loire', 1);
+INSERT INTO Departement VALUES (75, 'Paris', 2);
+INSERT INTO Departement VALUES (63, 'Puy-de-Dôme', 3);
+
+-- Ville (idVille, nomVille, codePostal, numDepartement)
+INSERT INTO Ville VALUES (1, 'Tours', 37200, 37);
+INSERT INTO Ville VALUES (2, 'Paris', 75000, 75);
+INSERT INTO Ville VALUES (3, 'Clermont-Ferrand', 63000, 63);
+
+-- Rue (idRue, nomRue, idVille)
+INSERT INTO Rue VALUES (1, 'BD de chinon', 1);
+INSERT INTO Rue VALUES (2, 'Rue Saint-Lazara', 2);
+INSERT INTO Rue VALUES (3, 'Rue du Ressort', 3);
+
+-- Adresse (idAdresse, numeroRue, idRue)
+INSERT INTO Adresse VALUES (1, 4, 1);
+INSERT INTO Adresse VALUES (2, 16, 2);
+INSERT INTO Adresse VALUES (3, 10, 3);
+
+-- Propriété (idPropriete, nomPropriete, degréIsolation, idAdresse)
+INSERT INTO Propriete VALUES (1, 'Tranquillité', 'C', 1);
+INSERT INTO Propriete VALUES (2, 'Laval', 'B', 2);
+INSERT INTO Propriete VALUES (3, 'Résidence du Parc', 'C', 3);
 
 -- Type sécurité (typeSécurité, libéllé)
 INSERT INTO TypeSecurite VALUES (1, 'Faible');
@@ -86,19 +111,21 @@ INSERT INTO Proprietaire VALUES (1, '2017-06-18', '2025-02-25', 3);
 INSERT INTO Proprietaire VALUES (2, '2019-09-03', '2024-09-15', 2);
 INSERT INTO Proprietaire VALUES (3, '2021-04-27', '2027-02-09', 5);
 
--- Locataire (idAppartement, datedebutloc, dateFinLoc, idPersonne)
-INSERT INTO Locataire VALUES (1, '2022-08-21', '2024-09-04', 5);
-INSERT INTO Locataire VALUES (3, '2021-02-14', '2023-02-19', 2);
-INSERT INTO Locataire VALUES (4, '2021-11-17', '2024-01-01', 4);
+-- Locataire (idAppartement, datedebutloc, dateFinLoc, idPersonne, nbHabitants)
+INSERT INTO Locataire VALUES (1, '2022-08-21', '2024-09-04', 5, 2);
+INSERT INTO Locataire VALUES (3, '2021-02-14', '2023-02-19', 2, 1);
+INSERT INTO Locataire VALUES (4, '2021-11-17', '2024-01-01', 4, 3);
+INSERT INTO Locataire VALUES (4, '2019-01-01', '2019-12-31', 2, 1);
+INSERT INTO Locataire VALUES (1, '2020-01-01', '2021-12-31', 2, 1);
 
--- TypeApparreil (idTypeAppareil, libéllé)
-INSERT INTO TypeAppareil VALUES (1, 'chauffage éléctrique');
-INSERT INTO TypeAppareil VALUES (2, 'réfrigérateur');
-INSERT INTO TypeAppareil VALUES (3, 'lampe');
-INSERT INTO TypeAppareil VALUES (4, 'aspirateur');
-INSERT INTO TypeAppareil VALUES (5, 'plaques de cuisson');
-INSERT INTO TypeAppareil VALUES (6, 'télévision');
-INSERT INTO TypeAppareil VALUES (7, 'chauffage au gaz');
+-- TypeAppareil (idTypeAppareil, libéllé, VideoEconomie)
+INSERT INTO TypeAppareil VALUES (1, 'chauffage éléctrique', 'https://youtu.be/xzFdC6Dnh3g');
+INSERT INTO TypeAppareil VALUES (2, 'réfrigérateur', 'https://youtu.be/dQw4w9WgXcQ');
+INSERT INTO TypeAppareil VALUES (3, 'lampe', 'https://youtu.be/');
+INSERT INTO TypeAppareil VALUES (4, 'aspirateur', 'https://youtu.be/');
+INSERT INTO TypeAppareil VALUES (5, 'plaques de cuisson', 'https://youtu.be/');
+INSERT INTO TypeAppareil VALUES (6, 'télévision', 'https://youtu.be/');
+INSERT INTO TypeAppareil VALUES (7, 'chauffage au gaz', 'https://youtu.be/');
 
 -- Appareil (idAppareil, nomAppareil, emplacement, idTypeAppareil, idPiece)
 INSERT INTO Appareil VALUES (1, "Chauffage cuisine", "Sous la fenêtre", 1, 2); -- chauffage éléctrique, cuisine

@@ -25,7 +25,7 @@ Son rôle est d’encourager les citoyens français à une consommation modéré
 Pour cela, CQC SA décide dans un premier temps de mettre en place une application web responsive qui permettra de suivre la consommation des citoyens en diverses ressources (Ex: Electricité, gaz, eau,...etc) et l’émission de substances nocives pour l’environnement
 (Ex: CO2).
 
-- [ ] encourager les citoyes à une consommation éco
+- [ ] encourager les citoyens à une consommation éco
 - [ ] app **responsive**
 - [ ] Suivre la conso (électricité, gaz, eau, ...)
 - [ ] Suivre l'émission de substances (CO2)
@@ -46,7 +46,7 @@ Pour cela, CQC SA décide dans un premier temps de mettre en place une applicati
   - [ ] Infos consommation et émission en substance
 - [ ] Gestion des ressources consommables et des substances
 - [ ] Stats Administateur :
-  - [ ] Histogramme hommes / femmes / autres
+  - [x] Histogramme hommes / femmes / autres
   - [ ] Nombre d'abonnés par tranches d'âge : [18;24], ]24;45], ]45;65], 65+
   - [ ] Maison la plus gourmande pour chaque ressource pour un mois donné
 		Tenir compte du nombre d'habitants
@@ -73,7 +73,7 @@ Pour cela, CQC SA décide dans un premier temps de mettre en place une applicati
 2. [x] Utilisateur peut consulter / modifier son profil
 3. [ ] Utilisateur :
    1. [x] personne physique
-   2. [ ] date création du compte
+   2. [x] date création du compte
    3. [ ] état du compte (actif / inactif)
    4. [ ] date de dernière connexion ?
 4. [ ] Identifiant unique généré pour chaque utilisateur
@@ -81,33 +81,33 @@ Pour cela, CQC SA décide dans un premier temps de mettre en place une applicati
    2. [ ] Se connecter avec le mail
 5. [ ] Âge minimum : 18 ans
 6. [x] Personne physique : Nom, prénom, date de naissance, genre, mail, identifiant, numéro de tel
-7. [ ] Adresse : numéro de maison, nom de rue, code postal, ville
-8. [ ] Degré de citoyenneté d'une maison / appoartements
-9.  [ ] Ville => département
-10. [ ] Département => région
-11. [ ] Maison = immeuble avec au moins 1 appartement
+7. [x] Adresse : numéro de maison, nom de rue, code postal, ville
+8. [ ] Degré de citoyenneté d'une maison / appartements
+9.  [x] Ville => département
+10. [x] Département => région
+11. [x] Maison = immeuble avec au moins 1 appartement
 12. [x] Appartement : différents locataires dans le temps (date début et fin)
 13. [x] Propriétaire  : plusieurs maisons, date début et fin
 14. [x] Locataire : plusieurs appartements dans la même période
 15. [x] Appartement loué à un seul utilisateur dans la même période
-16. [ ] Appartement : plusieurs habitants dans le contrat location
+16. [x] Appartement : plusieurs habitants dans le contrat location
 17. [x] Appartement : type (T1, T2, ...), degré de sécurité (fort, moyen, faible)
 18. [x] Pas besion des infos des habitants (uniquement le locataire)
-19. [ ] Maison : adresse fixe et **unique**, degré d'isolation, nom, évaluation éco-immeuble
+19. [x] Maison : adresse fixe et **unique**, degré d'isolation, nom, évaluation éco-immeuble
 20. [x] Type d'appartement par libellé et types de pièces qu'il doit contenir
 21. [x] Type de pièce libellé
-22. [ ] Pièce : décrite par un libellé et type de pièce
+22. [x] Pièce : décrite par un libellé et type de pièce
 23. [x] Appartement peut ne pas avoir toutes les pièces prévues pour son type (donc règle 20 invalidée ?), il peut en avoir plus que prévu
 
 #### Gestion de la consommation des équipements d'un appartement
 
 1. [x] Appartement : plusieurs appareils
 2. [x] Appartement : plusieurs exemplaires d'un même appareil
-3. [ ] Appareil : emplacement précis (description du lieu, **max 30 caractères**)
+3. [x] Appareil : emplacement précis (description du lieu, **max 30 caractères**, passé à 200 car pas suffisant)
 4. [x] Appareil : type d'appareil
 5. [x] Type appareil : conso au moins une ressource, émettre 0+ substances nocives
 6. [x] Appareil : libellé, description, Type appareil : conso/émission prédéfinie par heure
-7. [ ] Historique de fonctionnement
+7. [x] Historique de fonctionnement
    1. [ ] Interrupteur ON/OFF pour les appareils
    2. [ ] Confirer 1s = 1h de consommation / émission
 8. [ ] Appareil : mis en marche plusieurs fois dans la même journée
@@ -116,11 +116,11 @@ Pour cela, CQC SA décide dans un premier temps de mettre en place une applicati
 #### Gestion des ressources / substances
 
 1. [x] Ressource / substance : val min / max par jour de conso / production
-2. [ ] Ressource / substance :
+2. [x] Ressource / substance :
    1. [x] libellé, description
    2. [x] val min / max par jour de consommation / production
    3. [x] val critique de consommation / production par jour
-   4. [ ] val idéale de consommation / production par jour
+   4. [x] val idéale de consommation / production par jour
 
 ### 1.3.3 À faire
 
@@ -139,7 +139,7 @@ Pour cela, CQC SA décide dans un premier temps de mettre en place une applicati
     3.  [ ] export BDD SGBDR, script SQL...
     4.  [ ] code source du projet
 
-# 1.3.4 Fourni
+### 1.3.4 Fourni
 
 1. [ ] Projet contenant les pages pour le CRUD (non connecté à la BDD) (????)
 2. [ ] Liens vers des vidéos Youtube pour être un citoyen économe (?????)
