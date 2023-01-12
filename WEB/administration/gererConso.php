@@ -15,10 +15,10 @@
     <?php
 
     // requete pour la base
-    $req = 'SELECT idAppartement, numAppart, numeroRue, nomRue, codePostal, ville, nomPropriete,
+    $req = 'SELECT idAppartement, numAppart, numeroRue, nomRue, codePostal, nomVille, nomPropriete,
                     DATEDIFF(DATE(datefinprop),DATE(datedebutprop)) AS dayDebutFin,
                     DATEDIFF(DATE(NOW()),DATE(datedebutprop)) AS dayDebutCurrent
-    FROM Appartement NATURAL JOIN Propriete NATURAL JOIN Proprietaire';   //restreindre aux appartements de l'utilisateur
+    FROM Appartement NATURAL JOIN ProprieteAdresse NATURAL JOIN Proprietaire';   //restreindre aux appartements de l'utilisateur
 
     // exécution de la requête
     $data = $bdd->query($req);
@@ -32,10 +32,10 @@
         
         if ($ligne['numAppart'] != NULL) echo "Appartement {$ligne['numAppart']} ";
         if ($ligne['nomPropriete'] != NULL) {
-            $nomPropriete = iconv('ISO-8859-1', 'UTF-8', $ligne['nomPropriete']);
+            $nomPropriete = $ligne['nomPropriete'];
             echo "$nomPropriete ";
         }
-        echo "{$ligne['numeroRue']} {$ligne['nomRue']} {$ligne['codePostal']} {$ligne['ville']}</h3>";
+        echo "{$ligne['numeroRue']} {$ligne['nomRue']} {$ligne['codePostal']} {$ligne['nomVille']}</h3>";
 
         // requete pour la base
         $req2 = "SELECT idAppareil, libTypeRessource, valCritiqueConsoAppart, valIdealeConsoAppart, quantiteAllume, HOUR(CURRENT_TIME) AS hourCurrent
@@ -81,7 +81,7 @@
                     $somme += ($ligne3['hourOff'] - $ligne3['hourOn']);
                 }
                 else 
-                    $jour += ($ligne['dayCurrent'] - $ligne3['dayOn'])*24;
+                    $jour += ($ligne['dayDebutCurrent'] - $ligne3['dayOn'])*24;
                     $somme += ($ligne2['hourCurrent'] - $ligne3['hourOn']);
             }
     
@@ -92,7 +92,7 @@
             else {            
                 $somme = $somme/((int)$ligne['dayDebutCurrent']*24);
             }
-            $libTypeRessource = iconv('ISO-8859-1', 'UTF-8', $ligne2['libTypeRessource']);
+            $libTypeRessource = $ligne2['libTypeRessource'];
             echo "<tr>
                     <td>$libTypeRessource</td>
                     <td>".round($somme,3)." kW</td>

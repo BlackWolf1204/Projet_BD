@@ -79,15 +79,15 @@ require_once("../common/main.php");
         $numeroLigne = 0;
               
         foreach ($data2 as $ligne2) {
-                $nomAppareil = iconv('ISO-8859-1', 'UTF-8', $ligne['nomAppareil']);
-                $libTypeAppareil = iconv('ISO-8859-1', 'UTF-8', $ligne['libTypeAppareil']);
+                $nomAppareil = $ligne['nomAppareil'];
+                $libTypeAppareil = $ligne['libTypeAppareil'];
                 echo "<tr>";
                 if ($numeroLigne == 0) {
                         echo "<td rowspan = $nb>ON/OFF</td>
                         <td rowspan = $nb>$nomAppareil</td>
                         <td rowspan = $nb>$libTypeAppareil</td>";
                 }
-                $libTypeRessource = iconv('ISO-8859-1', 'UTF-8', $ligne2['libTypeRessource']);
+                $libTypeRessource = $ligne2['libTypeRessource'];
                 echo "<td>$libTypeRessource</td>
                         <td>{$ligne2['quantiteAllume']} k../h</td>";
                 if ($numeroLigne == 0) {
@@ -98,15 +98,15 @@ require_once("../common/main.php");
         }
 
         foreach ($data3 as $ligne3) {
-                $nomAppareil = iconv('ISO-8859-1', 'UTF-8', $ligne['nomAppareil']);
-                $libTypeAppareil = iconv('ISO-8859-1', 'UTF-8', $ligne['libTypeAppareil']);
+                $nomAppareil = $ligne['nomAppareil'];
+                $libTypeAppareil = $ligne['libTypeAppareil'];
                 echo "<tr>";
                 if ($numeroLigne == 0) {
                         echo "<td rowspan = $nb>ON/OFF</td>
                         <td rowspan = $nb>$nomAppareil</td>
                         <td rowspan = $nb>$libTypeAppareil</td>";
                 }
-                $libTypeSubstance = iconv('ISO-8859-1', 'UTF-8', $ligne3['libTypeSubstance']);
+                $libTypeSubstance = $ligne3['libTypeSubstance'];
                 echo "<td>$libTypeSubstance</td>
                         <td>{$ligne3['quantiteAllume']} k../h</td>"; 
                 if ($numeroLigne == 0) {

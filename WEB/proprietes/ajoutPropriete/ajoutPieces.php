@@ -90,6 +90,10 @@ $ROOT = '../../';
 		<input type="hidden" name="nomRue" value="<?= $propriete['nomRue'] ?>">
 		<input type="hidden" name="codePostal" value="<?= $propriete['codePostal'] ?>">
 		<input type="hidden" name="ville" value="<?= $propriete['ville'] ?>">
+		<input type="hidden" name="codeDepartement" value="<?= $_POST['codeDepartement'] ?>">
+		<input type="hidden" name="nomDepartement" value="<?= $_POST['nomDepartement'] ?>">
+		<input type="hidden" name="codeRegion" value="<?= $_POST['codeRegion'] ?>">
+		<input type="hidden" name="nomRegion" value="<?= $_POST['nomRegion'] ?>">
 		<input type="hidden" name="nomPropriete" value="<?= $propriete['nomPropriete'] ?>">
 		<input type="hidden" name="degreIsolation" value="<?= $_POST['degreIsolation'] ?>">
 
@@ -123,7 +127,7 @@ $ROOT = '../../';
 							<?php
 							foreach ($typePieces as $typePiece) {
 								$id = $typePiece['typePiece'];
-								$libelle = iconv('ISO-8859-1', 'UTF-8', $typePiece['libTypePiece']);
+								$libelle = $typePiece['libTypePiece'];
 								echo "<option value='$id'>$libelle</option>";
 							}
 							?>

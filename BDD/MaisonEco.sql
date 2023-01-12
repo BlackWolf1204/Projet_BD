@@ -2,6 +2,7 @@
 DROP DATABASE IF EXISTS MaisonEco;
 CREATE DATABASE IF NOT EXISTS MaisonEco;
 USE MaisonEco;
+DROP VIEW IF EXISTS ProprieteAdresse;
 DROP TABLE IF EXISTS InfoPersonne, Administrateur, Propriete,
 	TypeAppartement, TypePiece, TypeSecurite,
 	TypeAppareil, TypeRessource, TypeSubstance,
@@ -132,6 +133,16 @@ CREATE TABLE Propriete(
    PRIMARY KEY(idPropriete),
    FOREIGN KEY(idAdresse) REFERENCES Adresse(idAdresse)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Créer une vue avec la propriété et son adresse
+CREATE VIEW ProprieteAdresse AS
+SELECT Propriete.idPropriete, Propriete.nomPropriete, Propriete.degreIsolation, Adresse.numeroRue, Rue.nomRue, Ville.nomVille, Ville.codePostal, Departement.nomDepartement, Region.nomRegion
+FROM Propriete
+NATURAL JOIN Adresse
+NATURAL JOIN Rue
+NATURAL JOIN Ville
+NATURAL JOIN Departement
+NATURAL JOIN Region;
 
 CREATE TABLE Appartement(
    idAppartement INT AUTO_INCREMENT,

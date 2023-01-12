@@ -18,17 +18,17 @@ INSERT INTO Utilisateur VALUES (3, 'Alaine8', 'fe518362407a1723b8e8e14b7c4a7dbb4
 INSERT INTO Utilisateur VALUES (4, 'Lucas', '63edb57989e8d3168e7c2e5f48dcd0f20b967b07', '2022-12-16'); -- zk2C8mM
 INSERT INTO Utilisateur VALUES (5, 'Doriane', '8b0a16c3fb5dc325cc51d2331f3d86bccac487ae', '2022-12-16'); -- rGh9L2m
 
--- Région (idRegion, nomRegion)
-INSERT INTO Region VALUES (1, 'Centre-Val de Loire');
-INSERT INTO Region VALUES (2, 'Île-de-France');
-INSERT INTO Region VALUES (3, 'Auvergne-Rhône-Alpes');
+-- Région (codeRegion, nomRegion)
+INSERT INTO Region VALUES (24, 'Centre-Val de Loire');
+INSERT INTO Region VALUES (11, 'Île-de-France');
+INSERT INTO Region VALUES (84, 'Auvergne-Rhône-Alpes');
 
--- Département (numDepartement, nomDepartement, idRegion)
-INSERT INTO Departement VALUES (37, 'Indre-et-Loire', 1);
-INSERT INTO Departement VALUES (75, 'Paris', 2);
-INSERT INTO Departement VALUES (63, 'Puy-de-Dôme', 3);
+-- Département (codeDepartement, nomDepartement, codeRegion)
+INSERT INTO Departement VALUES (37, 'Indre-et-Loire', 24);
+INSERT INTO Departement VALUES (75, 'Paris', 11);
+INSERT INTO Departement VALUES (63, 'Puy-de-Dôme', 84);
 
--- Ville (idVille, nomVille, codePostal, numDepartement)
+-- Ville (idVille, nomVille, codePostal, codeDepartement)
 INSERT INTO Ville VALUES (1, 'Tours', 37200, 37);
 INSERT INTO Ville VALUES (2, 'Paris', 75000, 75);
 INSERT INTO Ville VALUES (3, 'Clermont-Ferrand', 63000, 63);
