@@ -13,8 +13,6 @@ $ROOT = '../../';
 
 	<h2>Ajouter un immeuble</h2>
 
-    <a href="../../Page_accueil/Page_accueil.php" class = "bouton-retour">Retour à l'accueil</a>
-
 	<form action="ajoutAppartement.php" method="post">
 		<!-- radio box : maison ou immeuble -->
 		<div id="type">
@@ -63,7 +61,11 @@ $ROOT = '../../';
 				<option value="F">F</option>
 			</select>
 		</div>
-		<input type="submit" value="Ajouter">
+		
+		<div class="doubleboutons">
+			<input type="submit" value="Ajouter">
+			<a href="<?= $ROOT ?>Page_accueil/Page_accueil.php" class="bouton">Retour à l'accueil</a>
+		</div>
 	</form>
 
 	<script>

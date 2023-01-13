@@ -23,6 +23,20 @@
 
         function drawChart() {
 
+            // Si l'écran est plus petit que 900px, modifier la taille du graphique
+            var width = window.innerWidth;
+            var height = window.innerHeight;
+            if (width < 900) {
+                width = width * 0.9;
+                height = height * 0.5;
+            } else {
+                width = width * 0.5;
+                height = height * 0.5;
+            }
+            var piechart = document.getElementById('piechart');
+            piechart.style.width = width + 'px';
+            piechart.style.height = height + 'px';
+
             <?php
             $req = $bdd->query("SELECT COUNT(*) FROM infoPersonne WHERE genre = 'M'");
             $nbHomme = $req ? $req->fetch()[0] : 0;
