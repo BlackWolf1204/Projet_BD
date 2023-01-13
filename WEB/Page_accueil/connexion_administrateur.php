@@ -39,7 +39,7 @@ if(isset($_POST['connexion']))
 
             $userinfo = $requser->fetch();//fetch permet de récupérer les données de la requête
 
-            $_SESSION['Id'] = $userinfo['idPersonne'];
+            $_SESSION['admin'] = $userinfo['idPersonne'];
             $_SESSION['Identifiant'] = $userinfo['identifiant'];
             $_SESSION['MotDePasse'] = $userinfo['mdp'];
 
