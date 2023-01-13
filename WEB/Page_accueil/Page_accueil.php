@@ -47,26 +47,18 @@
             justify-content: center;
         }
 
-            .welcome-header {
-            text-align: center;
-            font-size: 36px;
-            margin-top: 50px;
-            margin-bottom: 30px;
-            font-weight: bold;
-            }
+        .vantatopologymin {
+            height: 77px;
+            position: initial !important;
+        }
+        .vanta-canvas {
+            position: unset !important;
+        }
+    </style>
+    <script src="p5.min.js"></script>
+    <script src="vanta.topology.min.js"></script>
 
-            .welcome-text {
-            text-align: center;
-            font-size: 18px;
-            margin-bottom: 20px;
-            line-height: 1.5;
-            }
-
-            .welcome-bold {
-            font-weight: bold;
-            }
-    
-</style>
+    <div class="vantatopologymin" id="vantatopologymin_1"></div>
     <div class="body-right">
         
         <h2 class="welcome-header">BIENVENUE SUR NOTRE SITE</h2>
