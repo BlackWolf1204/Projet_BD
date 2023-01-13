@@ -7,6 +7,7 @@
     <title>Page statistiques</title>
 
     <?php require "../common/header.php"; ?>
+    <?php require "../common/verif_est_admin.php"; ?>
 
     <h2>Les statistiques</h2>
 

@@ -25,22 +25,9 @@ if(isset($_POST['connexion']))
             $userinfo = $requser->fetch();//fetch permet de récupérer les données de la requête
 
             $_SESSION['Id'] = $userinfo['idPersonne'];
-            $_SESSION['Mail'] = $userinfo['mail'];
-            $_SESSION['MotDePasse'] = $userinfo['mdp'];
-            $_SESSION['NumTel'] = $userinfo['numTel'];
-            $_SESSION['Genre'] = $userinfo['genre'];
-            $_SESSION['DateNaissance'] = $userinfo['dateNais'];
-            $_SESSION['Nom'] = $userinfo['nom'];
-            $_SESSION['Prenom'] = $userinfo['prenom'];
             
-            //On affiche une image de validation au premier plan (C:\xampp\htdocs\xampp\Projet_BD\Page_accueil\Validation.png)
-            
-            // on attend 2 secondes avant de rediriger
-            sleep(2);
-
-            //Si tout est bon on redirige vers la page d'accueil avec l'id de l'utilisateur vu que c'est unique
-            //Sinon pour la version finale
-            header("Location: Page_accueil.php");
+            // Redirection vers la page d'accueil dans 2 secondes
+            header("Refresh: 2; url={$ROOT}Page_accueil/Page_accueil.php");
         }
         else
         {
@@ -61,6 +48,7 @@ if(isset($_POST['connexion']))
     <meta charset="UTF-8">
     <!-- Ajout de Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="icon" href="<?= $ROOT ?>common/images/favicon.ico" type="image/x-icon" />
     
     <!-- Ajout de style personnalisé -->
     </head>
@@ -98,6 +86,10 @@ if(isset($_POST['connexion']))
                 border: none; /* Enlève la bordure du bouton */
                 cursor: pointer; /* Change le curseur lorsque la souris passe sur le bouton */
               }
+              img.validation {
+                width: 20%;
+                height: auto;
+              }
           </style>
         <body>
           <a href="../Page_accueil/Page_accueil.php">Retour</a>
@@ -106,7 +98,7 @@ if(isset($_POST['connexion']))
            
                 <div class="row">
 
-                <div class="col-sm-8 offset-sm-2"><!-- col-sm-8 offset-sm-2 c'est pour le centrage avec un espace de 2 -->
+                <div class="col-sm-8 offset-sm-2 text-center"><!-- col-sm-8 offset-sm-2 c'est pour le centrage avec un espace de 2 -->
 
                     <!-- Formulaire de connexion -->
 
@@ -130,6 +122,13 @@ if(isset($_POST['connexion']))
             if(isset($erreur)) //a mettre apres le formulaire au milieu de la page
             {
                 echo '<div align="center"><font color="red">'.$erreur."</font></div>";
+            }
+
+            if(isset($userexist))
+            {
+                echo '<div align="center"><font color="green">Vous êtes connecté !<br/>Redirection...</font></div>';
+                //On affiche une image de validation au premier plan (C:\xampp\htdocs\xampp\Projet_BD\Page_accueil\Validation.png)
+                echo "<img src='Validation.png' class='validation'/>";
             }
             ?>
           </div>

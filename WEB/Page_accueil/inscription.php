@@ -38,6 +38,7 @@ if (isset($_POST['inscription'])) {
         $Mail = htmlspecialchars($_POST['Mail']);
         $Mail2 = htmlspecialchars($_POST['Mail2']);
         $NumTel = htmlspecialchars($_POST['NumTel']);
+        $NumTel = preg_replace("#^(0[1-9]).?([0-9]{2}).?([0-9]{2}).?([0-9]{2}).?([0-9]{2})$#", "$1$2$3$4$5", $NumTel);
         $Mdp = htmlspecialchars($_POST['Mdp']);
         $Mdp2 = htmlspecialchars($_POST['Mdp2']);
     }
@@ -45,8 +46,9 @@ if (isset($_POST['inscription'])) {
     if (empty($erreur)) {
         if ($Mail != $Mail2) {
             $erreur = "Le mail ne correspond pas.";
-        } else if (!preg_match("#[0][6][- \.?]?([0-9][0-9][- \.?]?){4}$#", $NumTel)) {
-            $erreur = "Le numéro du portable est faux : $NumTel";
+        } else if (!preg_match("#^0[1-9][0-9]{8}$#", $NumTel)) {
+            // Sans espaces, tirets ou parenthèses : 0102030405
+            $erreur = "Le numéro du portable est invalide : $NumTel";
         }
         // on veut maintenant vérifier que la taillé est >8
         else if (strlen($Mdp) <= 8) {
@@ -144,7 +146,7 @@ if (isset($_POST['inscription'])) {
     <title> Page Inscription </title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
+    <link rel="icon" href="<?= $ROOT ?>common/images/favicon.ico" type="image/x-icon" />
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -366,7 +368,7 @@ if (isset($_POST['inscription'])) {
 
                         <div class="form-group col-md-6">
                             <label for="NumTel">Numéro de téléphone</label>
-                            <input type="tel" class="form-control" id="NumTel" name="NumTel" required placeholder="ex: 06 00 00 00 00" pattern="0[0-9][ \-]?[0-9]{2}[ \-]?[0-9]{2}[ \-]?[0-9]{2}[ \-]?[0-9]{2}" value="<?= $NumTel ?>">
+                            <input type="tel" class="form-control" id="NumTel" name="NumTel" required placeholder="ex: 06 00 00 00 00" pattern="0[1-9][ \-]?[0-9]{2}[ \-]?[0-9]{2}[ \-]?[0-9]{2}[ \-]?[0-9]{2}" value="<?= $NumTel ?>">
                         </div>
 
 

@@ -36,7 +36,7 @@ $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
         <div class="header-right">
             <?php
-            if (!isset($_SESSION['Id'])) {
+            if (!$estConnecte) {
                 echo "<a id=\"signup\" href=\"{$ROOT}Page_accueil/inscription.php\">S'inscrire</a>";
                 echo "<a id=\"login\" href=\"{$ROOT}Page_accueil/connexion.php\">Se connecter</a>";
                 echo "<a id=\"login_admin\" href=\"{$ROOT}Page_accueil/connexion_administrateur.php\">Se connecter en tant qu'administrateur</a>";

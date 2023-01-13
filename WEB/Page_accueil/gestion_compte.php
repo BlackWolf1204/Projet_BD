@@ -6,12 +6,11 @@
 $ROOT = "../";
 require_once '../common/main.php';
 
-if(isset($_SESSION['Id']) AND !empty($_SESSION['Id']))
+if($estConnecte)
 
 {
-    $getid = intval($_SESSION['Id']);
     $requser = $bdd->prepare('SELECT * FROM InfoPersonne WHERE idPersonne = ?');
-    $requser->execute(array($getid));
+    $requser->execute(array($sessionId));
     $userinfo = $requser->fetch();
 ?>
 
@@ -22,6 +21,7 @@ if(isset($_SESSION['Id']) AND !empty($_SESSION['Id']))
         <meta charset="UTF-8">
         <!-- Ajout de Bootstrap -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="icon" href="<?= $ROOT ?>common/images/favicon.ico" type="image/x-icon" />
         <!-- Ajout de style personnalisé -->
         <style> 
             body 
