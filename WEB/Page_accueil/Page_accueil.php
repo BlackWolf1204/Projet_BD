@@ -46,17 +46,37 @@
             align-items: center;
             justify-content: center;
         }
+
+        .vantatopologymin {
+            height: 77px;
+            position: initial !important;
+        }
+        .vanta-canvas {
+            position: unset !important;
+        }
     </style>
-    
+    <script src="p5.min.js"></script>
+    <script src="vanta.topology.min.js"></script>
+
+    <div class="vantatopologymin" id="vantatopologymin_1"></div>
     <div class="body-right">
-        <h2>BIENVENUE SUR NOTRE SITE</h2>
         
-        <p><b>De nos jours il est important de faire des économies d'énergie, ce site vous permettra de contrôler l'ensemble de vos appartements...</b></p>
-        <a href="../administration/gererConso.php" class="bouton">Regarder sa consommation/production</a>
-        <a href="../administration/gererAppareil.php" class="bouton">Gérer ses appareils</a>
-        <a href="../administration/gererPropriete.php" class="bouton">Gérer sa/ses propriété(s)</a>
-        <a href="../proprietes/ajoutPropriete/ajoutPropriete.php" class="bouton">Ajouter une propriété</a>
-        <!-- <a href="statistiques.php" class="bouton">Statistiques</a>  seulement pour admins -->
+        <h2 class="welcome-header">BIENVENUE SUR NOTRE SITE</h2>
+        <p class="welcome-text">De nos jours il est important de faire des économies d'énergie,</p>
+        <p class="welcome-text">ce site vous permettra de contrôler l'ensemble de vos appareils électriques et de voir votre consommation d'énergie, pour avoir une meilleure idée de votre consommation</p>
+
+        <!--on affiche les boutons de navigation UNIQUEMENT si l'utilisateur est connecté, on va donc vérifier si la variable de session $_SESSION['id'] existe-->
+        <?php if(isset($_SESSION['id'])) { ?>
+            <a href="../administration/gererConso.php" class="bouton">Regarder sa consommation/production</a>
+            <a href="../administration/gererAppareil.php" class="bouton">Gérer ses appareils</a>
+            <a href="../administration/gererPropriete.php" class="bouton">Gérer sa/ses propriété(s)</a>
+            <a href="../proprietes/ajoutPropriete/ajoutPropriete.php" class="bouton">Ajouter une propriété</a>
+            <!--on affciche le bouton statistiques UNIQUEMENT si l'utilisateur est un admin, on va donc vérifier si la variable de session $_SESSION['admin'] existe-->
+            <?php } ?>
+            <?php if(isset($_SESSION['admin'])) { ?>
+                <a href="../administration/statistiques.php" class="bouton">Statistiques</a>
+                <?php } ?>
+                
     </div>
     
 <?php require "../common/footer.php"; ?>

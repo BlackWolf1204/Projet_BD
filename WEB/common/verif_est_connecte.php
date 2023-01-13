@@ -1,6 +1,7 @@
 <?php
 if (!isset($_SESSION['Id']) || empty($_SESSION['Id'])) {
 	echo "<p>Vous devez être connecté pour effectuer cette action.</p>";
+	echo "<a href=\"{$ROOT}Page_accueil/Page_accueil.php\">Retour à l'accueil</a>";
 	exit();
 }
 
