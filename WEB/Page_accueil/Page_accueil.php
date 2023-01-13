@@ -56,7 +56,11 @@
         <a href="../administration/gererAppareil.php" class="bouton">Gérer ses appareils</a>
         <a href="../administration/gererPropriete.php" class="bouton">Gérer sa/ses propriété(s)</a>
         <a href="../proprietes/ajoutPropriete/ajoutPropriete.php" class="bouton">Ajouter une propriété</a>
-        <!-- <a href="statistiques.php" class="bouton">Statistiques</a>  seulement pour admins -->
+        <?php
+        if (isset($estAdmin) && $estAdmin == true) {
+            echo "<a href=\"../administration/statistiques.php\" class=\"bouton\">Statistiques</a>";
+        }
+        ?>
     </div>
     
 <?php require "../common/footer.php"; ?>

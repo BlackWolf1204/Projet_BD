@@ -15,15 +15,19 @@ require_once("../common/main.php");
 
     <h2>Vos appareils</h2>
 
-    <a href="../Page_accueil/Page_accueil.php">Retour</a>
+    <a href="../Page_accueil/Page_accueil.php" class = "bouton-retour">Retour à l'accueil</a>
 
     <?php
     
     // requete pour la base
-    $req = 'SELECT idAppareil, idTypeAppareil, nomAppareil, libTypeAppareil 
-            FROM Appareil NATURAL JOIN TypeAppareil';   //restreindre aux appareils de l'utilisateur
+    $req = "SELECT idAppareil, idTypeAppareil, nomAppareil, libTypeAppareil 
+            FROM Appareil NATURAL JOIN TypeAppareil";
     
-    ### peut regarder description de l'appareil si survole son nom ? ###
+    if (!isset($estAdmin) || $estAdmin != true) {
+        $req = $req." NATURAL JOIN (SELECT idPiece
+                                FROM Piece NATURAL JOIN Appartement NATURAL JOIN Propriete NATURAL JOIN Proprietaire
+                                WHERE idPersonne = {$_SESSION['Id']}) AS PiecesUtilisateur";
+    }
 
     // exécution de la requête
     $data = $bdd->query($req);
@@ -46,12 +50,12 @@ require_once("../common/main.php");
         // requete pour la base : ressources consommées
         $req2 = "SELECT libTypeRessource, quantiteAllume
                 FROM Consommer NATURAL JOIN TypeRessource
-                WHERE idTypeAppareil = {$ligne['idTypeAppareil']}";   //quantiteAllume est la quantite par heure ?
+                WHERE idTypeAppareil = {$ligne['idTypeAppareil']}";
         
         // requete pour la base : substances produites
         $req3 = "SELECT libTypeSubstance, quantiteAllume
                 FROM Produire NATURAL JOIN TypeSubstance
-                WHERE idTypeAppareil = {$ligne['idTypeAppareil']}";   //quantiteAllume est la quantite par heure ?
+                WHERE idTypeAppareil = {$ligne['idTypeAppareil']}";
 
         $nbP = "SELECT COUNT(*) AS nbP
                 FROM Produire
@@ -119,38 +123,6 @@ require_once("../common/main.php");
     echo "</tbody>
         </table>";
     ?>
-<!----------------------------------------------------------------
-<tr>
-        <th>appareil numero 1</th>
-        <th>type de l'appareil</th>
-        <th>ON/OFF</th>
-        <th><a href='../Page_accueil/Page_accueil.php'>Modification<a></th>
-</tr>
-<tr>
-        <th></th>
-        <th></th>
-        <th>Ressource</th>
-        <th>quantite Ressource</th>
-</tr>
-<tr>
-        <th></th>
-        <th></th>
-        <th>Ressource</th>
-        <th>quantite Ressource</th>
-</tr>
-<tr>
-        <th></th>
-        <th></th>
-        <th>substance</th>
-        <th>quantite Substance</th>
-</tr>
-<tr>
-        <th></th>
-        <th></th>
-        <th>substance</th>
-        <th>quantite Substance</th>
-</tr>
----------------------------------------------------------------->
         </tbody>
     </table>
     <a href="../Page_accueil/Page_accueil.php">Ajouter appareil</a>

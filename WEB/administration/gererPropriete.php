@@ -15,7 +15,7 @@ require_once("../common/main.php");
 
     <h2>Votre/Vos propriété(s)</h2>
 
-    <a href="../Page_accueil/Page_accueil.php">Retour</a>
+    <a href="../Page_accueil/Page_accueil.php" class = "bouton-retour">Retour à l'accueil</a>
     <table>
         <tbody>
             <tr class="titre">
@@ -46,7 +46,11 @@ require_once("../common/main.php");
     
     // requete pour la base
     $req = 'SELECT numeroRue, nomRue, codePostal, ville, degreIsolation, nomPropriete , idPropriete, DATE(dateDebutProp) AS dateDProp
-            FROM Propriete NATURAL JOIN Proprietaire';   //restreindre aux propriétés de l'utilisateur
+            FROM Propriete NATURAL JOIN Proprietaire';
+    
+    if (!isset($estAdmin) || $estAdmin != true) {
+        $req = "$req. WHERE idPersonne = {$_SESSION['Id']}";
+    }
 
     // exécution de la requête
     $data = $bdd->query($req);

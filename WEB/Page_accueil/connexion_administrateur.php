@@ -102,10 +102,22 @@ if(isset($_POST['connexion']))
                 border: none; /* Enlève la bordure du bouton */
                 cursor: pointer; /* Change le curseur lorsque la souris passe sur le bouton */
               }
+              .bouton-retour {
+                display: block; /* Affiche le bouton sur une nouvelle ligne */
+                width: 15%; /* Remplit 15% de la largeur de la colonne */
+                background-color: #00b894; /* Change la couleur de fond du bouton */
+                color: #fff; /* Change la couleur du texte du bouton */
+                padding: 14px 20px; /* Ajoute de l'espace à l'intérieur du bouton */
+                margin: 20px; /* Ajoute de l'espace au-dessus et en-dessous du bouton */
+                border: none; /* Enlève la bordure du bouton */
+                cursor: pointer; /* Change le curseur lorsque la souris passe sur le bouton */
+                text-align: center; /* Centre le texte du bouton */
+                text-decoration: none; /* Enlève la décoration du texte du bouton (souligné, etc.) */
+              } 
           </style>
        
         <body>
-          <a href="../Page_accueil/Page_accueil.php">Retour</a>
+            <a href="../Page_accueil/Page_accueil.php" class = "bouton-retour">Retour à l'accueil</a>
             <!-- Ajout d'un "style de fond" -->
             <div class="container mt-5"> <!-- container c'est pour le centrage -->
            
