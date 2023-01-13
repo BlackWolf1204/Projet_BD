@@ -10,7 +10,7 @@
 
     <h2>Votre consommation et production</h2>
 
-    <a href="../Page_accueil/Page_accueil.php">Retour</a>
+    <a href="../Page_accueil/Page_accueil.php" class = "bouton-retour">Retour à l'accueil</a>
 
     <?php
 
@@ -18,7 +18,11 @@
     $req = 'SELECT idAppartement, numAppart, numeroRue, nomRue, codePostal, nomVille, nomPropriete,
                     DATEDIFF(DATE(datefinprop),DATE(datedebutprop)) AS dayDebutFin,
                     DATEDIFF(DATE(NOW()),DATE(datedebutprop)) AS dayDebutCurrent
-    FROM Appartement NATURAL JOIN ProprieteAdresse NATURAL JOIN Proprietaire';   //restreindre aux appartements de l'utilisateur
+            FROM Appartement NATURAL JOIN ProprieteAdresse NATURAL JOIN Proprietaire';
+
+    if (!isset($estAdmin) || $estAdmin != true) {
+        $req = "$req. WHERE idPersonne = {$_SESSION['Id']}";
+    }
 
     // exécution de la requête
     $data = $bdd->query($req);
@@ -55,7 +59,7 @@
                 <tbody>
                     <tr class=\"titre\">
                         <td>Ressource</td>
-                        <td>Votre consommation par jour</td>
+                        <td>Votre consommation par jour en moyenne</td>
                         <td>Consommation idéale par jour</td>
                         <td>Consommation critique par jour</td>
                         <td>Avis</td>

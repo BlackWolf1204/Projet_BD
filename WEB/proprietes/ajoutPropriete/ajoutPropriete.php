@@ -13,7 +13,7 @@ $ROOT = '../../';
 
 	<h2>Ajouter un immeuble</h2>
 
-	<a href="../../Page_accueil/Page_accueil.php">Retour</a>
+    <a href="../../Page_accueil/Page_accueil.php" class = "bouton-retour">Retour à l'accueil</a>
 
 	<form action="ajoutAppartement.php" method="post">
 		<!-- radio box : maison ou immeuble -->

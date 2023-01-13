@@ -62,6 +62,20 @@ h2{
   text-align: center; /* Centre le texte */
   color: #00b894; /* Change la couleur du texte */
 }
+
+.bouton-retour {
+  display: block; /* Affiche le bouton sur une nouvelle ligne */
+  width: 15%; /* Remplit 15% de la largeur de la colonne */
+  background-color: #00b894; /* Change la couleur de fond du bouton */
+  color: #fff; /* Change la couleur du texte du bouton */
+  padding: 14px 20px; /* Ajoute de l'espace à l'intérieur du bouton */
+  margin: 20px; /* Ajoute de l'espace au-dessus et en-dessous du bouton */
+  border: none; /* Enlève la bordure du bouton */
+  cursor: pointer; /* Change le curseur lorsque la souris passe sur le bouton */
+  text-align: center; /* Centre le texte du bouton */
+  text-decoration: none; /* Enlève la décoration du texte du bouton (souligné, etc.) */
+}    
+
 form {
   max-width: 500px; /* Limite la largeur du formulaire */
   margin: 1em auto; /* Centre le formulaire sur la page */
@@ -69,15 +83,18 @@ form {
   border: 1px solid #ddd; /* Ajoute une bordure au formulaire */
   padding: 20px; /* Ajoute de l'espace autour du contenu du formulaire */
 }
+
 input:not([type="radio"]), select {
   width: 100%; /* Remplit toute la largeur de la colonne */
   padding: 12px 20px; /* Ajoute de l'espace à l'intérieur de l'élément */
   margin: 8px 0; /* Ajoute de l'espace en dessous de l'élément */
   box-sizing: border-box; /* Permet de prendre en compte la bordure dans la largeur de l'élément */
 }
+
 button {
   width: 100%; /* Remplit toute la largeur de la colonne */
 }
+
 button, .header-right > a {
   background-color: #00b894; /* Change la couleur de fond du bouton */
   color: #fff; /* Change la couleur du texte du bouton */
