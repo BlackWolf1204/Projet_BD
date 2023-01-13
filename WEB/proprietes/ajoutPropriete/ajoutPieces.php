@@ -3,7 +3,7 @@ $ROOT = '../../';
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
 	<title>Ajouter les pièces</title>
@@ -17,6 +17,7 @@ $ROOT = '../../';
 	</style>
 
 	<?php require("{$ROOT}common/header.php") ?>
+	<?php require("{$ROOT}common/verif_est_connecte.php") ?>
 
 	<?php
 	if (empty($_POST)) {
@@ -38,47 +39,37 @@ $ROOT = '../../';
 	if ($type == "maison")
 		$nbAppartements = 1;
 
+	// Chargement des types d'appartements une fois
 	$typeAppartements = $bdd->query("SELECT * FROM typeappartement");
 	$typeAppartements = $typeAppartements->fetchAll();
 
+	// Chargement des types de pièces une fois
 	$typePieces = $bdd->query("SELECT * FROM typepiece");
 	$typePieces = $typePieces->fetchAll();
 
+	// Récupération des données des appartements
 	$appartements = array();
-	if ($type == "maison") {
+	for ($i = 1; $i <= $nbAppartements; $i++) {
 		$appartement = array();
-		$appartement['numAppartement'] = 0;
-		$appartement['degreSecurite'] = $_POST['degreSecurite_1'];
-		$appartement['typeAppart'] = $_POST['typeAppartement_1'];
+		$appartement['numAppartement'] = $_POST["numAppartement_$i"];
+		$appartement['degreSecurite'] = $_POST["degreSecurite_$i"];
+		$appartement['typeAppart'] = trouveTypeAppartement($typeAppartements, $_POST["typeAppartement_$i"]);
 		$appartements[] = $appartement;
-	} else {
-		for ($i = 1; $i <= $nbAppartements; $i++) {
-			$appartement = array();
-			$appartement['numAppartement'] = $_POST["numAppartement_$i"];
-			$appartement['degreSecurite'] = $_POST["degreSecurite_$i"];
-			foreach ($typeAppartements as $typeAppartement) {
-				if ($typeAppartement['typeAppart'] == $_POST["typeAppartement_$i"]) {
-					$appartement['typeAppart'] = $typeAppartement;
-					break;
-				}
-			}
-			if (empty($appartement['typeAppart'])) {
-				echo "<p>Erreur : type d'appartement {$typeAppart['typeAppart']} inconnu.</p>";
-				exit();
-			}
-			$appartements[] = $appartement;
-		}
+	}
+
+	// Vérifier qu'aucun numéro d'appartement n'est en double
+	$numsAppartements = array();
+	foreach ($appartements as $appartement) {
+		$numsAppartements[] = $appartement['numAppartement'];
+	}
+	if (count($numsAppartements) != count(array_unique($numsAppartements))) {
+		echo "<p>Vous avez entré plusieurs fois le même numéro d'appartement.</p>";
+		exit();
 	}
 
 	$nbPieces = 0;
 	foreach ($appartements as $appartement) {
-		foreach ($typeAppartements as $typeAppartement) {
-			if ($typeAppartement['typeAppart'] == $appartement['typeAppart']['typeAppart']) {
-				$nbPiecesAppart = $typeAppartement['nbPieces'];
-				break;
-			}
-		}
-		$nbPieces += $nbPiecesAppart;
+		$nbPieces += $appartement['typeAppart']['nbPieces'];
 	}
 
 	if ($nbAppartements == 1) {
@@ -99,6 +90,10 @@ $ROOT = '../../';
 		<input type="hidden" name="nomRue" value="<?= $propriete['nomRue'] ?>">
 		<input type="hidden" name="codePostal" value="<?= $propriete['codePostal'] ?>">
 		<input type="hidden" name="ville" value="<?= $propriete['ville'] ?>">
+		<input type="hidden" name="codeDepartement" value="<?= $_POST['codeDepartement'] ?>">
+		<input type="hidden" name="nomDepartement" value="<?= $_POST['nomDepartement'] ?>">
+		<input type="hidden" name="codeRegion" value="<?= $_POST['codeRegion'] ?>">
+		<input type="hidden" name="nomRegion" value="<?= $_POST['nomRegion'] ?>">
 		<input type="hidden" name="nomPropriete" value="<?= $propriete['nomPropriete'] ?>">
 		<input type="hidden" name="degreIsolation" value="<?= $_POST['degreIsolation'] ?>">
 
@@ -108,12 +103,7 @@ $ROOT = '../../';
 
 		for ($i = 1; $i <= $nbAppartements; $i++) {
 			$appartement = $appartements[$i - 1];
-			foreach ($typeAppartements as $typeAppart) {
-				if ($typeAppart['typeAppart'] == $appartement['typeAppart']['typeAppart']) {
-					$typeAppartement = $typeAppart;
-					break;
-				}
-			}
+			$typeAppartement = trouveTypeAppartement($typeAppartements, $appartement['typeAppart']['typeAppart']);
 		?>
 
 			<div class="infoAppart" appartNum=<?= $i ?>>
@@ -137,7 +127,7 @@ $ROOT = '../../';
 							<?php
 							foreach ($typePieces as $typePiece) {
 								$id = $typePiece['typePiece'];
-								$libelle = iconv('ISO-8859-1', 'UTF-8', $typePiece['libTypePiece']);
+								$libelle = $typePiece['libTypePiece'];
 								echo "<option value='$id'>$libelle</option>";
 							}
 							?>

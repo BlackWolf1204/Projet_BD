@@ -30,3 +30,25 @@ function echoLabelPropriete($propriete)
 	echo "<span name=\"labelPropriete\" type=\"text\" readonly=true>$labelPropriete</span>";
 	echo "</div>";
 }
+
+function trouveTypeAppartement($listeTypeAppartements, $typeAppart)
+{
+	foreach ($listeTypeAppartements as $typeAppartement) {
+		if ($typeAppartement['typeAppart'] == $typeAppart) {
+			return $typeAppartement;
+		}
+	}
+	echo "<p>Erreur : type d'appartement {$typeAppart} inconnu.</p>";
+	exit();
+}
+
+function trouveTypePiece($listeTypePieces, $idTypePiece)
+{
+	foreach ($listeTypePieces as $typePiece) {
+		if ($typePiece['typePiece'] == $idTypePiece) {
+			return $typePiece;
+		}
+	}
+	echo "<p>Erreur : type de pièce {$idTypePiece} inconnu.</p>";
+	exit();
+}

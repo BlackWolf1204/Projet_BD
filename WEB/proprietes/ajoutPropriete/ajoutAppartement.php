@@ -3,7 +3,7 @@ $ROOT = '../../';
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 
 <head>
 	<title>Ajouter un appartement</title>
@@ -17,6 +17,7 @@ $ROOT = '../../';
 	</style>
 
 	<?php require("{$ROOT}common/header.php") ?>
+	<?php require("{$ROOT}common/verif_est_connecte.php") ?>
 
 	<?php
 	if (empty($_POST)) {
@@ -55,12 +56,17 @@ $ROOT = '../../';
 		<input type="hidden" name="nomRue" value="<?= $propriete['nomRue'] ?>">
 		<input type="hidden" name="codePostal" value="<?= $propriete['codePostal'] ?>">
 		<input type="hidden" name="ville" value="<?= $propriete['ville'] ?>">
+		<input type="hidden" name="codeDepartement" value="<?= $_POST['codeDepartement'] ?>">
+		<input type="hidden" name="nomDepartement" value="<?= $_POST['nomDepartement'] ?>">
+		<input type="hidden" name="codeRegion" value="<?= $_POST['codeRegion'] ?>">
+		<input type="hidden" name="nomRegion" value="<?= $_POST['nomRegion'] ?>">
 		<input type="hidden" name="nomPropriete" value="<?= $propriete['nomPropriete'] ?>">
 		<input type="hidden" name="degreIsolation" value="<?= $_POST['degreIsolation'] ?>">
 
 		<!-- Pour une maison (1 ppartment) : degreSecurité (faible, moyen, fort), typeAppartement (select récup de la table typeappartement : T1, T2...) -->
 		<!-- Pour les n appartements => numAppartement, degreSecurité (faible, moyen, fort), typeAppartement (select récup de la table typeappartement : T1, T2...) -->
 		<?php
+		// Chargement des types d'appartements et types de sécurité une fois
 		$TypeSecurite = $bdd->query("SELECT * FROM TypeSecurite");
 		$TypeSecurite = $TypeSecurite->fetchAll();
 		$TypeAppartement = $bdd->query("SELECT * FROM TypeAppartement");
@@ -72,17 +78,19 @@ $ROOT = '../../';
 			<div class="infoAppart" appartNum=<?= $i ?>>
 
 				<?php
-				if ($type != "maison") {
-					echo "<div id=\"numAppartement_$i\">";
-					echo "<label for=\"numAppartement_$i\">Numéro d'appartement</label> ";
-					echo "<input type=\"text\" name=\"numAppartement_$i\" placeholder=\"$i\" value=\"$i\" size=4>";
-					echo "</div>";
+				$style = "";
+				if ($type == "maison") {
+					$style = "style=\"display: none;\"";
 				}
+				echo "<div id=\"numAppartement_$i\" $style>";
+				echo "<label for=\"numAppartement_$i\">Numéro d'appartement</label> ";
+				echo "<input type=\"text\" name=\"numAppartement_$i\" placeholder=\"$i\" value=\"$i\" size=4>";
+				echo "</div>";
 				?>
 
 				<div id="degreSecurite_<?= $i ?>">
 					<label for="degreSecurite_<?= $i ?>">Degré de sécurité</label>
-					<select name="degreSecurite_<?= $i ?>">
+					<select name="degreSecurite_<?= $i ?>" title="Degré de sécurité du logement">
 						<?php
 						$default = 2;
 						foreach ($TypeSecurite as $TypeSec) {
@@ -95,7 +103,7 @@ $ROOT = '../../';
 
 				<div id="typeAppartement_<?= $i ?>">
 					<label for="typeAppartement_<?= $i ?>">Type de logement</label>
-					<select name="typeAppartement_<?= $i ?>">
+					<select name="typeAppartement_<?= $i ?>" title="Type et taille du logement">
 						<?php
 						foreach ($TypeAppartement as $TypeAppart) {
 							echo "<option value='" . $TypeAppart['typeAppart'] . "'>" . $TypeAppart['libTypeAppart'] . "</option>";

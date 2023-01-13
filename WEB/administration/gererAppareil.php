@@ -32,25 +32,23 @@ require_once("../common/main.php");
     die("Problème d'exécution de la requête \n");
     
     echo "<table>
-            <thead>
-                <tr>
-                    <th>Status</th>
-                    <th>Appareil</th>
-                    <th>Type appareil</th>
-                    <th>Ressource(s)/Substance(s) concernée(s)</th>
-                    <th>Consommation/Production par heure</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>";
-            
+            <tbody>
+                <tr class=\"titre\">
+                    <td>Status</td>
+                    <td>Appareil</td>
+                    <td>Type appareil</td>
+                    <td>Ressource(s)/Substance(s) concernée(s)</td>
+                    <td>Consommation/Production par heure</td>
+                    <td></td>
+                </tr>";
+
     foreach ($data as $ligne) {
-        // requete pour la base
+        // requete pour la base : ressources consommées
         $req2 = "SELECT libTypeRessource, quantiteAllume
                 FROM Consommer NATURAL JOIN TypeRessource
                 WHERE idTypeAppareil = {$ligne['idTypeAppareil']}";   //quantiteAllume est la quantite par heure ?
         
-        // requete pour la base
+        // requete pour la base : substances produites
         $req3 = "SELECT libTypeSubstance, quantiteAllume
                 FROM Produire NATURAL JOIN TypeSubstance
                 WHERE idTypeAppareil = {$ligne['idTypeAppareil']}";   //quantiteAllume est la quantite par heure ?
@@ -64,8 +62,8 @@ require_once("../common/main.php");
                 WHERE idTypeAppareil = {$ligne['idTypeAppareil']}";
 
         // exécution de la requête
-        $data3 = $bdd->query($req3);
-        $data2 = $bdd->query($req2);
+        $data3 = $bdd->query($req3); // produire
+        $data2 = $bdd->query($req2); // consommer
         $nbPL = $bdd->query($nbP);
         $nbCL = $bdd->query($nbC);
         // si erreur
@@ -74,30 +72,48 @@ require_once("../common/main.php");
 
         foreach ($nbPL as $nbPLignes) {
                 foreach ($nbCL as $nbCLignes) {
-                        $nb = (int)$nbPLignes['nbP']+(int)$nbCLignes['nbC']+1;
+                        $nb = (int)$nbPLignes['nbP']+(int)$nbCLignes['nbC'];
                 }
         }
-        echo "<tr>
-                <th rowspan = $nb>ON/OFF</th>
-                <th rowspan = $nb>{$ligne['nomAppareil']}</th>
-                <th rowspan = $nb>{$ligne['libTypeAppareil']}</th>
-                <th></th>
-                <th></th>
-                <th rowspan = $nb><a href='../Page_accueil/Page_accueil.html'>Modification</a></th>
-              </tr>";   //changer Modification pour garder en memoire l'id de l'appareil a modifier
         
+        $numeroLigne = 0;
+              
         foreach ($data2 as $ligne2) {
-                echo "<tr>
-                        <th>{$ligne2['libTypeRessource']}</th>
-                        <th>{$ligne2['quantiteAllume']} k../h</th>
-                      </tr>";       
+                $nomAppareil = $ligne['nomAppareil'];
+                $libTypeAppareil = $ligne['libTypeAppareil'];
+                echo "<tr>";
+                if ($numeroLigne == 0) {
+                        echo "<td rowspan = $nb>ON/OFF</td>
+                        <td rowspan = $nb>$nomAppareil</td>
+                        <td rowspan = $nb>$libTypeAppareil</td>";
+                }
+                $libTypeRessource = $ligne2['libTypeRessource'];
+                echo "<td>$libTypeRessource</td>
+                        <td>{$ligne2['quantiteAllume']} k../h</td>";
+                if ($numeroLigne == 0) {
+                        echo "<td rowspan = $nb><a href='../Page_accueil/Page_accueil.php'>Modification</a></td>";   //changer Modification pour garder en memoire l'id de l'appareil a modifier
+                } 
+                echo "</tr>";
+                $numeroLigne++;
         }
 
         foreach ($data3 as $ligne3) {
-                echo "<tr>
-                        <th>{$ligne3['libTypeSubstance']}</th>
-                        <th>{$ligne3['quantiteAllume']} k../h</th>
-                      </tr>";       
+                $nomAppareil = $ligne['nomAppareil'];
+                $libTypeAppareil = $ligne['libTypeAppareil'];
+                echo "<tr>";
+                if ($numeroLigne == 0) {
+                        echo "<td rowspan = $nb>ON/OFF</td>
+                        <td rowspan = $nb>$nomAppareil</td>
+                        <td rowspan = $nb>$libTypeAppareil</td>";
+                }
+                $libTypeSubstance = $ligne3['libTypeSubstance'];
+                echo "<td>$libTypeSubstance</td>
+                        <td>{$ligne3['quantiteAllume']} k../h</td>"; 
+                if ($numeroLigne == 0) {
+                        echo "<td rowspan = $nb><a href='../Page_accueil/Page_accueil.php'>Modification</a></td>";   //changer Modification pour garder en memoire l'id de l'appareil a modifier
+                }
+                echo "</tr>";
+                $numeroLigne++; 
         }
     }
     echo "</tbody>
@@ -108,7 +124,7 @@ require_once("../common/main.php");
         <th>appareil numero 1</th>
         <th>type de l'appareil</th>
         <th>ON/OFF</th>
-        <th><a href='../Page_accueil/Page_accueil.html'>Modification<a></th>
+        <th><a href='../Page_accueil/Page_accueil.php'>Modification<a></th>
 </tr>
 <tr>
         <th></th>

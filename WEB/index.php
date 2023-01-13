@@ -9,39 +9,52 @@
 	<?php require('common/header.php') ?>
 
 	<?php
+	function scanFolder($path)
+	{
+		$files = scandir($path);
+
+		// Fichiers
+		$nbFichiers = 0;
+		foreach ($files as $file) {
+			$fpath = $path . "/" . $file;
+			if (!is_dir($fpath)) {
+				if (substr($file, -4) == ".php" || substr($file, -5) == ".html") {
+					$nbFichiers++;
+					break;
+				}
+			}
+		}
+		if ($nbFichiers >= 1) {
+			echo "<h2>$path</h2>";
+		}
+		foreach ($files as $file) {
+			$fpath = $path . "/" . $file;
+			if (!is_dir($fpath)) {
+				if (substr($file, -4) == ".php" || substr($file, -5) == ".html") {
+					echo "<a href='$fpath'>$file</a><br>";
+					continue;
+				}
+			}
+		}
+
+		// Dossiers
+		foreach ($files as $file) {
+			$fpath = $path . "/" . $file;
+			if (is_dir($fpath)) {
+				// ignorer le dossier common
+				if ($file != "." && $file != ".." && $file != "common") {
+					scanFolder($fpath);
+				}
+			}
+		}
+	}
+
 	// afficher un lien vers tous les .php et .html du projet
-	$files = scandir(".");
-	foreach ($files as $file) {
-		if (substr($file, -4) == ".php" || substr($file, -5) == ".html") {
-			echo "<a href='$file'>$file</a><br>";
-		}
-	}
-
 	// et sous-dossiers
-	$folders = scandir(".");
-	foreach ($folders as $folder) {
-		// ignorer le dossier common
-		if ($folder == "common") {
-			continue;
-		}
-		if (is_dir($folder) && $folder != "." && $folder != "..") {
-			$files = scandir($folder);
-			$filesPhp = array_filter($files, function ($file) {
-				return substr($file, -4) == ".php" || substr($file, -5) == ".html";
-			});
-			if (count($filesPhp) == 0) {
-				continue;
-			}
-			echo "<h2>$folder</h2>";
-			foreach ($filesPhp as $file) {
-				echo "<a href='$folder/$file'>$file</a><br>";
-			}
-		}
-	}
-
+	scanFolder(".");
 	?>
 
 	<?php require('common/footer.php') ?>
-</body>
+	</body>
 
 </html>

@@ -5,7 +5,6 @@
 <?php
 $ROOT="../";
 include("../common/main.php");
-session_start();//On démarre la session
 
 
 if(isset($_POST['connexion']))
@@ -16,8 +15,8 @@ if(isset($_POST['connexion']))
 
     if(!empty($mailconnect) AND !empty($mdpconnect))//techniquement le required devrait s'en charger mais on sait jamais
     {
-        $requser = $bdd->prepare("SELECT * FROM InfoPersonne JOIN Utilisateur ON InfoPersonne.idPersonne = Utilisateur.idPersonne WHERE InfoPersonne.mail = ? AND Utilisateur.mdp = ?");
-        $requser->execute(array($mailconnect, $mdpconnect));
+        $requser = $bdd->prepare("SELECT * FROM InfoPersonne NATURAL JOIN Utilisateur WHERE (InfoPersonne.mail = ? OR Utilisateur.identifiant = ?) AND Utilisateur.mdp = ?");
+        $requser->execute(array($mailconnect, $mailconnect, $mdpconnect));
         $userexist = $requser->rowCount();
 
         if($userexist == 1)
@@ -101,8 +100,8 @@ if(isset($_POST['connexion']))
               }
           </style>
         <body>
+          <a href="../Page_accueil/Page_accueil.php">Retour</a>
             <!-- Ajout d'un "style de fond" -->
-            <div style="background-image: url('https://www.example.com/image.jpg'); background-size: cover; height: 100vh;">
             <div class="container mt-5"> <!-- container c'est pour le centrage -->
            
                 <div class="row">
@@ -117,15 +116,15 @@ if(isset($_POST['connexion']))
                     <div class="form-row"><!-- Div pour connecter avec le mail et le mot de passe -->
 
                         <div class="form-group col-md-6">
-                            <input type="email" name="Mail_Connexion" class="form-control" placeholder="Mail" required, value="<?php if(isset($mailconnect)) { echo $mailconnect; } ?>">
+                            <input type="text" id="username" name="Mail_Connexion" class="form-control" placeholder="Mail ou identifiant" required, value="<?php if(isset($mailconnect)) { echo $mailconnect; } ?>" autocomplete="username">
                         </div>
                         <div class="form-group col-md-6">
-                            <input type="password" name="Mot_de_passe_Connexion" class="form-control" placeholder="Mot de passe" required>
+                            <input type="password" id="password" name="Mot_de_passe_Connexion" class="form-control" placeholder="Mot de passe" required autocomplete="password">
                        </div>
                     </div><!-- Fin de la div pour les champs mail et mot de passe -->
 
 
-              <button type="submit" name="connexion">Se Connecter</button><!-- Bouton d'envoi du formulaire de connexion -->
+              <button type="submit" id="login" name="connexion">Se Connecter</button><!-- Bouton d'envoi du formulaire de connexion -->
             </form>
             <?php
             if(isset($erreur)) //a mettre apres le formulaire au milieu de la page

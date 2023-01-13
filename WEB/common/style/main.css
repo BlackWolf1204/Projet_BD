@@ -13,6 +13,10 @@ body
   flex-direction: column;
 }
 
+.body {
+  padding: 1em;  
+}
+
 header {
   position: relative;
   min-height: fit-content;
@@ -60,7 +64,7 @@ h2{
 }
 form {
   max-width: 500px; /* Limite la largeur du formulaire */
-  margin: 0 auto; /* Centre le formulaire sur la page */
+  margin: 1em auto; /* Centre le formulaire sur la page */
   background-color: #fff; /* Change la couleur de fond du formulaire */
   border: 1px solid #ddd; /* Ajoute une bordure au formulaire */
   padding: 20px; /* Ajoute de l'espace autour du contenu du formulaire */
@@ -83,15 +87,71 @@ button, .header-right > a {
   cursor: pointer; /* Change le curseur lorsque la souris passe sur le bouton */
 }
 
+table {
+  margin: 20px auto auto auto;
+  table-layout: auto;
+  width: 98%;
+  border-collapse: collapse;
+  border: solid green 4px;
+  text-align: center;
+}
+
+table thead *{
+  font-weight: bold;
+  padding: 10px;
+  font-size: 18pt;
+}
+
+table tr:not(.titre):nth-child(even) {
+  background: lightsteelblue;
+}
+
+table .titre {
+  font-weight: bold;
+  background: lightgreen;
+}
+
+table td:not(.ignore) {
+  border: solid green 1px;
+  padding: 5px;
+}
+
+.appart {
+  border: double #3dc7ab 5px;
+  margin: 7px;
+  padding: 5px;
+}
+
 /* Styles pour les boutons au survol de la souris */
 .bouton:hover, .header-right > a:hover {
   background-color: #3dc7ab;
 }
 
 footer {
-  padding: 0 1em;
   margin-top: auto;
 }
+footer > .footer {
+  padding: 0 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 footer p {
-  line-height: 0.5em;
+  margin: auto 0;
+  padding: 0.2em;
+}
+
+.flex-together {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.vantatopologymin {
+  height: 77px;
+  position: unset !important;
+}
+.vanta-canvas {
+  position: unset !important;
 }

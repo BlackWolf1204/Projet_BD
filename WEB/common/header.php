@@ -12,25 +12,16 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
     $url = 'http';
 }
 $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-if (isset($_SESSION['Id'])) {
-    $co_deco = "Deconnexion";
-    $url_co_deco = "{$ROOT}Page_accueil/deconnexion.php";
-    $sign_gerer = "Gérer compte";
-    $url_sign_gerer = "{$ROOT}Page_accueil/gestion_compte.php";
-} else {
-    $co_deco = "Se connecter";
-    $url_co_deco = "{$ROOT}Page_accueil/connexion.php";
-    $sign_gerer = "S'inscrire";
-    $url_sign_gerer = "{$ROOT}Page_accueil/inscription.php";
-}
 ?>
 
 <meta charset="utf-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="icon" href="<?= $ROOT ?>images/logo.webp" type="image/x-icon" />
-<link rel='stylesheet' type='text/css' media='screen' href='<?= $ROOT ?>style/main.css'>
+<link rel="icon" href="<?= $ROOT ?>common/images/favicon.ico" type="image/x-icon" />
+<link rel='stylesheet' type='text/css' media='screen' href='<?= $ROOT ?>common/style/main.css'>
+<script src="<?= $ROOT ?>common/vanta/p5.min.js"></script>
+<script src="<?= $ROOT ?>common/vanta/vanta.topology.min.js"></script>
 
 </head>
 
@@ -40,18 +31,23 @@ if (isset($_SESSION['Id'])) {
         <h1><a href="<?= $ROOT ?>Page_accueil/Page_accueil.php" title="Accueil" style="text-decoration: none;">Projet Maison Économe</a></h1>
 
         <div class="header-left">
-            <img src="<?= $ROOT ?>images/logo.webp" alt="logo" class="logo">
+            <img src="<?= $ROOT ?>common/images/logo.webp" alt="logo" class="logo">
         </div>
 
         <div class="header-right">
-            <a id="signup" href=<?php echo $url_co_deco; ?>><?php echo $co_deco; ?></a>
-            <a id="login" href=<?php echo $url_sign_gerer; ?>><?php echo $sign_gerer; ?></a>
             <?php
             if (!isset($_SESSION['Id'])) {
+                echo "<a id=\"signup\" href=\"{$ROOT}Page_accueil/inscription.php\">S'inscrire</a>";
+                echo "<a id=\"login\" href=\"{$ROOT}Page_accueil/connexion.php\">Se connecter</a>";
                 echo "<a id=\"login_admin\" href=\"{$ROOT}Page_accueil/connexion_administrateur.php\">Se connecter en tant qu'administrateur</a>";
+            } else {
+                echo "<a id=\"logout\" href=\"{$ROOT}Page_accueil/deconnexion.php\">Se déconnecter</a>";
+                echo "<a id=\"manage_account\" href=\"{$ROOT}Page_accueil/gestion_compte.php\">Gérer son compte</a>";
             }
             ?>
         </div>
         </div>
 
     </header>
+    <div class="vantatopologymin" id="vantatopologymin_1"></div>
+    <div class="body">

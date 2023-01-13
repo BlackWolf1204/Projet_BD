@@ -16,10 +16,9 @@ require_once("../common/main.php");
     <h2>Votre/Vos propriété(s)</h2>
 
     <a href="../Page_accueil/Page_accueil.php">Retour</a>
-
     <table>
-        <thead>
-            <tr>
+        <tbody>
+            <tr class="titre">
                 <td>Immeuble</td>
                 <td colspan = "2">Adresse (+nom)</td>
                 <td>Isolation</td>
@@ -40,7 +39,7 @@ require_once("../common/main.php");
                 <td>Type appartement/maison</td>
                 <td>Pièce(s)</td>
             </tr>
-        </thead>
+        </tbody>
     </table>
 
     <?php
@@ -73,23 +72,23 @@ require_once("../common/main.php");
         die("Problème d'exécution de la requête \n");
 
         foreach($nbL as $l) {
-            $nbAppart = $l['nbLigne'];
+            $nbAppart = $l['nbLigne']+1;
         }
 
         echo "<table>
                 <tbody>
-                    <tr>
-                        <th>";
+                    <tr class=\"titre\">
+                        <td>";
 
         if ($nbAppart == 1) echo "Maison";
         else echo "Immeuble";
-        echo "  </th>
-                <th colspan = \"2\">".$ligne['numeroRue']." ".$ligne['nomRue']." ".$ligne['codePostal']." ".$ligne['ville'];
+        echo "  </td>
+                <td colspan = \"2\">".$ligne['numeroRue']." ".$ligne['nomRue']." ".$ligne['codePostal']." ".$ligne['ville'];
         if ($ligne['nomPropriete'] != NULL) echo " ({$ligne['nomPropriete']})";
-        echo "  </th>
-                <th>{$ligne['degreIsolation']}</th>
-                <th>{$ligne['dateDProp']}</th>
-                <th rowspan = \"$nbAppart\"><a href='{$ROOT}proprietes/ajoutPropriete/ajoutPropriete.php'>Modifier<a></th>
+        echo "  </td>
+                <td>{$ligne['degreIsolation']}</td>
+                <td>{$ligne['dateDProp']}</td>
+                <td rowspan = \"$nbAppart\"><a href='{$ROOT}proprietes/ajoutPropriete/ajoutPropriete.php'>Modifier<a></td>
             </tr>";   //changer Modification pour garder en memoire l'id de la propriété a modifier
         
         foreach ($data2 as $ligne2) {
@@ -168,35 +167,8 @@ require_once("../common/main.php");
             </table>";
     }
     ?>
-<!----------------------------------------------------------------
-    <table style="width: 90%;">
-    <tbody>
-    <tr style = "background: skyblue">
-    <td>Immeuble</td>
-    <td colspan = "2">Adresse (+nom)</td>
-    <td>Isolation</td>
-    <td colspan = "2">Date acquisition de la propriété</td>
-    <td rowspan = "3">Modifier</td>
-    </tr>
-    <tr style = "background: lightgrey">
-    <td>Numéro appartement</td>
-    <td>Type sécurité</td>
-    <td>Locataire (Date de debut de location)</td>
-    <td>Type appartement/maison</td>
-    <td>Pièce(s)</td>
-    </tr>
-    <tr>
-    <td>Numéro appartement</td>
-    <td>Type sécurité</td>
-    <td>Locataire (Date Debut)</td>
-    <td>Type appartement/maison</td>
-    <td>Pièce(s)</td>
-    </tr>
+    
     </tbody>
-    </table>
-
----------------------------------------------------------------->
-        </tbody>
     </table>
     <a href="../proprietes/ajoutPropriete/ajoutPropriete.php">Ajouter propiété</a>
  </body>

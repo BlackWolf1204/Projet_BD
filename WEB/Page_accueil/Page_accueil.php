@@ -47,47 +47,48 @@
             justify-content: center;
         }
 
-        .vantatopologymin {
-            height: 77px;
-            position: initial !important;
-        }
-        .vanta-canvas {
-            position: unset !important;
-        }
-    </style>
-    <script src="p5.min.js"></script>
-    <script src="vanta.topology.min.js"></script>
+            .welcome-header {
+            text-align: center;
+            font-size: 36px;
+            margin-top: 50px;
+            margin-bottom: 30px;
+            font-weight: bold;
+            }
 
-    <div class="vantatopologymin" id="vantatopologymin_1"></div>
+            .welcome-text {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            }
+
+            .welcome-bold {
+            font-weight: bold;
+            }
+    
+</style>
     <div class="body-right">
-        <h2>BIENVENUE SUR NOTRE SITE</h2>
         
-        <p><b>De nos jours il est important de faire des économies d'énergie, ce site vous permettra de contrôler l'ensemble de vos appartements...</b></p>
-        <a href="../administration/gererConso.php" class="bouton">Regarder sa consommation/production</a>
-        <a href="../administration/gererAppareil.php" class="bouton">Gérer ses appareils</a>
-        <a href="../administration/gererPropriete.php" class="bouton">Gérer sa/ses propriété(s)</a>
-        <a href="../proprietes/ajoutPropriete/ajoutPropriete.php" class="bouton">Ajouter une propriété</a>
-        <!-- <a href="statistiques.php" class="bouton">Statistiques</a>  seulement pour admins -->
+        <h2 class="welcome-header">BIENVENUE SUR NOTRE SITE</h2>
+        <p class="welcome-text">De nos jours il est important de faire des économies d'énergie,</p>
+        <p class="welcome-text">ce site vous permettra de contrôler l'ensemble de vos appareils électriques et de voir votre consommation d'énergie, pour avoir une meilleure idée de votre consommation</p>
+
+        <!--on affiche les boutons de navigation UNIQUEMENT si l'utilisateur est connecté, on va donc vérifier si la variable de session $_SESSION['id'] existe-->
+        <?php if(isset($_SESSION['id'])) { ?>
+            <a href="../administration/gererConso.php" class="bouton">Regarder sa consommation/production</a>
+            <a href="../administration/gererAppareil.php" class="bouton">Gérer ses appareils</a>
+            <a href="../administration/gererPropriete.php" class="bouton">Gérer sa/ses propriété(s)</a>
+            <a href="../proprietes/ajoutPropriete/ajoutPropriete.php" class="bouton">Ajouter une propriété</a>
+            <!--on affciche le bouton statistiques UNIQUEMENT si l'utilisateur est un admin, on va donc vérifier si la variable de session $_SESSION['admin'] existe-->
+            <?php } ?>
+            <?php if(isset($_SESSION['admin'])) { ?>
+                <a href="../administration/statistiques.php" class="bouton">Statistiques</a>
+                <?php } ?>
+                
+           
+   
     </div>
-    <!-- fin du corps de la page -->
-    <!-- juste en dessous du body on ajoute le script pour l'effet d'image dynamique de fond -->
-    <div class="vantatopologymin" id="vantatopologymin_2"></div>
-
-    <script>
-        // Ajout de l'effet d'image dynamique de fond
-        vantaConfig = {
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 77.00,
-            minWidth: 100.00,
-            scale: 1.00,
-            scaleMobile: 1.00
-        }
-        VANTA.TOPOLOGY({ ...vantaConfig, el: "#vantatopologymin_1" });
-        VANTA.TOPOLOGY({ ...vantaConfig, el: "#vantatopologymin_2" });
-    </script>       
-
+    
 <?php require "../common/footer.php"; ?>
 
 </html><!-- fin de la page -->
