@@ -20,7 +20,7 @@ if($estConnecte)
         <title> Page Profil </title>
         <meta charset="UTF-8">
         <!-- Ajout de Bootstrap -->
-        <link rel="icon" href="<?= $ROOT ?>common/images/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="<?= $ROOT ?>common/images/Green_house.ico" type="image/x-icon" />
         <link rel="stylesheet" href="<?= $ROOT ?>common/style/main.css">
     </head>
             <body>
