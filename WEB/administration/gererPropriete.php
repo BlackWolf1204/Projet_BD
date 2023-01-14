@@ -45,18 +45,19 @@ require_once("../common/main.php");
     <?php
     
     // requete pour la base
-    $req = 'SELECT numeroRue, nomRue, codePostal, ville, degreIsolation, nomPropriete , idPropriete, DATE(dateDebutProp) AS dateDProp
-            FROM Propriete NATURAL JOIN Proprietaire';
+    $req = 'SELECT numeroRue, nomRue, codePostal, nomVille, degreIsolation, nomPropriete , idPropriete, DATE(dateDebutProp) AS dateDProp
+            FROM ProprieteAdresse NATURAL JOIN Proprietaire';
     
     if (!isset($estAdmin) || $estAdmin != true) {
-        $req = "$req. WHERE idPersonne = {$_SESSION['Id']}";
+        $req = "$req WHERE idPersonne = {$_SESSION['Id']}";
     }
 
     // exécution de la requête
     $data = $bdd->query($req);
     // si erreur
-    if ($data == NULL)
-    die("Problème d'exécution de la requête \n");
+    if ($data == NULL) {
+        die($bdd->errorInfo()[2] . "<br>Problème d'exécution de la requête \n");
+    }
     
     foreach ($data as $ligne) {
         // requete pour la base
@@ -87,7 +88,7 @@ require_once("../common/main.php");
         if ($nbAppart == 1) echo "Maison";
         else echo "Immeuble";
         echo "  </td>
-                <td colspan = \"2\">".$ligne['numeroRue']." ".$ligne['nomRue']." ".$ligne['codePostal']." ".$ligne['ville'];
+                <td colspan = \"2\">".$ligne['numeroRue']." ".$ligne['nomRue']." ".$ligne['codePostal']." ".$ligne['nomVille'];
         if ($ligne['nomPropriete'] != NULL) echo " ({$ligne['nomPropriete']})";
         echo "  </td>
                 <td>{$ligne['degreIsolation']}</td>

@@ -49,7 +49,7 @@ if(isset($_POST['connexion']))
     <meta charset="UTF-8">
     <!-- Ajout de Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="icon" href="<?= $ROOT ?>common/images/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="<?= $ROOT ?>common/images/Green_house.ico" type="image/x-icon" />
     <link rel="stylesheet" href="<?= $ROOT ?>common/style/main.css">
     
     <!-- Ajout de style personnalisé -->
