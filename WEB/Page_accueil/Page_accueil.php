@@ -12,6 +12,8 @@
 <!-- entré dans body -->
 
     <style>
+
+        
         /* Ajout de style personnalisé */
         body {
             font-family: Arial, sans-serif; /* Change la police de caractères */
@@ -66,18 +68,16 @@
         <p class="welcome-text">ce site vous permettra de contrôler l'ensemble de vos appareils électriques et de voir votre consommation d'énergie, pour avoir une meilleure idée de votre consommation</p>
 
         <!--on affiche les boutons de navigation UNIQUEMENT si l'utilisateur est connecté, on va donc vérifier si la variable de session $_SESSION['id'] existe-->
-        <?php if(isset($_SESSION['Id'])) { ?>
+        <?php if($estConnecte) { ?>
             <a href="../administration/gererConso.php" class="bouton">Regarder sa consommation/production</a>
             <a href="../administration/gererAppareil.php" class="bouton">Gérer ses appareils</a>
             <a href="../administration/gererPropriete.php" class="bouton">Gérer sa/ses propriété(s)</a>
             <a href="../proprietes/ajoutPropriete/ajoutPropriete.php" class="bouton">Ajouter une propriété</a>
-            <!--on affciche le bouton statistiques UNIQUEMENT si l'utilisateur est un admin, on va donc vérifier si la variable de session $_SESSION['admin'] existe-->
-            <?php } ?>
-            <?php if(isset($_SESSION['admin'])) { ?>
-                <a href="../administration/statistiques.php" class="bouton">Statistiques</a>
-                <?php } ?>
-                
-           
+            <!--on affciche le bouton statistiques UNIQUEMENT si l'utilisateur est un admin, on va donc vérifier si la variable de session $estAdmin est validée-->
+        <?php } ?>
+        <?php if($estAdmin) { ?>
+            <a href="../administration/statistiques.php" class="bouton">Statistiques</a>
+        <?php } ?>
    
     </div>
     

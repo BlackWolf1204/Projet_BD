@@ -143,7 +143,10 @@ $ROOT = '../../';
 		}
 		?>
 
-		<input type="submit" value="Ajouter">
+		<div class="doubleboutons">
+			<input type="submit" value="Ajouter">
+			<a href="<?= $ROOT ?>Page_accueil/Page_accueil.php" class="bouton">Retour à l'accueil</a>
+		</div>
 	</form>
 
 	<?php require("{$ROOT}common/footer.php") ?>

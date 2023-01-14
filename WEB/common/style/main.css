@@ -62,6 +62,14 @@ h2{
   text-align: center; /* Centre le texte */
   color: #00b894; /* Change la couleur du texte */
 }
+
+.bouton-retour {
+  display: block; /* Affiche le bouton sur une nouvelle ligne */
+  width: 15%; /* Remplit 15% de la largeur de la colonne */
+  margin: 20px; /* Ajoute de l'espace au-dessus et en-dessous du bouton */
+  padding: 12px 20px;
+}    
+
 form {
   max-width: 500px; /* Limite la largeur du formulaire */
   margin: 1em auto; /* Centre le formulaire sur la page */
@@ -69,22 +77,27 @@ form {
   border: 1px solid #ddd; /* Ajoute une bordure au formulaire */
   padding: 20px; /* Ajoute de l'espace autour du contenu du formulaire */
 }
+
 input:not([type="radio"]), select {
   width: 100%; /* Remplit toute la largeur de la colonne */
   padding: 12px 20px; /* Ajoute de l'espace à l'intérieur de l'élément */
   margin: 8px 0; /* Ajoute de l'espace en dessous de l'élément */
   box-sizing: border-box; /* Permet de prendre en compte la bordure dans la largeur de l'élément */
 }
+
 button {
   width: 100%; /* Remplit toute la largeur de la colonne */
 }
-button, .header-right > a {
+
+button, .header-right > a, .bouton, .bouton-retour {
   background-color: #00b894; /* Change la couleur de fond du bouton */
   color: #fff; /* Change la couleur du texte du bouton */
   padding: 14px 20px; /* Ajoute de l'espace à l'intérieur du bouton */
   margin: 8px 0; /* Ajoute de l'espace en dessous du bouton */
   border: none; /* Enlève la bordure du bouton */
   cursor: pointer; /* Change le curseur lorsque la souris passe sur le bouton */
+  text-align: center; /* Centre le texte du bouton */
+  text-decoration: none; /* Enlève la décoration du texte du bouton (souligné, etc.) */
 }
 
 table {
@@ -123,8 +136,10 @@ table td:not(.ignore) {
 }
 
 /* Styles pour les boutons au survol de la souris */
-.bouton:hover, .header-right > a:hover {
+.bouton:hover, .header-right > a:hover, button:hover, .bouton-retour:hover {
   background-color: #3dc7ab;
+  text-decoration: none;
+  color: #fff;
 }
 
 footer {
@@ -148,10 +163,41 @@ footer p {
   flex-wrap: wrap;
 }
 
+.doubleboutons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.doubleboutons > * {
+  width: 50% !important;
+}
+
 .vantatopologymin {
   height: 77px;
   position: unset !important;
 }
 .vanta-canvas {
   position: unset !important;
+}
+
+img.validation {
+  width: 20%;
+  height: auto;
+}
+
+/* Pour width < 700px */
+@media screen and (max-width: 700px) {
+  header {
+    flex-direction: column;
+  }
+  header > h1 {
+    position: unset;
+  }
+  .header-left {
+    display: flex;
+  }
+  header img {
+    margin: 0 auto;
+  }
 }

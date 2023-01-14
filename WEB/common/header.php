@@ -40,7 +40,7 @@ $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
         <?php
-        if (!isset($_SESSION['Id'])) 
+       if (!$estConnecte) {
         {
             echo "<li class='nav-item'><a class='nav-link' href='{$ROOT}Page_accueil/inscription.php'>S'inscrire</a></li>";
             echo "<li class='nav-item'><a class='nav-link' href='{$ROOT}Page_accueil/connexion.php'>Se connecter (utilisateur)</a></li>";
@@ -61,6 +61,7 @@ $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 </header>
     <br><br>
+
     <div class="vantatopologymin" id="vantatopologymin_1"></div>
     <div class="body">
 

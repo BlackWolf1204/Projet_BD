@@ -29,6 +29,7 @@ CREATE TABLE Administrateur(
    dateCreation DATE NOT NULL,
    PRIMARY KEY(idPersonne),
    FOREIGN KEY(idPersonne) REFERENCES InfoPersonne(idPersonne)
+        ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE TypeAppartement(
@@ -89,6 +90,7 @@ CREATE TABLE Departement(
    PRIMARY KEY(numDepartement),
    UNIQUE(nomDepartement),
    FOREIGN KEY(idRegion) REFERENCES Region(idRegion)
+        ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Ville(
@@ -98,6 +100,7 @@ CREATE TABLE Ville(
    numDepartement INT NOT NULL,
    PRIMARY KEY(idVille),
    FOREIGN KEY(numDepartement) REFERENCES Departement(numDepartement)
+        ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Rue(
@@ -106,6 +109,7 @@ CREATE TABLE Rue(
    idVille INT NOT NULL,
    PRIMARY KEY(idRue),
    FOREIGN KEY(idVille) REFERENCES Ville(idVille)
+        ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Adresse(
@@ -114,6 +118,7 @@ CREATE TABLE Adresse(
    idRue INT NOT NULL,
    PRIMARY KEY(idAdresse),
    FOREIGN KEY(idRue) REFERENCES Rue(idRue)
+        ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Utilisateur(
@@ -123,6 +128,7 @@ CREATE TABLE Utilisateur(
    dateCreation DATE NOT NULL,
    PRIMARY KEY(idPersonne),
    FOREIGN KEY(idPersonne) REFERENCES InfoPersonne(idPersonne)
+        ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Propriete(
@@ -132,6 +138,7 @@ CREATE TABLE Propriete(
    idAdresse INT NOT NULL,
    PRIMARY KEY(idPropriete),
    FOREIGN KEY(idAdresse) REFERENCES Adresse(idAdresse)
+        ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Créer une vue avec la propriété et son adresse
@@ -151,9 +158,12 @@ CREATE TABLE Appartement(
    typeAppart INT NOT NULL,
    idPropriete INT NOT NULL,
    PRIMARY KEY(idAppartement),
-   FOREIGN KEY(degreSecurite) REFERENCES TypeSecurite(degreSecurite),
-   FOREIGN KEY(typeAppart) REFERENCES TypeAppartement(typeAppart),
+   FOREIGN KEY(degreSecurite) REFERENCES TypeSecurite(degreSecurite)
+        ON DELETE CASCADE,
+   FOREIGN KEY(typeAppart) REFERENCES TypeAppartement(typeAppart)
+        ON DELETE CASCADE,
    FOREIGN KEY(idPropriete) REFERENCES Propriete(idPropriete)
+        ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Piece(
@@ -163,6 +173,7 @@ CREATE TABLE Piece(
    PRIMARY KEY(idPiece),
    FOREIGN KEY(typePiece) REFERENCES TypePiece(typePiece),
    FOREIGN KEY(idAppartement) REFERENCES Appartement(idAppartement)
+        ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Appareil(
@@ -172,8 +183,10 @@ CREATE TABLE Appareil(
    idTypeAppareil INT NOT NULL,
    idPiece INT NOT NULL,
    PRIMARY KEY(idAppareil),
-   FOREIGN KEY(idTypeAppareil) REFERENCES TypeAppareil(idTypeAppareil),
+   FOREIGN KEY(idTypeAppareil) REFERENCES TypeAppareil(idTypeAppareil)
+        ON DELETE CASCADE,
    FOREIGN KEY(idPiece) REFERENCES Piece(idPiece)
+        ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE HistoriqueConsommation(
@@ -183,6 +196,7 @@ CREATE TABLE HistoriqueConsommation(
    idAppareil INT NOT NULL,
    PRIMARY KEY(idConsommation),
    FOREIGN KEY(idAppareil) REFERENCES Appareil(idAppareil)
+        ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Consommer(
@@ -192,8 +206,10 @@ CREATE TABLE Consommer(
    qteMaxParJour FLOAT,
    quantiteAllume FLOAT,
    PRIMARY KEY(idTypeAppareil, typeRessource),
-   FOREIGN KEY(idTypeAppareil) REFERENCES TypeAppareil(idTypeAppareil),
+   FOREIGN KEY(idTypeAppareil) REFERENCES TypeAppareil(idTypeAppareil)
+        ON DELETE CASCADE,
    FOREIGN KEY(typeRessource) REFERENCES TypeRessource(typeRessource)
+        ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Produire(
@@ -203,8 +219,10 @@ CREATE TABLE Produire(
    qteMaxParJour FLOAT,
    quantiteAllume FLOAT,
    PRIMARY KEY(idTypeAppareil, typeSubstance),
-   FOREIGN KEY(idTypeAppareil) REFERENCES TypeAppareil(idTypeAppareil),
+   FOREIGN KEY(idTypeAppareil) REFERENCES TypeAppareil(idTypeAppareil)
+        ON DELETE CASCADE,
    FOREIGN KEY(typeSubstance) REFERENCES TypeSubstance(typeSubstance)
+        ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Proprietaire(
@@ -213,8 +231,10 @@ CREATE TABLE Proprietaire(
    datefinprop DATETIME,
    idPersonne INT NOT NULL,
    PRIMARY KEY(idPropriete, datedebutprop),
-   FOREIGN KEY(idPropriete) REFERENCES Propriete(idPropriete),
+   FOREIGN KEY(idPropriete) REFERENCES Propriete(idPropriete)
+        ON DELETE CASCADE,
    FOREIGN KEY(idPersonne) REFERENCES Utilisateur(idPersonne)
+        ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Locataire(
@@ -224,6 +244,8 @@ CREATE TABLE Locataire(
    idPersonne INT NOT NULL,
    nbHabitants INT,
    PRIMARY KEY(idAppartement, datedebutloc),
-   FOREIGN KEY(idAppartement) REFERENCES Appartement(idAppartement),
+   FOREIGN KEY(idAppartement) REFERENCES Appartement(idAppartement)
+        ON DELETE CASCADE,
    FOREIGN KEY(idPersonne) REFERENCES Utilisateur(idPersonne)
+        ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

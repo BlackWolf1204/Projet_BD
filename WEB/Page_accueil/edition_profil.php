@@ -5,13 +5,12 @@
 $ROOT = "../";
 require_once '../common/main.php';
 
-if(isset($_SESSION['Id']))
-{
+if ($estConnecte) {
+    $tableUser = $estAdmin ? "Administrateur" : "Utilisateur";
 
-    $getid = intval($_SESSION['Id']);
-    $requser = $bdd->prepare('SELECT * FROM InfoPersonne JOIN Utilisateur ON InfoPersonne.idPersonne = Utilisateur.idPersonne WHERE InfoPersonne.idPersonne = ?');
-    $requser->execute(array($getid));
-    $userinfo = $requser->fetch();  
+    $requser = $bdd->prepare("SELECT * FROM InfoPersonne NATURAL JOIN $tableUser WHERE InfoPersonne.idPersonne = ?");
+    $result = $requser->execute(array($sessionId));
+    $userinfo = $requser->fetch();
 
     /*
 
@@ -34,146 +33,153 @@ if(isset($_SESSION['Id']))
     */
 
     // on modifie l'identifiant de l'utilisateur et de l'administrateur si il est connecté en tant qu'administrateur
-    if(isset($_POST['newidentifiant']) AND !empty($_POST['newidentifiant']) AND $_POST['newidentifiant'] != $userinfo['identifiant'])
-    {
+    $nbChangements = 0;
+    $msgs = array();
+    if (isset($_POST['newidentifiant']) and !empty($_POST['newidentifiant']) and $_POST['newidentifiant'] != $userinfo['identifiant']) {
         $newidentifiant = htmlspecialchars($_POST['newidentifiant']);
-        $insertidentifiant = $bdd->prepare("UPDATE Utilisateur SET identifiant = ? WHERE idPersonne = ?");
-        $insertidentifiant->execute(array($newidentifiant, $getid));
-        header('Location: edition_profil.php?id='.$_SESSION['Id']);
+        $insertidentifiant = $bdd->prepare("UPDATE $tableUser SET identifiant = ? WHERE idPersonne = ?");
+        $res = $insertidentifiant->execute(array($newidentifiant, $sessionId));
+        if ($res)
+            $nbChangements++;
+        else
+            $msgs[] = "Erreur lors de la modification de l'identifiant";
     }
-    if(isset($_POST['newidentifiant']) AND !empty($_POST['newidentifiant']) AND $_POST['newidentifiant'] != $userinfo['identifiant'])
-    {
-        $newidentifiant = htmlspecialchars($_POST['newidentifiant']);
-        $insertidentifiant = $bdd->prepare("UPDATE Administrateur SET identifiant = ? WHERE idPersonne = ?");
-        $insertidentifiant->execute(array($newidentifiant, $getid));
-        header('Location: edition_profil.php?id='.$_SESSION['Id']);
+    if (isset($_POST['newmail']) and !empty($_POST['newmail']) and $_POST['newmail'] != $userinfo['mail']) {
+        $newmail = htmlspecialchars($_POST['newmail']);
+        $insertmail = $bdd->prepare("UPDATE InfoPersonne SET mail = ? WHERE idPersonne = ?");
+        $res = $insertmail->execute(array($newmail, $sessionId));
+        if ($res)
+            $nbChangements++;
+        else
+            $msgs[] = "Erreur lors de la modification de l'adresse mail";
     }
 
-    if(isset($_POST['newmdp1']) AND !empty($_POST['newmdp1']) AND isset($_POST['newmdp2']) AND !empty($_POST['newmdp2']))
-    {
+    if (isset($_POST['newmdp1']) and !empty($_POST['newmdp1']) and isset($_POST['newmdp2']) and !empty($_POST['newmdp2'])) {
         $mdp1 = sha1($_POST['newmdp1']);
         $mdp2 = sha1($_POST['newmdp2']);
-        if($mdp1 == $mdp2)
-        {
-            $insertmdp = $bdd->prepare("UPDATE Utilisateur SET mdp = ? WHERE idPersonne = ?");
-            $insertmdp->execute(array($mdp1, $getid));
-            header('Location: edition_profil.php?id='.$_SESSION['Id']);
-
-        }
-        else
-        {
-            $msg = "Vos deux mots de passee ne correspondent pas !";
+        if ($mdp1 == $mdp2) {
+            $insertmdp = $bdd->prepare("UPDATE $tableUser SET mdp = ? WHERE idPersonne = ?");
+            $res = $insertmdp->execute(array($mdp1, $sessionId));
+            if ($res)
+                $nbChangements++;
+            else
+                $msgs[] = "Erreur lors de la modification du mot de passe";
+        } else {
+            $msgs[] = "Les deux mots de passe ne correspondent pas";
         }
     }
 
-    if(isset($_POST['newnumtel']) AND !empty($_POST['newnumtel']) AND $_POST['newnumtel'] != $userinfo['numTel'])
-    {
+    if (isset($_POST['newnumtel']) and !empty($_POST['newnumtel']) and $_POST['newnumtel'] != $userinfo['numTel']) {
+        $NumTel = htmlspecialchars($_POST['newnumtel']);
+        $NumTel = preg_replace("#^(0[1-9]).?([0-9]{2}).?([0-9]{2}).?([0-9]{2}).?([0-9]{2})$#", "$1$2$3$4$5", $NumTel);
         $newnumtel = htmlspecialchars($_POST['newnumtel']);
-        $insertnumtel = $bdd->prepare("UPDATE InfoPersonne SET numTel = ? WHERE idPersonne = ?");
-        $insertnumtel->execute(array($newnumtel, $getid));
-
-        header('Location: edition_profil.php?id='.$_SESSION['Id']);
+        if (!preg_match("#^0[1-9][0-9]{8}$#", $NumTel)) {
+            // Sans espaces, tirets ou parenthèses : 0102030405
+            echo "Le numéro du portable est invalide : $NumTel";
+        } else {
+            $insertnumtel = $bdd->prepare("UPDATE InfoPersonne SET numTel = ? WHERE idPersonne = ?");
+            $res = $insertnumtel->execute(array($newnumtel, $sessionId));
+            if ($res)
+                $nbChangements++;
+            else
+                $msgs[] = "Erreur lors de la modification du numéro de téléphone";
+        }
     }
-    if(isset($_POST['newgenre']) AND !empty($_POST['newgenre']) AND $_POST['newgenre'] != $userinfo['genre'])
-    {
+    if (isset($_POST['newgenre']) and !empty($_POST['newgenre']) and $_POST['newgenre'] != $userinfo['genre']) {
         $newgenre = htmlspecialchars($_POST['newgenre']);
         $insertgenre = $bdd->prepare("UPDATE InfoPersonne SET genre = ? WHERE idPersonne = ?");
-        $insertgenre->execute(array($newgenre, $getid));
-
-        header('Location: edition_profil.php?id='.$_SESSION['Id']);
+        $res = $insertgenre->execute(array($newgenre, $sessionId));
+        if ($res)
+            $nbChangements++;
+        else
+            $msgs[] = "Erreur lors de la modification du genre";
     }
-    if(isset($_POST['newnom']) AND !empty($_POST['newnom']) AND $_POST['newnom'] != $userinfo['nom'])
-    {
+    if (isset($_POST['newnom']) and !empty($_POST['newnom']) and $_POST['newnom'] != $userinfo['nom']) {
         $newnom = htmlspecialchars($_POST['newnom']);
         $insertnom = $bdd->prepare("UPDATE InfoPersonne SET nom = ? WHERE idPersonne = ?");
-        $insertnom->execute(array($newnom, $getid));
-        header('Location: edition_profil.php?id='.$_SESSION['Id']);
+        $res = $insertnom->execute(array($newnom, $sessionId));
+        if ($res)
+            $nbChangements++;
+        else
+            $msgs[] = "Erreur lors de la modification du nom";
     }
-    if(isset($_POST['newprenom']) AND !empty($_POST['newprenom']) AND $_POST['newprenom'] != $userinfo['prenom'])
-    {
+    if (isset($_POST['newprenom']) and !empty($_POST['newprenom']) and $_POST['newprenom'] != $userinfo['prenom']) {
         $newprenom = htmlspecialchars($_POST['newprenom']);
         $insertprenom = $bdd->prepare("UPDATE InfoPersonne SET prenom = ? WHERE idPersonne = ?");
-        $insertprenom->execute(array($newprenom, $getid));
-        header('Location: edition_profil.php?id='.$_SESSION['Id']);
+        $res = $insertprenom->execute(array($newprenom, $sessionId));
+        if ($res)
+            $nbChangements++;
+        else
+            $msgs[] = "Erreur lors de la modification du prénom";
     }
-}
-else
-{
-    $msg = "Votre Compte a bien été mis a jour !";
 
-   header("Location: Page_accueil.php");
+    if ($nbChangements > 0) {
+        // Rerécupérer les infos de l'utilisateur
+        $requser = $bdd->prepare("SELECT * FROM InfoPersonne NATURAL JOIN $tableUser WHERE InfoPersonne.idPersonne = ?");
+        $result = $requser->execute(array($sessionId));
+        $userinfo = $requser->fetch();
+        $msgs[] = "Vos informations ont été mises à jour";
+    }
+} else {
+    echo "Vous n'êtes pas connecté !<br>Redirection vers la page d'accueil dans 2 secondes...";
+    header("Refresh: 2; url={$ROOT}Page_accueil/Page_accueil.php");
 }
 ?>
 
 <!DOCTYPE html>
 <html>
-<title> Edition Profil </title>
+<title>Édition Profil </title>
     <meta charset="UTF-8">
     <!-- Ajout de Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="icon" href="<?= $ROOT ?>common/images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="<?= $ROOT ?>common/style/main.css">
     <!-- Ajout de style personnalisé -->
     </head>
     <style> 
-              body 
-              {
-                font-family: Arial, sans-serif; /* Change la police de caractères */
-                color: #333; /* Change la couleur du texte, , #333 est le code couleur noir */
-                background-color: #eee;/* Change la couleur de fond , #eee est le code couleur gris clair */
-              }
-              h2 {
-                font-size: 36px; /* Change la taille de la police */
-                text-align: center; /* Centre le texte */
-                color: #00b894; /* Change la couleur du texte */
-              }
-              form {
-                max-width: 500px; /* Limite la largeur du formulaire */
-                margin: 0 auto; /* Centre le formulaire sur la page */
-                background-color: #fff; /* Change la couleur de fond du formulaire */
-                border: 1px solid #ddd; /* Ajoute une bordure au formulaire */
-                padding: 20px; /* Ajoute de l'espace autour du contenu du formulaire */
-              }
-              input, select {
-                width: 100%; /* Remplit toute la largeur de la colonne */
-                padding: 12px 20px; /* Ajoute de l'espace à l'intérieur de l'élément */
-                margin: 8px 0; /* Ajoute de l'espace en dessous de l'élément */
-                box-sizing: border-box; /* Permet de prendre en compte la bordure dans la largeur de l'élément */
-              }
-              button {
-                width: 100%; /* Remplit toute la largeur de la colonne */
-                background-color: #00b894; /* Change la couleur de fond du bouton */
-                color: #fff; /* Change la couleur du texte du bouton */
-                padding: 14px 20px; /* Ajoute de l'espace à l'intérieur du bouton */
-                margin: 8px 0; /* Ajoute de l'espace en dessous du bouton */
-                border: none; /* Enlève la bordure du bouton */
-                cursor: pointer; /* Change le curseur lorsque la souris passe sur le bouton */
-              }
-          </style>
+        form > label {
+            margin-top: 1em;
+        }
+    </style>
     
     <body>
         <div align="center">
-            <h2>Edition de mon profil</h2>
+            <h2>Édition de mon profil</h2>
             <div align="left">
-                <form method="POST" action="">
+                <form method="POST" action="edition_profil.php">
                 <label>Nom :</label>
-                    <input type="text" name="newnom" placeholder="Nom" value="<?php echo $userinfo['nom']; ?>" /><br /><br />
-                    <label>Prénom :</label>
-                    <input type="text" name="newprenom" placeholder="Prénom" value="<?php echo $userinfo['prenom']; ?>" /><br /><br />
-                    <label>Mail :</label>
-                    <input type="text" name="newmail" placeholder="Mail" value="<?php echo $userinfo['mail']; ?>" autocomplete="email" /><br /><br />
-                    <label>Mot de passe :</label>
-                    <input type="password" name="newmdp1" placeholder="Mot de passe" autocomplete="new-password"/><br /><br />
-                    <label>Confirmation - mot de passe :</label>
-                    <input type="password" name="newmdp2" placeholder="Confirmation du mot de passe" autocomplete="new-password" /><br /><br />
-                    <label>Numéro de téléphone :</label>
-                    <input type="text" name="newnumtel" placeholder="Numéro de téléphone" value="<?php echo $userinfo['numTel']; ?>" /><br /><br />
-                    <label>Genre :</label>
-                    <input type="text" name="newgenre" placeholder="Genre" value="<?php echo $userinfo['genre']; ?>" /><br /><br />
-                    <label>Identifiant :</label>
-                    <input type="text" name="newidentifiant" placeholder="Identifiant" value="<?php echo $userinfo['identifiant']; ?>" disabled /><br /><br />
+                <input type="text" name="newnom" placeholder="Nom" value="<?php echo $userinfo['nom']; ?>" />
+                <label>Prénom :</label>
+                <input type="text" name="newprenom" placeholder="Prénom" value="<?php echo $userinfo['prenom']; ?>" />
+                <label>Mail :</label>
+                <input type="text" name="newmail" placeholder="Mail" value="<?php echo $userinfo['mail']; ?>" autocomplete="email" />
+                <label>Nouveau mot de passe :</label>
+                <input type="password" name="newmdp1" placeholder="Nouveau mot de passe" autocomplete="new-password" />
+                <label>Confirmation - mot de passe :</label>
+                <input type="password" name="newmdp2" placeholder="Confirmation du mot de passe" autocomplete="new-password" />
+                <label>Numéro de téléphone :</label>
+                <input type="text" name="newnumtel" placeholder="Numéro de téléphone" pattern="0[1-9][ \-]?[0-9]{2}[ \-]?[0-9]{2}[ \-]?[0-9]{2}[ \-]?[0-9]{2}" title="Format 01 23 45 67 89" value="<?php echo $userinfo['numTel']; ?>" />
+                <label>Genre :</label>
+                <select id="Genre" name="newgenre" value="<?= $Genre ?>" required>
+                    <option value="H" <?php if ($userinfo['genre'] == 'H') echo 'selected'; ?>>Homme</option>
+                    <option value="F" <?php if ($userinfo['genre'] == 'F') echo 'selected'; ?>>Femme</option>
+                    <option value="A" <?php if ($userinfo['genre'] == 'A') echo 'selected'; ?>>Autres</option>
+                </select>
+                <label>Identifiant :</label>
+                <input type="text" name="newidentifiant" placeholder="Identifiant" value="<?php echo $userinfo['identifiant']; ?>" disabled />
+                <div class="doubleboutons">
                     <input type="submit" value="Mettre à jour mon profil !" />
+                    <a href="<?= $ROOT ?>Page_accueil/Page_accueil.php" class="bouton">Retour à l'accueil</a>
+                </div>
 
-                </form>
-                <?php if(isset($msg)) { echo $msg; } ?>
-            </div>
+            </form>
+            <!-- Afficher $msgs avec un join de \n -->
+            <script>
+                var msgs = <?= json_encode($msgs) ?>;
+                if (msgs.length > 0) {
+                    alert(msgs.join("\n"));
+                }
+            </script>
         </div>
-    </body>
+    </div>
+</body>

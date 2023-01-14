@@ -25,22 +25,9 @@ if(isset($_POST['connexion']))
             $userinfo = $requser->fetch();//fetch permet de récupérer les données de la requête
 
             $_SESSION['Id'] = $userinfo['idPersonne'];
-            $_SESSION['Mail'] = $userinfo['mail'];
-            $_SESSION['MotDePasse'] = $userinfo['mdp'];
-            $_SESSION['NumTel'] = $userinfo['numTel'];
-            $_SESSION['Genre'] = $userinfo['genre'];
-            $_SESSION['DateNaissance'] = $userinfo['dateNais'];
-            $_SESSION['Nom'] = $userinfo['nom'];
-            $_SESSION['Prenom'] = $userinfo['prenom'];
             
-            //On affiche une image de validation au premier plan (C:\xampp\htdocs\xampp\Projet_BD\Page_accueil\Validation.png)
-            
-            // on attend 2 secondes avant de rediriger
-            sleep(2);
-
-            //Si tout est bon on redirige vers la page d'accueil avec l'id de l'utilisateur vu que c'est unique
-            //Sinon pour la version finale
-            header("Location: Page_accueil.php");
+            // Redirection vers la page d'accueil dans 2 secondes
+            header("Refresh: 2; url={$ROOT}Page_accueil/Page_accueil.php");
         }
         else
         {
@@ -61,52 +48,18 @@ if(isset($_POST['connexion']))
     <meta charset="UTF-8">
     <!-- Ajout de Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="icon" href="<?= $ROOT ?>common/images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="<?= $ROOT ?>common/style/main.css">
     
     <!-- Ajout de style personnalisé -->
     </head>
-    <style> 
-              body 
-              {
-                font-family: Arial, sans-serif; /* Change la police de caractères */
-                color: #333; /* Change la couleur du texte, , #333 est le code couleur noir */
-                background-color: #eee;/* Change la couleur de fond , #eee est le code couleur gris clair */
-              }
-              h2 {
-                font-size: 36px; /* Change la taille de la police */
-                text-align: center; /* Centre le texte */
-                color: #00b894; /* Change la couleur du texte */
-              }
-              form {
-                max-width: 500px; /* Limite la largeur du formulaire */
-                margin: 0 auto; /* Centre le formulaire sur la page */
-                background-color: #fff; /* Change la couleur de fond du formulaire */
-                border: 1px solid #ddd; /* Ajoute une bordure au formulaire */
-                padding: 20px; /* Ajoute de l'espace autour du contenu du formulaire */
-              }
-              input, select {
-                width: 100%; /* Remplit toute la largeur de la colonne */
-                padding: 12px 20px; /* Ajoute de l'espace à l'intérieur de l'élément */
-                margin: 8px 0; /* Ajoute de l'espace en dessous de l'élément */
-                box-sizing: border-box; /* Permet de prendre en compte la bordure dans la largeur de l'élément */
-              }
-              button {
-                width: 100%; /* Remplit toute la largeur de la colonne */
-                background-color: #00b894; /* Change la couleur de fond du bouton */
-                color: #fff; /* Change la couleur du texte du bouton */
-                padding: 14px 20px; /* Ajoute de l'espace à l'intérieur du bouton */
-                margin: 8px 0; /* Ajoute de l'espace en dessous du bouton */
-                border: none; /* Enlève la bordure du bouton */
-                cursor: pointer; /* Change le curseur lorsque la souris passe sur le bouton */
-              }
-          </style>
         <body>
-          <a href="../Page_accueil/Page_accueil.php">Retour</a>
             <!-- Ajout d'un "style de fond" -->
             <div class="container mt-5"> <!-- container c'est pour le centrage -->
            
                 <div class="row">
 
-                <div class="col-sm-8 offset-sm-2"><!-- col-sm-8 offset-sm-2 c'est pour le centrage avec un espace de 2 -->
+                <div class="col-sm-8 offset-sm-2 text-center"><!-- col-sm-8 offset-sm-2 c'est pour le centrage avec un espace de 2 -->
 
                     <!-- Formulaire de connexion -->
 
@@ -124,12 +77,22 @@ if(isset($_POST['connexion']))
                     </div><!-- Fin de la div pour les champs mail et mot de passe -->
 
 
-              <button type="submit" id="login" name="connexion">Se Connecter</button><!-- Bouton d'envoi du formulaire de connexion -->
+                <div class="doubleboutons">
+                    <button type="submit" id="login" name="connexion">Se Connecter</button>
+                    <a href="<?= $ROOT ?>Page_accueil/Page_accueil.php" class="bouton">Retour à l'accueil</a>
+                </div>
             </form>
             <?php
             if(isset($erreur)) //a mettre apres le formulaire au milieu de la page
             {
                 echo '<div align="center"><font color="red">'.$erreur."</font></div>";
+            }
+
+            if(isset($userexist))
+            {
+                echo '<div align="center"><font color="green">Vous êtes connecté !<br/>Redirection...</font></div>';
+                //On affiche une image de validation au premier plan (C:\xampp\htdocs\xampp\Projet_BD\Page_accueil\Validation.png)
+                echo "<img src='Validation.png' class='validation'/>";
             }
             ?>
           </div>

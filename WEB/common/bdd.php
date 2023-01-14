@@ -10,13 +10,18 @@ try {
 
 $bdd = $pdo;
 
-if (isset($_SESSION['Id'])) {
-	$result = $bdd->query("SELECT COUNT(*) FROM Administrateur WHERE idPersonne = {$_SESSION['Id']}");
+if (isset($_SESSION['Id']) && !empty($_SESSION['Id'])) {
+	$sessionId = $_SESSION['Id'];
+	$estConnecte = true;
+	$requser = $bdd->prepare("SELECT COUNT(*) FROM Administrateur WHERE idPersonne = ?");
+	$result = $requser->execute(array($sessionId));
 	if ($result) {
-		$estAdmin = $result->fetchColumn() > 0;
+		$estAdmin = $requser->fetchColumn() > 0;
 	} else {
 		$estAdmin = false;
 	}
 } else {
+	$sessionId = null;
+	$estConnecte = false;
 	$estAdmin = false;
 }
