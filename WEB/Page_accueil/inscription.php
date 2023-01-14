@@ -45,7 +45,7 @@ if (isset($_POST['inscription'])) {
     if (empty($erreur)) {
         if ($Mail != $Mail2) {
             $erreur = "Le mail ne correspond pas.";
-        } else if (!preg_match("#[0][6][- \.?]?([0-9][0-9][- \.?]?){4}$#", $NumTel)) {
+        } else if (!preg_match("#^0[1-9][ \-]?[0-9]{2}[ \-]?[0-9]{2}[ \-]?[0-9]{2}[ \-]?[0-9]{2}$#", $NumTel)) {
             $erreur = "Le numéro du portable est faux : $NumTel";
         }
         // on veut maintenant vérifier que la taillé est >8
@@ -366,7 +366,7 @@ if (isset($_POST['inscription'])) {
 
                         <div class="form-group col-md-6">
                             <label for="NumTel">Numéro de téléphone</label>
-                            <input type="tel" class="form-control" id="NumTel" name="NumTel" required placeholder="ex: 06 00 00 00 00" pattern="0[0-9][ \-]?[0-9]{2}[ \-]?[0-9]{2}[ \-]?[0-9]{2}[ \-]?[0-9]{2}" value="<?= $NumTel ?>">
+                            <input type="tel" class="form-control" id="NumTel" name="NumTel" required placeholder="ex: 06 00 00 00 00" pattern="0[1-9][ \-]?[0-9]{2}[ \-]?[0-9]{2}[ \-]?[0-9]{2}[ \-]?[0-9]{2}" value="<?= $NumTel ?>">
                         </div>
 
 

@@ -66,7 +66,7 @@
         <p class="welcome-text">ce site vous permettra de contrôler l'ensemble de vos appareils électriques et de voir votre consommation d'énergie, pour avoir une meilleure idée de votre consommation</p>
 
         <!--on affiche les boutons de navigation UNIQUEMENT si l'utilisateur est connecté, on va donc vérifier si la variable de session $_SESSION['id'] existe-->
-        <?php if(isset($_SESSION['id'])) { ?>
+        <?php if(isset($_SESSION['Id'])) { ?>
             <a href="../administration/gererConso.php" class="bouton">Regarder sa consommation/production</a>
             <a href="../administration/gererAppareil.php" class="bouton">Gérer ses appareils</a>
             <a href="../administration/gererPropriete.php" class="bouton">Gérer sa/ses propriété(s)</a>

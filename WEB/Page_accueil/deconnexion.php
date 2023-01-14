@@ -1,11 +1,3 @@
-<!--        //SITE D'UNE MAISON ECONOME // -->
-<!--    (page deconnexion) 
-    Cette page permettra la deconnexion ( après connexion ) quand on se trouve sur la page d'accueil:
-
--->
-
-<!-- Notes 24/12/2022 : a tester avec la page d'accueil-->
-
 
 <?php
 
