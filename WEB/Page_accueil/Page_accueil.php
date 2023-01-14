@@ -5,8 +5,9 @@
  
  <head><!-- début de l'entête de la page -->
 
-    <title>Page d'acceuil</title><!-- déclaration du titre de la page -->
+    <title>Green House</title><!-- déclaration du titre de la page -->
 
+    
     <?php require "../common/header.php"?>
 
 <!-- entré dans body -->
@@ -15,18 +16,13 @@
 
         
         /* Ajout de style personnalisé */
-        body {
+        .body_accueil {
             font-family: Arial, sans-serif; /* Change la police de caractères */
             color: #333; /* Change la couleur du texte, #333 est le code couleur noir */
             background-color: #eee; /* Change la couleur de fond, #eee est le code couleur gris clair */
         }
-        p {
-            font-size: 18px; /* Change la taille de la police */
-            text-align: justify; /* Justifie le texte */
-            margin: 20px 0; /* Ajoute de l'espace au-dessus et en-dessous du paragraphe */
-        }
 
-        .bouton {
+        .bouton_Nav{
             display: block; /* Affiche le bouton sur une nouvelle ligne */
             width: 90%; /* Remplit 90% de la largeur de la colonne */
             background-color: #00b894; /* Change la couleur de fond du bouton */
@@ -53,26 +49,23 @@
             height: 77px;
             position: initial !important;
         }
-        .vanta-canvas {
+        .vanta-canvas 
+        {
             position: unset !important;
         }
-    </style>
-    <script src="p5.min.js"></script>
-    <script src="vanta.topology.min.js"></script>
-
-    <div class="vantatopologymin" id="vantatopologymin_1"></div>
-    <div class="body-right">
-        
-        <h2 class="welcome-header">BIENVENUE SUR NOTRE SITE</h2>
-        <p class="welcome-text">De nos jours il est important de faire des économies d'énergie,</p>
-        <p class="welcome-text">ce site vous permettra de contrôler l'ensemble de vos appareils électriques et de voir votre consommation d'énergie, pour avoir une meilleure idée de votre consommation</p>
-
+        </style>
+      
+    
         <!--on affiche les boutons de navigation UNIQUEMENT si l'utilisateur est connecté, on va donc vérifier si la variable de session $_SESSION['id'] existe-->
+
+
         <?php if($estConnecte) { ?>
-            <a href="../administration/gererConso.php" class="bouton">Regarder sa consommation/production</a>
-            <a href="../administration/gererAppareil.php" class="bouton">Gérer ses appareils</a>
-            <a href="../administration/gererPropriete.php" class="bouton">Gérer sa/ses propriété(s)</a>
-            <a href="../proprietes/ajoutPropriete/ajoutPropriete.php" class="bouton">Ajouter une propriété</a>
+            <!--on affiche Bienvenue suivi du  de l'utilisateur au mileu de la page -->
+            <h1>Bienvenue <?php echo $_SESSION['Prenom']; ?> !</h1>
+            <a href="../administration/gererConso.php" class="bouton_Nav">Regarder sa consommation/production</a>
+            <a href="../administration/gererAppareil.php" class="bouton_Nav">Gérer ses appareils</a>
+            <a href="../administration/gererPropriete.php" class="bouton_Nav">Gérer sa/ses propriété(s)</a>
+            <a href="../proprietes/ajoutPropriete/ajoutPropriete.php" class="bouton_Nav">Ajouter une propriété</a>
             <!--on affciche le bouton statistiques UNIQUEMENT si l'utilisateur est un admin, on va donc vérifier si la variable de session $estAdmin est validée-->
         <?php } ?>
         <?php if($estAdmin) { ?>
