@@ -27,33 +27,36 @@ $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <div class="container">
-            <img src="<?= $ROOT ?>common/images/Green_house.webp" alt="Green_house" width="20" height="20" style="float:left; margin:0 25px 0 0;" />
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <div class="container">
+<img src=  "<?= $ROOT ?>common/images/Green_house.webp" alt="Green_house" width="20" height="20" style="float:left; margin:0 25px 0 0;" />
 
-            <a class="navbar-brand" href="<?= $ROOT ?>Page_accueil/Page_accueil.php"><b>Green House </b></a>
-            <button class="navbar-toggler" type="carousel-btn" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+    <a class="navbar-brand" href="<?= $ROOT ?>Page_accueil/Page_accueil.php"><b>Green House </b></a>
+    <button class="navbar-toggler" type="carousel-btn" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <?php
-                    if (!$estConnecte) 
-                        echo "<li class='nav-item'><a class='nav-link' href='{$ROOT}Page_accueil/inscription.php'>S'inscrire</a></li>";
-                        echo "<li class='nav-item'><a class='nav-link' href='{$ROOT}Page_accueil/connexion.php'>Se connecter (utilisateur)</a></li>";
-                        echo "<li class='nav-item'><a class='nav-link' href='{$ROOT}Page_accueil/connexion_administrateur.php'>Se connecter (admin)</a></li>";
-                    } else {
-                        echo "<li class='nav-item'><a class='nav-link' href='{$ROOT}Page_accueil/deconnexion.php'>Se déconnecter</a></li>";
-                        echo "<li class='nav-item'><a class='nav-link' href='{$ROOT}Page_accueil/gestion_compte.php'>Mon compte</a></li>";
-                    }
-                    ?>
-                </ul>
-            </div>
-        </div>
-
-
-    </nav>
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+      <ul class="navbar-nav ml-auto">
+        <?php
+       if (!$estConnecte) 
+        {
+            echo "<li class='nav-item'><a class='nav-link' href='{$ROOT}Page_accueil/inscription.php'>S'inscrire</a></li>";
+            echo "<li class='nav-item'><a class='nav-link' href='{$ROOT}Page_accueil/connexion.php'>Se connecter (utilisateur)</a></li>";
+            echo "<li class='nav-item'><a class='nav-link' href='{$ROOT}Page_accueil/connexion_administrateur.php'>Se connecter (admin)</a></li>";
+        }
+        else
+        {
+            echo "<li class='nav-item'><a class='nav-link' href='{$ROOT}Page_accueil/deconnexion.php'>Se déconnecter</a></li>";
+            echo "<li class='nav-item'><a class='nav-link' href='{$ROOT}Page_accueil/mon_compte.php'>Mon compte</a></li>";
+        }
+        ?>
+        </ul>
+    </div>
+    </div>
+    
+        
+</nav>
 
 
     <br><br>
