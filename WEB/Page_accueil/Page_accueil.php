@@ -56,8 +56,8 @@
             <!--on affiche Bienvenue suivi du  de l'utilisateur au mileu de la page -->
             <h1 style="text-align: center;">Bienvenue <?= $Prenom ?> !</h1>
             <a href="../administration/gererConso.php" class="bouton_Nav bouton">Regarder sa consommation/production</a>
-            <a href="../administration/gererAppareil.php" class="bouton_Nav bouton">Gérer ses appareils</a>
-            <a href="../administration/gererPropriete.php" class="bouton_Nav bouton">Gérer sa/ses propriété(s)</a>
+            <a href="../Gestion des appareils/gererAppareils.php" class="bouton_Nav bouton">Gérer ses appareils</a>
+            <a href="../proprietes/gererProprietes.php" class="bouton_Nav bouton">Gérer sa/ses propriété(s)</a>
             <a href="../proprietes/ajoutPropriete/ajoutPropriete.php" class="bouton_Nav bouton">Ajouter une propriété</a>
             <!--on affciche le bouton statistiques UNIQUEMENT si l'utilisateur est un admin, on va donc vérifier si la variable de session $estAdmin est validée-->
         <?php } ?>

@@ -71,16 +71,9 @@ $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
                     <h1 style="color: Green; font-size: 50px; font-weight: bold; text-shadow: 0px 0px 35px #000000;">Green House</h1>
                     <p style="color: White; font-size: 30px; font-weight: bold; text-shadow: 0px 0px 25px #000000;">Contrôler votre consommation d'energies </p>
                     <p style="color: White; font-size: 30px; font-weight: bold; text-shadow: 0px 0px 25px #000000;">afin de réduire vos émissions de substances nocives </p>
-
                 </div>
-
-
             </div>
-
         </div>
-
-
-
-
-
     <?php } ?>
+
+    <div class="body">

@@ -7,7 +7,11 @@ function proprieteFromPost()
 		"nomRue" => $_POST['nomRue'],
 		"codePostal" => $_POST['codePostal'],
 		"ville" => $_POST['ville'],
-		"nomPropriete" => $_POST['nomPropriete']
+		"nomPropriete" => $_POST['nomPropriete'],
+		"codeRegion" => $_POST['codeRegion'],
+		"nomRegion" => $_POST['nomRegion'],
+		"codeDepartement" => $_POST['codeDepartement'],
+		"nomDepartement" => $_POST['nomDepartement'],
 	);
 }
 

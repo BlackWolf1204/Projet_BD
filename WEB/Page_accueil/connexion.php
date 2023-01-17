@@ -27,7 +27,7 @@ if(isset($_POST['connexion']))
             $_SESSION['Id'] = $userinfo['idPersonne'];
             
             // Redirection vers la page d'accueil dans 2 secondes
-            header("Refresh: 2; url={$ROOT}Page_accueil/Page_accueil.php");
+            header("Refresh: 1; url={$ROOT}Page_accueil/Page_accueil.php");
         }
         else
         {
@@ -88,7 +88,7 @@ if(isset($_POST['connexion']))
                 echo '<div align="center"><font color="red">'.$erreur."</font></div>";
             }
 
-            if(isset($userexist))
+            if(isset($userexist) AND $userexist == 1)
             {
                 echo '<div align="center"><font color="green">Vous êtes connecté !<br/>Redirection...</font></div>';
                 //On affiche une image de validation au premier plan (C:\xampp\htdocs\xampp\Projet_BD\Page_accueil\Validation.png)

@@ -3,10 +3,10 @@
 -- Info personne (idPersonne, nom, dateNaissance, genre, email, tel, prenom)
 INSERT INTO InfoPersonne VALUES (1, 'MARTIN', '1990-01-01', 'M', 'gabriel9854@gmail.com', '0695867428', 'Gabriel');
 INSERT INTO InfoPersonne VALUES (2, 'ETIENNE', '1997-01-01', 'M', 'Adam7474@gmail.com', '0659852674', 'Adam');
-INSERT INTO InfoPersonne VALUES (3, 'MALLET', '1995-01-01', 'F', 'AlaineE9586@gmail.com', '06359824', 'Alaine');
+INSERT INTO InfoPersonne VALUES (3, 'MALLET', '1995-01-01', 'F', 'AlaineE9586@gmail.com', '0635982412', 'Alaine');
 INSERT INTO InfoPersonne VALUES (4, 'LAURENT', '1999-01-01', 'M', 'Lucas22@gmail.com', '0639356827', 'Lucas');
 INSERT INTO InfoPersonne VALUES (5, 'PETIT', '1997-01-01', 'F', 'Doriane562@gmail.com', '0695847233', 'Doriane');
-INSERT INTO InfoPersonne VALUES (6, 'DUPONT', '1995-01-01', 'A', 'dpdu2222@gmail.com', '063598742', 'Dupont');
+INSERT INTO InfoPersonne VALUES (6, 'DUPONT', '1995-01-01', 'A', 'dpdu2222@gmail.com', '0635987420', 'Dupont');
 
 -- Administrateur (idPersonne, identifiant, mdp, dateCreation)
 INSERT INTO Administrateur VALUES (1, 'gabriel9854', 'd269d30513bca41eb810eb899dcbf87b6bf00f8e', '2022-12-16'); -- yRTX7pf6

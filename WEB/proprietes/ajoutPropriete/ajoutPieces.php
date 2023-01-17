@@ -73,10 +73,11 @@ $ROOT = '../../';
 	}
 
 	if ($nbAppartements == 1) {
+		$lappartement = $type == "maison" ? "la maison" : "l'appartement";
 		if ($nbPieces == 1)
-			echo "<h2>Configuration de la pièce de l'appartement</h2>";
+			echo "<h2>Configuration de la pièce de $lappartement</h2>";
 		else
-			echo "<h2>Configuration des $nbPieces pièces de l'appartement</h2>";
+			echo "<h2>Configuration des $nbPieces pièces de $lappartement</h2>";
 	} else {
 		echo "<h2>Configuration des $nbPieces pièces des $nbAppartements appartements</h2>";
 	}
@@ -108,7 +109,9 @@ $ROOT = '../../';
 
 			<div class="infoAppart" appartNum=<?= $i ?>>
 
-				<h2 id="numAppartement_<?= $i ?>">Appartement numéro <?= $i ?></h2>
+				<?php if ($type != "maison") { ?>
+					<h2 id="numAppartement_<?= $i ?>">Appartement numéro <?= $appartement['numAppartement'] ?></h2>
+				<?php } ?>
 				<input type="hidden" name="numAppartement_<?= $i ?>" value="<?= $i ?>">
 				<input type="hidden" name="degreSecurite_<?= $i ?>" value="<?= $appartement['degreSecurite'] ?>">
 				<input type="hidden" name="typeAppartement_<?= $i ?>" value="<?= $typeAppartement['typeAppart'] ?>">

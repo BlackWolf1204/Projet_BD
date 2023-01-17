@@ -94,7 +94,7 @@ CREATE TABLE Departement(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Ville(
-   idVille INT,
+   idVille INT AUTO_INCREMENT,
    nomVille VARCHAR(50)  NOT NULL,
    codePostal VARCHAR(5)  NOT NULL,
    numDepartement INT NOT NULL,
@@ -104,7 +104,7 @@ CREATE TABLE Ville(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Rue(
-   idRue INT,
+   idRue INT AUTO_INCREMENT,
    nomRue VARCHAR(50)  NOT NULL,
    idVille INT NOT NULL,
    PRIMARY KEY(idRue),
@@ -113,7 +113,7 @@ CREATE TABLE Rue(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE Adresse(
-   idAdresse INT,
+   idAdresse INT AUTO_INCREMENT,
    numeroRue INT NOT NULL,
    idRue INT NOT NULL,
    PRIMARY KEY(idAdresse),
@@ -249,3 +249,84 @@ CREATE TABLE Locataire(
    FOREIGN KEY(idPersonne) REFERENCES Utilisateur(idPersonne)
         ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+-- Génération des TIGGER :
+
+-- Empêcher la création d'un compte pour les données invalides :
+--  - pour une personne de moins de 18 ans
+--  - pour un numéro de téléphone invalide
+CREATE TRIGGER VerifDonneesInfoPersonne
+BEFORE INSERT ON InfoPersonne
+FOR EACH ROW
+BEGIN
+    IF (NEW.dateNais > DATE_SUB(CURDATE(), INTERVAL 18 YEAR)) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Vous devez avoir plus de 18 ans pour créer un compte';
+    END IF;
+    IF (NEW.numTel NOT REGEXP '^0[1-9][0-9]{8}$') THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le numéro de téléphone doit être composé de 10 chiffres et commencer par 0';
+    END IF;
+END;
+
+-- Empêcher la création et modification d'un compte Utilisateur et Administrateur pour les données invalides :
+--  - pour un identifiant déjà utilisé
+--  - pour un mot de passe ne correspondant pas à un hash
+CREATE TRIGGER VerifDonneesUtilisateur
+BEFORE INSERT ON Utilisateur
+FOR EACH ROW
+BEGIN
+    IF (NEW.identifiant IN (SELECT identifiant FROM Utilisateur)) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cet identifiant est déjà utilisé';
+    END IF;
+    IF (NEW.mdp NOT REGEXP '^[a-zA-Z0-9]{20,}$') THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le mot de passe n''est pas valide';
+    END IF;
+END;
+CREATE TRIGGER VerifDonneesAdministrateur
+BEFORE INSERT ON Administrateur
+FOR EACH ROW
+BEGIN
+    IF (NEW.identifiant IN (SELECT identifiant FROM Administrateur)) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cet identifiant est déjà utilisé';
+    END IF;
+    IF (NEW.mdp NOT REGEXP '^[a-zA-Z0-9]{20,}$') THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le mot de passe n''est pas valide';
+    END IF;
+END;
+
+-- Empêcher la création d'une ville dont les données ne sont pas valides :
+--  - Un code postal doit être composé de 5 chiffres et doit commencer par le numéro du département
+CREATE TRIGGER VerifDonneesVille
+BEFORE INSERT ON Ville
+FOR EACH ROW
+BEGIN
+    IF (NEW.codePostal NOT REGEXP '^[0-9]{5}$') THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le code postal doit être composé de 5 chiffres';
+    END IF;
+    -- Les 2 premiers caractères du code postal correspondent au numéro du département
+    IF (NEW.numDepartement NOT LIKE CONCAT(SUBSTRING(NEW.codePostal, 1, 2), '%')) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le code postal doit commencer par le numéro du département';
+    END IF;
+END;
+
+-- Empêcher la création d'une adresse dont les données ne sont pas valides :
+--  - Le numéro de rue doit être un entier positif
+CREATE TRIGGER VerifDonneesAdresse
+BEFORE INSERT ON Adresse
+FOR EACH ROW
+BEGIN
+    IF (NEW.numeroRue NOT REGEXP '^[1-9][0-9]*$') THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le numéro de rue doit être un entier positif';
+    END IF;
+END;
+
+-- Empêcher la création d'un appartement dont les données ne sont pas valides :
+--  - Le numéro de l'appartement doit être un entier positif
+CREATE TRIGGER VerifDonneesAppartement
+BEFORE INSERT ON Appartement
+FOR EACH ROW
+BEGIN
+    IF (NEW.numAppart NOT REGEXP '^[1-9][0-9]*$') THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le numéro de l''appartement doit être un entier positif';
+    END IF;
+END;
