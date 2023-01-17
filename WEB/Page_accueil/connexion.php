@@ -25,7 +25,6 @@ if(isset($_POST['connexion']))
             $userinfo = $requser->fetch();//fetch permet de récupérer les données de la requête
 
             $_SESSION['Id'] = $userinfo['idPersonne'];
-            $_SESSION['Prenom'] = $userinfo['prenom'];
             
             // Redirection vers la page d'accueil dans 2 secondes
             header("Refresh: 2; url={$ROOT}Page_accueil/Page_accueil.php");

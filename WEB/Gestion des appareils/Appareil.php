@@ -91,17 +91,17 @@ if (isset($_POST['Appareil'])) {
                     <div class="row">
                     <div class="col-sm-8 offset-sm-2"><!-- col-sm-8 offset-sm-2 c'est pour le centrage avec un espace de 2 -->
                     <!--on affiche le infos d'appareil nom,  -->
-                    <!--<h2>Profil de <?php echo $userinfo['Prenom']; ?></h2>-->
+                    <!--<h2>Profil de <?= $Prenom ?></h2>-->
                     <a href="../Page_accueil/Page_accueil.php">Retour</a>
          <form action="Appareil.php" method="post">
                     <!-- Non d'appareil --> 
                     <div>
-                        <label for="nomApareil"">Nom d'appareril</label>
+                        <label for="nomApareil">Nom d'appareril</label>
                         <input type="text" name="nomAppareil" placeholder="ex: Lampe">
                     </div>
                     <!-- Type d'appareil --> 
                     <div>
-                        <label for="TypeAppareil"">Type d'appareril</label>
+                        <label for="TypeAppareil">Type d'appareril</label>
                         <select name="TypeAppareil">
                           <option value="A">choisissez le type de votre appareil</option>
                           <option value="B">chauffage éléctrique</option>
@@ -115,7 +115,7 @@ if (isset($_POST['Appareil'])) {
                     </div>
                      <!-- Description --> 
                      <div>
-                        <label for="emplacement"">Description</label>
+                        <label for="emplacement">Description</label>
                         <input type="text" name="emplacement" placeholder="Indiquez l'emplacement de votre appareil">
                     </div>
                     <a href="Supprimer.php">Supprimer</a>

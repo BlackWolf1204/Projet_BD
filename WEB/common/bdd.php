@@ -20,8 +20,24 @@ if (isset($_SESSION['Id']) && !empty($_SESSION['Id'])) {
 	} else {
 		$estAdmin = false;
 	}
+
+	$requser = $bdd->prepare("SELECT Nom, Prenom FROM InfoPersonne WHERE idPersonne = ?");
+	$result = $requser->execute(array($sessionId));
+	if ($result) {
+		$result = $requser->fetch();
+		$Prenom = $result['Prenom'];
+		$Nom = $result['Nom'];
+	} else {
+		$sessionId = null;
+		$estConnecte = false;
+		$estAdmin = false;
+		$Prenom = "";
+		$Nom = "";
+	}
 } else {
 	$sessionId = null;
 	$estConnecte = false;
 	$estAdmin = false;
+	$Prenom = "";
+	$Nom = "";
 }

@@ -21,16 +21,18 @@
             FROM Appartement NATURAL JOIN ProprieteAdresse NATURAL JOIN Proprietaire';
 
     if (!isset($estAdmin) || $estAdmin != true) {
-        $req = "$req. WHERE idPersonne = {$_SESSION['Id']}";
+        $req = "$req WHERE idPersonne = {$_SESSION['Id']}";
     }
 
     // exécution de la requête
     $data = $bdd->query($req);
     // si erreur
     if ($data == NULL)
-    die("Problème d'exécution de la requête \n");
+    die("Problème d'exécution de la requête : {$bdd->errorInfo()[2]} \n");
 
+    $nbLignes = 0;
     foreach ($data as $ligne) {
+        $nbLignes++;
         echo "<div class=\"appart\">
                 <h3>";
         
@@ -183,8 +185,12 @@
             </div>";
     }
     ?>
-        </tbody>
-    </table>
+
+    <?php
+        if ($nbLignes == 0) {
+            echo "<p>Vous n'avez pas d'appartement</p>";
+        }
+    ?>
  </body>
  
  <?php require "../common/footer.php"; ?>
