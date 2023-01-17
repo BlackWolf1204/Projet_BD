@@ -15,168 +15,139 @@
     <?php
 
     // requete pour la base
-    $req = 'SELECT idAppartement, numAppart, numeroRue, nomRue, codePostal, nomVille, nomPropriete,
-                    DATEDIFF(DATE(datefinprop),DATE(datedebutprop)) AS dayDebutFin,
-                    DATEDIFF(DATE(NOW()),DATE(datedebutprop)) AS dayDebutCurrent
+    $reqApparts = 'SELECT idAppartement, numAppart, numeroRue, nomRue, codePostal, nomVille, nomPropriete,
+                    DATE(datefinprop) AS datefinprop, DATE(datedebutprop) AS datedebutprop,
+                    (UNIX_TIMESTAMP(datefinprop) - UNIX_TIMESTAMP(datedebutprop)) AS tempsDureeLocation,
+                    (UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(datedebutprop)) AS tempsDepuisDebutLocation
             FROM Appartement NATURAL JOIN ProprieteAdresse NATURAL JOIN Proprietaire';
 
     if (!isset($estAdmin) || $estAdmin != true) {
-        $req = "$req WHERE idPersonne = {$_SESSION['Id']}";
+        $reqApparts = "$reqApparts WHERE idPersonne = {$_SESSION['Id']}";
     }
 
     // exécution de la requête
-    $data = $bdd->query($req);
+    $dataApparts = $bdd->query($reqApparts);
     // si erreur
-    if ($data == NULL)
-    die("Problème d'exécution de la requête : {$bdd->errorInfo()[2]} \n");
+    if ($dataApparts == NULL)
+    die("Problème d'exécution de la requête des appartements : {$bdd->errorInfo()[2]} \n");
+
+    $timestampNow = time();
 
     $nbLignes = 0;
-    foreach ($data as $ligne) {
+    foreach ($dataApparts as $appartement) {
         $nbLignes++;
+
+        // La durée de la location depuis le début de la location jusqu'à la fin de la location (ou jusqu'à maintenant) en heures
+        $heuresDureeLocation = 0;
+        if ($appartement['tempsDureeLocation'] != NULL) {
+            $heuresDureeLocation = $appartement['tempsDureeLocation'] / 3600;
+        }
+        else {
+            $heuresDureeLocation = $appartement['tempsDepuisDebutLocation'] / 3600;
+        }
+
+        $textPeriodeLocation = "";
+        if($appartement['tempsDureeLocation'] != NULL) {
+            $textPeriodeLocation = "du {$appartement['datedebutprop']} au {$appartement['datefinprop']}";
+        }
+        else {
+            $textPeriodeLocation = "du {$appartement['datedebutprop']} au {$timestampNow}";
+        }
+
         echo "<div class=\"appart\">
                 <h3>";
         
-        if ($ligne['numAppart'] != NULL) echo "Appartement {$ligne['numAppart']} ";
-        if ($ligne['nomPropriete'] != NULL) {
-            $nomPropriete = $ligne['nomPropriete'];
-            echo "$nomPropriete ";
-        }
-        echo "{$ligne['numeroRue']} {$ligne['nomRue']} {$ligne['codePostal']} {$ligne['nomVille']}</h3>";
+        if ($appartement['numAppart'] != NULL) echo "Appartement {$appartement['numAppart']} - ";
+        echo adressePropriete($appartement) . "</h3>";
+
+        echo "<p>Données sur la période $textPeriodeLocation</p>";
+
+        // CONSOMMATION de ressources
 
         // requete pour la base
-        $req2 = "SELECT idAppareil, libTypeRessource, valCritiqueConsoAppart, valIdealeConsoAppart, quantiteAllume, HOUR(CURRENT_TIME) AS hourCurrent
-                FROM TypeRessource NATURAL JOIN Consommer NATURAL JOIN TypeAppareil NATURAL JOIN Appareil NATURAL JOIN Piece
-                WHERE idAppartement = {$ligne['idAppartement']}
-                GROUP BY libTypeRessource, valCritiqueConsoAppart, valIdealeConsoAppart";
-                
+        $reqConso = "SELECT idAppareil, libTypeRessource, valCritiqueConsoAppart, valIdealeConsoAppart, quantiteAllume,
+                    SUM((UNIX_TIMESTAMP(IFNULL(dateOff, NOW())) - UNIX_TIMESTAMP(dateOn))) AS dureeAllume
+                FROM TypeRessource NATURAL JOIN Consommer NATURAL JOIN TypeAppareil NATURAL JOIN Appareil NATURAL JOIN Piece NATURAL JOIN HistoriqueConsommation
+                WHERE idAppartement = {$appartement['idAppartement']} AND dateOn >= '{$appartement['datedebutprop']}' AND dateOn <= '{$appartement['datefinprop']}'
+                GROUP BY typeRessource";
+
         ### peut regarder une description de la ressource si survole son nom ? ###
 
         // exécution de la requête
-        $data2 = $bdd->query($req2);
+        $dataConso = $bdd->query($reqConso);
         // si erreur
-        if ($data2 == NULL)
-        die("Problème d'exécution de la requête \n");
+        if ($dataConso == NULL)
+        die("Problème d'exécution de la requête de consommation : {$bdd->errorInfo()[2]}\n");
 
-        echo "<table>
+        echo "<table class=\"with-space\">
                 <tbody>
                     <tr class=\"titre\">
                         <td>Ressource</td>
-                        <td>Votre consommation par jour en moyenne</td>
+                        <td>Consommation par jour en moyenne</td>
                         <td>Consommation idéale par jour</td>
                         <td>Consommation critique par jour</td>
                         <td>Avis</td>
                     </tr>";
 
-        foreach ($data2 as $ligne2) {
-            $req3 = "SELECT DAY(dateOff) AS dayOff, HOUR(TIME(dateOff)) AS hourOff, DAY(dateOn) AS dayOn, HOUR(TIME(dateOn)) AS hourOn
-                    FROM HistoriqueConsommation NATURAL JOIN Appareil
-                    WHERE idAppareil = {$ligne2['idAppareil']}";
-    
-            // exécution de la requête
-            $data3 = $bdd->query($req3);
-            // si erreur
-            if ($data3 == NULL)
-            die("Problème d'exécution de la requête \n");
+        foreach ($dataConso as $ligneConso) {
+            // Consommation d'une ressource
 
-            $somme = 0;
-            $jour = 0;
-    
-            foreach ($data3 as $ligne3) {
-                if ($ligne3['dayOff'] != NULL) {
-                    $jour += ($ligne3['dayOff'] - $ligne3['dayOn'])*24;
-                    $somme += ($ligne3['hourOff'] - $ligne3['hourOn']);
-                }
-                else 
-                    $jour += ($ligne['dayDebutCurrent'] - $ligne3['dayOn'])*24;
-                    $somme += ($ligne2['hourCurrent'] - $ligne3['hourOn']);
-            }
-    
-            $somme = ($somme+$jour)*$ligne2['quantiteAllume'];
-            if ($ligne['dayDebutFin'] != NULL) {
-                $somme = $somme/((int)$ligne['dayDebutFin']*24);
-            }
-            else {            
-                $somme = $somme/((int)$ligne['dayDebutCurrent']*24);
-            }
-            $libTypeRessource = $ligne2['libTypeRessource'];
+            $consommation = ($ligneConso['dureeAllume'] / 3600) * $ligneConso['quantiteAllume'] / $heuresDureeLocation;
+            $libTypeRessource = $ligneConso['libTypeRessource'];
+            
             echo "<tr>
                     <td>$libTypeRessource</td>
-                    <td>".round($somme,3)." kW</td>
-                    <td>{$ligne2['valIdealeConsoAppart']}</td>
-                    <td>{$ligne2['valCritiqueConsoAppart']}</td>";
+                    <td>" . $consommation = str_replace(".", ",", round($consommation, 3)) . " kWh/j</td>
+                    <td>{$ligneConso['valIdealeConsoAppart']} kWh/j</td>
+                    <td>{$ligneConso['valCritiqueConsoAppart']} kWh/j</td>";
 
-            if ($ligne2['valIdealeConsoAppart']+5 >= $somme) echo "<td class=\"vert\">C'est très bien!</td>";
-            else if ($ligne2['valCritiqueConsoAppart']-5 > $somme) echo "<td class=\"orange\">C'est moyen</td>";
+            if ($ligneConso['valIdealeConsoAppart']+5 >= $consommation) echo "<td class=\"vert\">C'est très bien!</td>";
+            else if ($ligneConso['valCritiqueConsoAppart']-5 > $consommation) echo "<td class=\"orange\">C'est moyen</td>";
             else echo "<td class=\"rouge\">C mauvais!</td>";
             echo "</tr>";
         }
-        echo "</tbody>
-            </table>";
+        
+        echo "<tr class=\"space\"><td colspan=\"6\" class=\"ignore-border\">&nbsp;</td></tr>";
+
+        
+        // PRODUCTION de substances
         
         // requete pour la base
-        $req2 = "SELECT libTypeSubstance, valCritiqueProdAppart, valIdealeProdAppart
-                FROM TypeSubstance NATURAL JOIN Produire NATURAL JOIN TypeAppareil NATURAL JOIN Appareil NATURAL JOIN Piece NATURAL JOIN Appartement
-                WHERE idAppartement = {$ligne['idAppartement']}
-                GROUP BY libTypeSubstance, valCritiqueProdAppart, valIdealeProdAppart";
+        $reqProd = "SELECT libTypeSubstance, valCritiqueProdAppart, valIdealeProdAppart, idAppareil, quantiteAllume,
+                SUM((UNIX_TIMESTAMP(IFNULL(dateOff, NOW())) - UNIX_TIMESTAMP(dateOn))) AS dureeAllume
+                FROM TypeSubstance NATURAL JOIN Produire NATURAL JOIN TypeAppareil NATURAL JOIN Appareil NATURAL JOIN Piece NATURAL JOIN HistoriqueConsommation
+                WHERE idAppartement = {$appartement['idAppartement']} AND dateOn >= '{$appartement['datedebutprop']}' AND dateOn <= '{$appartement['datefinprop']}'
+                GROUP BY typeSubstance";
 
         ### changer base de donnée pour avoir historique des on/off et pouvoir calculer le temps de marche ###
         ### peut regarder une description de la substance si survole son nom ? ###
 
         // exécution de la requête
-        $dat2a = $bdd->query($req2);
+        $dataProd = $bdd->query($reqProd);
         // si erreur
-        if ($data2 == NULL)
-        die("Problème d'exécution de la requête \n");
+        if ($dataProd == NULL)
+        die("Problème d'exécution de la requête de production : {$bdd->errorInfo()[2]}\n");
 
-        echo "<table>
-                <tbody>
-                    <tr class=\"titre\">
-                        <td>Substance(s) nocive(s)</td>
-                        <td>Votre production par jour</td>
+        echo "      <tr class=\"titre\">
+                        <td>Substance nocive</td>
+                        <td>Production par jour</td>
                         <td>Produciton idéale par jour</td>
                         <td>Production critique par jour</td>
                         <td>Avis</td>
                     </tr>";
 
-        foreach ($data2 as $ligne2) {
-            $req3 = "SELECT DAY(dateOff) AS dayOff, HOUR(TIME(dateOff)) AS hourOff, DAY(dateOn) AS dayOn, HOUR(TIME(dateOn)) AS hourOn
-                    FROM HistoriqueConsommation NATURAL JOIN Appareil
-                    WHERE idAppareil = {$ligne2['idAppareil']}";
+        foreach ($dataProd as $ligneProd) {
+            $heuresAllume = $ligneProd['dureeAllume'] / 3600;
     
-            // exécution de la requête
-            $data3 = $bdd->query($req3);
-            // si erreur
-            if ($data3 == NULL)
-            die("Problème d'exécution de la requête \n");
-    
-            $somme = 0;
-            $jour = 0;
-    
-            foreach ($data3 as $ligne3) {
-                if ($ligne3['dayOff'] != NULL) {
-                    $jour += ($ligne3['dayOff'] - $ligne3['dayOn'])*24;
-                    $somme += ($ligne3['hourOff'] - $ligne3['hourOn']);
-                }
-                else 
-                    $jour += ($ligne['dayCurrent'] - $ligne3['dayOn'])*24;
-                    $somme += ($ligne2['hourCurrent'] - $ligne3['hourOn']);
-            }
-    
-            $somme = ($somme+$jour)*$ligne2['quantiteAllume'];
-            if ($ligne['dayDebutFin'] != NULL) {
-                $somme = $somme/((int)$ligne['dayDebutFin']*24);
-            }
-            else {            
-                $somme = $somme/((int)$ligne['dayDebutCurrent']*24);
-            }
+            $production = $heuresAllume * $ligneProd['quantiteAllume'] / $heuresDureeLocation;
             echo "<tr>
-                    <td>{$ligne2['libTypeRessource']}</td>
-                    <td>".round($somme,3)." k..../j</td>
-                    <td>{$ligne2['valIdealeConsoAppart']}</td>
-                    <td>{$ligne2['valCritiqueConsoAppart']}</td>";
+                    <td>{$ligneProd['libTypeSubstance']}</td>
+                    <td>" . $consommation = str_replace(".", ",", round($production, 3)) . " kWh/j</td>
+                    <td>{$ligneProd['valIdealeProdAppart']} kWh/j</td>
+                    <td>{$ligneProd['valCritiqueProdAppart']} kWh/j</td>";
 
-            if ($ligne2['valIdealeProdAppart']+5 >= $somme) echo "<td class=\"vert\">C'est très bien!</td>";
-            else if ($ligne2['valCritiqueProdAppart']-5 > $somme) echo "<td class=\"orange\">C'est moyen</td>";
+            if ($ligneProd['valIdealeProdAppart']+5 >= $production) echo "<td class=\"vert\">C'est très bien!</td>";
+            else if ($ligneProd['valCritiqueProdAppart']-5 > $production) echo "<td class=\"orange\">C'est moyen</td>";
             else echo "<td class=\"rouge\">C mauvais!</td>";
             echo "</tr>";
         }

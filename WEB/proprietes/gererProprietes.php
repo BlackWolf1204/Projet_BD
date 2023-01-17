@@ -11,36 +11,33 @@ require_once("../common/main.php");
  
     <title>Page propriété</title>
 
+    <style>
+        tr.space > td {
+            padding: 5px;
+        }
+    </style>
+
     <?php require "../common/header.php"; ?>
 
     <h2>Votre/Vos propriété(s)</h2>
 
     <a href="../Page_accueil/Page_accueil.php" class = "bouton-retour">Retour à l'accueil</a>
-    <table>
+    <table class="with-space">
         <tbody>
             <tr class="titre">
                 <td>Immeuble</td>
-                <td colspan = "2">Adresse (+nom)</td>
-                <td>Isolation</td>
-                <td colspan = "2">Date acquisition de la propriété</td>
-                <td rowspan = "3">Modifications</td>
+                <td colspan = "2">Adresse (nom)</td>
+                <td>Niveau d'isolation</td>
+                <td colspan = "1">Date d'acquisition de la propriété</td>
+                <td rowspan = "2">Modifications</td>
             </tr>
             <tr>
                 <td>Numéro appartement</td>
-                <td>Type sécurité</td>
-                <td>Locataire (Date de debut de location)</td>
-                <td>Type appartement/maison</td>
+                <td>Type de sécurité</td>
+                <td>Locataire (Date de début de la location)</td>
+                <td>Type d'appartement/maison</td>
                 <td>Pièce(s)</td>
             </tr>
-            <tr>
-                <td>Numéro appartement</td>
-                <td>Type sécurité</td>
-                <td>Locataire (Date de début de location)</td>
-                <td>Type appartement/maison</td>
-                <td>Pièce(s)</td>
-            </tr>
-        </tbody>
-    </table>
 
     <?php
     
@@ -53,124 +50,101 @@ require_once("../common/main.php");
     }
 
     // exécution de la requête
-    $data = $bdd->query($req);
+    $dataProprietes = $bdd->query($req);
     // si erreur
-    if ($data == NULL) {
+    if ($dataProprietes == NULL) {
         die($bdd->errorInfo()[2] . "<br>Problème d'exécution de la requête \n");
     }
     
-    foreach ($data as $ligne) {
-        // requete pour la base
-        $req2 = "SELECT idAppartement, numAppart, libTypeAppart, nomSecurite
-        FROM (((Appartement NATURAL JOIN Propriete) NATURAL JOIN TypeAppartement) NATURAL JOIN TypeSecurite) NATURAL JOIN Locataire 
-        WHERE idPropriete =".$ligne['idPropriete'];
+    foreach ($dataProprietes as $propriete) {
+        echo "<tr class=\"space\"><td colspan=\"6\" class=\"ignore-border\">&nbsp;</td></tr>";
 
-        $nb = "SELECT COUNT(*) AS nbLigne
-        FROM Appartement
-        WHERE idPropriete = {$ligne['idPropriete']}";
+        // requete pour la base
+        $reqApparts = "SELECT idAppartement, numAppart, libTypeAppart, nomSecurite
+        FROM ((Appartement NATURAL JOIN TypeAppartement) NATURAL JOIN TypeSecurite)
+        WHERE idPropriete = {$propriete['idPropriete']}";
 
         // exécution de la requête
-        $data2 = $bdd->query($req2);
-        $nbL = $bdd->query($nb);
-        // si erreur
-        if ($data2 == NULL || $nbL == NULL)
-        die("Problème d'exécution de la requête \n");
-
-        foreach($nbL as $l) {
-            $nbAppart = $l['nbLigne']+1;
+        $dataAppartements = $bdd->query($reqApparts);
+        if (!$dataAppartements) {
+            die("Problème d'exécution de la requête des appartements.<br>{$bdd->errorInfo()[2]}<br>");
         }
-
-        echo "<table>
-                <tbody>
+        
+        $nbAppart = $dataAppartements->rowCount();
+        $rowspan = $nbAppart + 1;
+        
+        echo "
                     <tr class=\"titre\">
                         <td>";
 
         if ($nbAppart == 1) echo "Maison";
         else echo "Immeuble";
         echo "  </td>
-                <td colspan = \"2\">".$ligne['numeroRue']." ".$ligne['nomRue']." ".$ligne['codePostal']." ".$ligne['nomVille'];
-        if ($ligne['nomPropriete'] != NULL) echo " ({$ligne['nomPropriete']})";
+                <td colspan = \"2\">".$propriete['numeroRue']." ".$propriete['nomRue']." ".$propriete['codePostal']." ".$propriete['nomVille'];
+        if ($propriete['nomPropriete'] != NULL) echo " ({$propriete['nomPropriete']})";
         echo "  </td>
-                <td>{$ligne['degreIsolation']}</td>
-                <td>{$ligne['dateDProp']}</td>
-                <td rowspan = \"$nbAppart\"><a href='{$ROOT}proprietes/ajoutPropriete/ajoutPropriete.php'>Modifier<a></td>
+                <td>{$propriete['degreIsolation']}</td>
+                <td>{$propriete['dateDProp']}</td>
+                <td rowspan = \"$rowspan\"><a href='{$ROOT}proprietes/ajoutPropriete/ajoutPropriete.php'>Modifier<a></td>
             </tr>";   //changer Modification pour garder en memoire l'id de la propriété a modifier
         
-        foreach ($data2 as $ligne2) {
+        foreach ($dataAppartements as $appartement) {
             echo "<tr>
-                    <td>{$ligne2['numAppart']}</td>
-                    <td>{$ligne2['nomSecurite']}</td>";
+                    <td>{$appartement['numAppart']}</td>
+                    <td>{$appartement['nomSecurite']}</td>";
 
             // requete pour la base
-            $req3 = "SELECT DATE(datedebutloc) AS dateDLoc, nom, prenom
+            $reqLocataire = "SELECT DATE(datedebutloc) AS dateDLoc, nom, prenom
             FROM (Locataire NATURAL JOIN Utilisateur) NATURAL JOIN InfoPersonne
-            WHERE idAppartement = {$ligne2['idAppartement']} AND dateFinLoc IS NULL";
-
-            $nb = "SELECT COUNT(*) AS nbLignes
-            FROM Locataire
-            WHERE idAppartement = {$ligne2['idAppartement']} AND dateFinLoc IS NULL";
+            WHERE idAppartement = {$appartement['idAppartement']} AND dateFinLoc IS NULL";
 
             // exécution de la requête
-            $data3 = $bdd->query($req3);
-            $nbL = $bdd->query($nb);
+            $dataLocataires = $bdd->query($reqLocataire);
+            $nbLocataire = $dataLocataires->rowCount();
             // si erreur
-            if ($data3 == NULL || $nbL == NULL)
-            die("Problème d'exécution de la requête \n");
-
-            foreach($nbL as $l) {
-                $nbLocataire = $l['nbLignes'];
-            }
+            if ($dataLocataires == NULL)
+            die("Problème d'exécution de la requête des locataires \n");
 
             if ($nbLocataire == 1) {
-                foreach ($data3 as $ligne3) {
-                    echo "<td>{$ligne3['prenom']} {$ligne3['nom']} ({$ligne3['dateDLoc']})</td>";
-                }
+                $locataire = $dataLocataires->fetch();
+                echo "<td>{$locataire['prenom']} {$locataire['nom']} ({$locataire['dateDLoc']})</td>";
             }
             else if ($nbLocataire == 0) {
                 echo "<td>Pas de locataire</td>";
             }
             else {
-                echo "<td>Problème au niveau de la location de l'appartement</td>";
+                echo "<td>Problème au niveau de la location de l'appartement (plusieurs locataires)</td>";
             }
-            echo "  <td>{$ligne2['libTypeAppart']}</td>
+            echo "  <td>{$appartement['libTypeAppart']}</td>
                     <td>";
             
             // requete pour la base
-            $req4 = "SELECT  libTypePiece
+            $reqPieces = "SELECT  libTypePiece
             FROM Piece NATURAL JOIN TypePiece 
-            WHERE idAppartement = {$ligne2['idAppartement']}";
-
-            $nb = "SELECT COUNT(*) AS nbLignes
-            FROM Piece
-            WHERE idAppartement = {$ligne2['idAppartement']}";
+            WHERE idAppartement = {$appartement['idAppartement']}";
 
             // exécution de la requête
-            $data4 = $bdd->query($req4);
-            $nbL = $bdd->query($nb);
+            $dataPieces = $bdd->query($reqPieces);
+            $nbPiece = $dataPieces->rowCount();
+            
             // si erreur
-            if ($data4 == NULL || $nbL == NULL)
+            if ($dataPieces == NULL || $nbPiece == NULL)
             die("Problème d'exécution de la requête \n");
 
-            foreach($nbL as $l) {
-                $nbPiece = $l['nbLignes'];
-            }
-
-            $i = 0;
-            foreach ($data4 as $ligne4) {
-                echo $ligne4['libTypePiece'];
-                if ($i < $nbPiece) {
+            $iPiece = 0;
+            foreach ($dataPieces as $piece) {
+                echo $piece['libTypePiece'];
+                if ($iPiece < $nbPiece - 1) {
                     echo ", ";
                 }
-                $i++;
-            }
+                $iPiece++;
+            } // fin foreach pieces
             echo "</td>";
-        }
+        } // fin foreach appartements
 
+        echo "</tr>";
 
-
-        echo "</tbody>
-            </table>";
-    }
+    } // fin foreach proprietes
     ?>
     
     </tbody>

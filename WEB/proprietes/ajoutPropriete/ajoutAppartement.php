@@ -28,7 +28,7 @@ $ROOT = '../../';
 
 	// Données du POST :
 	// type, nbAppartements,
-	// numéroRue, nomRue, codePostal, ville, nomPropriete
+	// numeroRue, nomRue, codePostal, ville, nomPropriete
 	// degreIsolation
 
 	$propriete = proprieteFromPost();
@@ -52,10 +52,10 @@ $ROOT = '../../';
 		<?php echoLabelPropriete($propriete); ?>
 		<input type="hidden" name="type" value="<?= $type ?>">
 		<input type="hidden" name="nbAppartements" value="<?= $nbAppartements ?>">
-		<input type="hidden" name="numéroRue" value="<?= $propriete['numéroRue'] ?>">
+		<input type="hidden" name="numeroRue" value="<?= $propriete['numeroRue'] ?>">
 		<input type="hidden" name="nomRue" value="<?= $propriete['nomRue'] ?>">
 		<input type="hidden" name="codePostal" value="<?= $propriete['codePostal'] ?>">
-		<input type="hidden" name="ville" value="<?= $propriete['ville'] ?>">
+		<input type="hidden" name="nomVille" value="<?= $propriete['nomVille'] ?>">
 		<input type="hidden" name="codeDepartement" value="<?= $_POST['codeDepartement'] ?>">
 		<input type="hidden" name="nomDepartement" value="<?= $_POST['nomDepartement'] ?>">
 		<input type="hidden" name="codeRegion" value="<?= $_POST['codeRegion'] ?>">

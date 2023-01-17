@@ -6,7 +6,7 @@ require_once("{$ROOT}common/verif_est_connecte.php");
 
 // Données du POST :
 // type, nbAppartements,
-// numéroRue, nomRue, codePostal, ville, codeDepartement, nomDepartement, codeRegion, nomRegion,
+// numeroRue, nomRue, codePostal, ville, codeDepartement, nomDepartement, codeRegion, nomRegion,
 // nomPropriete, degreIsolation
 // pour chaque appartement :
 // 		numAppartement_i, degreSecurite_i, typeAppartement_i
@@ -15,7 +15,7 @@ require_once("{$ROOT}common/verif_est_connecte.php");
 
 if (
 	!isset($_POST['type']) || !isset($_POST['nbAppartements'])
-	|| !isset($_POST['numéroRue']) || !isset($_POST['nomRue']) || !isset($_POST['codePostal']) || !isset($_POST['ville'])
+	|| !isset($_POST['numeroRue']) || !isset($_POST['nomRue']) || !isset($_POST['codePostal']) || !isset($_POST['ville'])
 	|| !isset($_POST['codeDepartement']) || !isset($_POST['nomDepartement']) || !isset($_POST['codeRegion']) || !isset($_POST['nomRegion'])
 	|| !isset($_POST['nomPropriete']) || !isset($_POST['degreIsolation'])
 	|| !isset($_POST['numAppartement_1']) || !isset($_POST['degreSecurite_1']) || !isset($_POST['typeAppartement_1'])
@@ -92,9 +92,9 @@ if ($res->rowCount() == 0) {
 	$idRue = $res->fetch()['idRue'];
 }
 // Ajouter l'adresse si elle n'existe pas
-$res = $bdd->query("SELECT idAdresse FROM adresse WHERE numeroRue = '{$propriete['numéroRue']}' AND idRue = '{$idRue}'");
+$res = $bdd->query("SELECT idAdresse FROM adresse WHERE numeroRue = '{$propriete['numeroRue']}' AND idRue = '{$idRue}'");
 if ($res->rowCount() == 0) {
-	$res = $bdd->query("INSERT INTO adresse (numeroRue, idRue) VALUES ('{$propriete['numéroRue']}', '$idRue')");
+	$res = $bdd->query("INSERT INTO adresse (numeroRue, idRue) VALUES ('{$propriete['numeroRue']}', '$idRue')");
 	if (!$res) {
 		$bdd->rollBack();
 		die("Erreur : impossible d'ajouter l'adresse : " . $bdd->errorInfo()[2]);

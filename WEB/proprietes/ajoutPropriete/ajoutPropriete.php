@@ -29,14 +29,14 @@ $ROOT = '../../';
 
 		<!-- addresse : numéro, rue, code postal, ville -->
 		<div id="adresse">
-			<label for="numéroRue">Numéro de rue</label>
-			<input type="number" name="numéroRue" id="numéroRue" placeholder="123" title="Numéro de rue" required>
+			<label for="numeroRue">Numéro de rue</label>
+			<input type="number" name="numeroRue" id="numeroRue" placeholder="123" title="Numéro de rue" required>
 			<label for="street">Rue</label>
 			<input type="text" name="nomRue" id="street" placeholder="Rue de la paix" title="Nom de la rue" autcompelte="address-level1" required oninput="nomRueAjoute()">
 			<label for="codePostal">Code postal</label>
 			<input type="text" name="codePostal" id="zipCode" placeholder="75000" title="Code postal" autcomplete="postal-code" required oninput="chercherVilleParCodePostal()">
-			<label for="ville">Ville</label>
-			<input type="text" name="ville" placeholder="Paris" id="city" title="Ville" autcomplete="city address-level2" required oninput="chercherCodePostalParVille()">
+			<label for="nomVille">Ville</label>
+			<input type="text" name="nomVille" placeholder="Paris" id="city" title="Ville" autcomplete="city address-level2" required oninput="chercherCodePostalParVille()">
 			<label for="departement">Département</label>
 			<input type="text" id="departement" name="departement" title="Département" disabled>
 			<input type="hidden" id="codeDepartement" name="codeDepartement">
@@ -170,7 +170,7 @@ $ROOT = '../../';
 		function nomRueAjoute() {
 			// Déplacer le numéro de la rue
 			let rue = document.getElementById("street");
-			let numero = document.getElementById("numéroRue");
+			let numero = document.getElementById("numeroRue");
 			if (rue.value && rue.value.match(/^[0-9]+/)) {
 				numero.value = rue.value.match(/^[0-9]+/)[0];
 				const nomRue = rue.value.replace(/^[0-9]+ */, "");;

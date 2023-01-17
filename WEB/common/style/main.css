@@ -106,7 +106,7 @@ button, .header-right > a, .bouton, .bouton-retour {
   text-decoration: none; /* Enlève la décoration du texte du bouton (souligné, etc.) */
 }
 
-table {
+table:not(.with-space) {
   margin: 20px auto auto auto;
   table-layout: auto;
   width: 98%;
@@ -115,13 +115,24 @@ table {
   text-align: center;
 }
 
+table.with-space {
+  margin: 20px auto auto auto;
+  table-layout: auto;
+  width: 98%;
+  text-align: center;
+  border-collapse: collapse;
+  border: solid green 4px;
+  border-left: none;
+  border-right: none;
+}
+
 table thead *{
   font-weight: bold;
   padding: 10px;
   font-size: 18pt;
 }
 
-table tr:not(.titre):nth-child(even) {
+table tr:not(.titre):not(.space):nth-child(even) {
   background: lightsteelblue;
 }
 
@@ -130,9 +141,25 @@ table .titre {
   background: lightgreen;
 }
 
-table td:not(.ignore) {
+table td:not(.ignore-border) {
   border: solid green 1px;
   padding: 5px;
+}
+
+table tr {
+  border-collapse: collapse;
+  border: solid green 4px;
+}
+
+/* tr qui n'est pas un .space */
+table tr:not(.space) {
+  border-top: none;
+  border-bottom: none;
+}
+
+table tr.space {
+  border-left: none;
+  border-right: none;
 }
 
 .appart {

@@ -3,10 +3,10 @@
 function proprieteFromPost()
 {
 	return array(
-		"numéroRue" => $_POST['numéroRue'],
+		"numeroRue" => $_POST['numeroRue'],
 		"nomRue" => $_POST['nomRue'],
 		"codePostal" => $_POST['codePostal'],
-		"ville" => $_POST['ville'],
+		"nomVille" => $_POST['nomVille'],
 		"nomPropriete" => $_POST['nomPropriete'],
 		"codeRegion" => $_POST['codeRegion'],
 		"nomRegion" => $_POST['nomRegion'],
@@ -17,7 +17,7 @@ function proprieteFromPost()
 
 function adressePropriete($propriete)
 {
-	$adresse = $propriete['numéroRue'] . " " . $propriete['nomRue'] . ", " . $propriete['codePostal'] . " " . $propriete['ville'];
+	$adresse = $propriete['numeroRue'] . " " . $propriete['nomRue'] . ", " . $propriete['codePostal'] . " " . $propriete['nomVille'];
 	if ($propriete['nomPropriete'] != null) {
 		$labelPropriete = $propriete['nomPropriete'] . " (" . $adresse . ")";
 	} else {

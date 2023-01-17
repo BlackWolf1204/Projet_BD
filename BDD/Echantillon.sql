@@ -93,7 +93,7 @@ INSERT INTO Appartement VALUES (4, 10, 2, 2, 2); -- T1 bis
 INSERT INTO TypePiece VALUES (1, 'cuisine');
 INSERT INTO TypePiece VALUES (2, 'salon');
 INSERT INTO TypePiece VALUES (3, 'salle à manger');
-INSERT INTO TypePiece VALUES (4, 'piece principale');
+INSERT INTO TypePiece VALUES (4, 'pièce principale');
 INSERT INTO TypePiece VALUES (5, 'chambre');
 
 -- Pièce (idPiece, typePiece, idAppartement)
@@ -107,18 +107,19 @@ INSERT INTO Piece VALUES (7, 5, 4); -- chambre
 INSERT INTO Piece VALUES (8, 4, 4); -- pièce principale
 
 -- Propriétaire (idPropriete, datedebutprop, datefinprop, idPersonne)
-INSERT INTO Proprietaire VALUES (1, '2017-06-18', '2025-02-25', 3);
-INSERT INTO Proprietaire VALUES (2, '2019-09-03', '2024-09-15', 2);
-INSERT INTO Proprietaire VALUES (3, '2021-04-27', '2027-02-09', 5);
+INSERT INTO Proprietaire VALUES (1, '2017-06-18', NULL, 3);
+INSERT INTO Proprietaire VALUES (2, '2019-09-03', NULL, 2);
+INSERT INTO Proprietaire VALUES (3, '2021-04-27', NULL, 5);
+INSERT INTO Proprietaire VALUES (3, '2019-09-03', '2021-04-27', 2);
 
 -- Locataire (idAppartement, datedebutloc, dateFinLoc, idPersonne, nbHabitants)
-INSERT INTO Locataire VALUES (1, '2022-08-21', '2024-09-04', 5, 2);
-INSERT INTO Locataire VALUES (3, '2021-02-14', '2023-02-19', 2, 1);
-INSERT INTO Locataire VALUES (4, '2021-11-17', '2024-01-01', 4, 3);
+INSERT INTO Locataire VALUES (1, '2022-08-21', NULL, 5, 2);
+INSERT INTO Locataire VALUES (3, '2021-02-14', NULL, 2, 1);
+INSERT INTO Locataire VALUES (4, '2021-11-17', NULL, 4, 3);
 INSERT INTO Locataire VALUES (4, '2019-01-01', '2019-12-31', 2, 1);
 INSERT INTO Locataire VALUES (1, '2020-01-01', '2021-12-31', 2, 1);
 
--- TypeAppareil (idTypeAppareil, libéllé, VideoEconomie)
+-- TypeAppareil (idTypeAppareil, libTypeAppareil, VideoEconomie)
 INSERT INTO TypeAppareil VALUES (1, 'chauffage éléctrique', 'https://youtu.be/xzFdC6Dnh3g');
 INSERT INTO TypeAppareil VALUES (2, 'réfrigérateur', 'https://youtu.be/dQw4w9WgXcQ');
 INSERT INTO TypeAppareil VALUES (3, 'lampe', 'https://youtu.be/');
@@ -174,13 +175,13 @@ INSERT INTO HistoriqueConsommation VALUES (2, CAST('2021-11-01' AS DATETIME), CA
 INSERT INTO HistoriqueConsommation VALUES (3, CAST('2022-11-01' AS DATETIME), NULL, 1); -- chauffage éléctrique (toujours en fonctionnement)
 
 -- lampe 2 allumée tous les soirs du 10 décembre 2022 au 17 décembre 2022
-INSERT INTO HistoriqueConsommation VALUES (4, CAST('2022-12-10 18:00:00' AS DATETIME), CAST('2022-12-11 23:00:00' AS DATETIME), 2); -- lampe
-INSERT INTO HistoriqueConsommation VALUES (5, CAST('2022-12-11 18:00:00' AS DATETIME), CAST('2022-12-12 23:00:00' AS DATETIME), 2); -- lampe
-INSERT INTO HistoriqueConsommation VALUES (6, CAST('2022-12-12 18:00:00' AS DATETIME), CAST('2022-12-13 23:00:00' AS DATETIME), 2); -- lampe
-INSERT INTO HistoriqueConsommation VALUES (7, CAST('2022-12-13 18:00:00' AS DATETIME), CAST('2022-12-14 23:00:00' AS DATETIME), 2); -- lampe
-INSERT INTO HistoriqueConsommation VALUES (8, CAST('2022-12-14 18:00:00' AS DATETIME), CAST('2022-12-15 23:00:00' AS DATETIME), 2); -- lampe
-INSERT INTO HistoriqueConsommation VALUES (9, CAST('2022-12-15 18:00:00' AS DATETIME), CAST('2022-12-16 23:00:00' AS DATETIME), 2); -- lampe
-INSERT INTO HistoriqueConsommation VALUES (10, CAST('2022-12-16 18:00:00' AS DATETIME), CAST('2022-12-17 23:00:00' AS DATETIME), 2); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (4, CAST('2022-12-10 18:00:00' AS DATETIME), CAST('2022-12-10 23:00:00' AS DATETIME), 2); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (5, CAST('2022-12-11 18:00:00' AS DATETIME), CAST('2022-12-11 23:00:00' AS DATETIME), 2); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (6, CAST('2022-12-12 18:00:00' AS DATETIME), CAST('2022-12-12 23:00:00' AS DATETIME), 2); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (7, CAST('2022-12-13 18:00:00' AS DATETIME), CAST('2022-12-13 23:00:00' AS DATETIME), 2); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (8, CAST('2022-12-14 18:00:00' AS DATETIME), CAST('2022-12-14 23:00:00' AS DATETIME), 2); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (9, CAST('2022-12-15 18:00:00' AS DATETIME), CAST('2022-12-15 23:00:00' AS DATETIME), 2); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (10, CAST('2022-12-16 18:00:00' AS DATETIME), CAST('2022-12-16 23:00:00' AS DATETIME), 2); -- lampe
 
 -- aspirateur 3 allumé une fois toutes les deux semaines depuis 2021 pour une durée d'une heure
 INSERT INTO HistoriqueConsommation VALUES (11, CAST('2022-01-03 19:00:00' AS DATETIME), CAST('2022-01-03 20:00:00' AS DATETIME), 3); -- aspirateur
