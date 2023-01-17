@@ -113,11 +113,11 @@ INSERT INTO Proprietaire VALUES (3, '2021-04-27', NULL, 5);
 INSERT INTO Proprietaire VALUES (3, '2019-09-03', '2021-04-27', 2);
 
 -- Locataire (idAppartement, datedebutloc, dateFinLoc, idPersonne, nbHabitants)
-INSERT INTO Locataire VALUES (1, '2022-08-21', NULL, 5, 2);
+INSERT INTO Locataire VALUES (1, '2020-08-21', NULL, 5, 2);
 INSERT INTO Locataire VALUES (3, '2021-02-14', NULL, 2, 1);
-INSERT INTO Locataire VALUES (4, '2021-11-17', NULL, 4, 3);
+INSERT INTO Locataire VALUES (4, '2020-11-17', NULL, 4, 3);
 INSERT INTO Locataire VALUES (4, '2019-01-01', '2019-12-31', 2, 1);
-INSERT INTO Locataire VALUES (1, '2020-01-01', '2021-12-31', 2, 1);
+INSERT INTO Locataire VALUES (1, '2018-01-01', '2019-12-31', 2, 1);
 
 -- TypeAppareil (idTypeAppareil, libTypeAppareil, VideoEconomie)
 INSERT INTO TypeAppareil VALUES (1, 'chauffage éléctrique', 'https://youtu.be/xzFdC6Dnh3g');
@@ -144,8 +144,8 @@ INSERT INTO Appareil VALUES (13, "Le chauffage de la chambre", "Au dessus du lit
 INSERT INTO Appareil VALUES (14, "La lampe de la pièce principale", "Au dessus du lit", 3, 8); -- lampe, pièce principale
 
 -- TypeRessource (idTypeRessource, libéllé, valCritiqueConsoAppart, valIdealeConsoAppart, description)
-INSERT INTO TypeRessource VALUES (1, 'électricité', 50000, 5000, 'électricité...'); -- Wh / jour / foyer
-INSERT INTO TypeRessource VALUES (2, 'gaz', 50000, 13000, 'le gaz...'); -- Wh / jour / foyer
+INSERT INTO TypeRessource VALUES (1, 'électricité', 5000, 500, 'électricité...'); -- Wh / jour / foyer
+INSERT INTO TypeRessource VALUES (2, 'gaz', 7000, 700, 'le gaz...'); -- Wh / jour / foyer
 INSERT INTO TypeRessource VALUES (3, 'eau', 2, 0.7, "l'eau..."); -- m3 / jour / foyer
 
 -- Consommer (idTypeAppareil, typeRessource, qteMinParJour, qteMaxParJour, quantiteAllume)
@@ -158,15 +158,22 @@ INSERT INTO Consommer VALUES (6, 1, 0, 1200, 50); -- télévision
 INSERT INTO Consommer VALUES (7, 2, 0, 1000, 500); -- chauffage au gaz
 
 -- TypeSubstance (idTypeSubstance, libéllé, valCritiqueConsoAppart, valIdealeConsoAppart, description)
-INSERT INTO TypeSubstance VALUES (1, 'chaleur', 50000, 5000, 'chaleur...');
-INSERT INTO TypeSubstance VALUES (2, 'dioxyde de carbone', 50000, 13000, 'le dioxyde de carbone...');
+-- Soit une baignoire de 135 litres = 135 kg d'eau = 135000/18 = 7500 mol d'eau
+-- L'eau de capacité thermique Cp = 75 J/(mol.K) à température ambiante
+-- Faire passer cette quantité d'eau de 20 °C à 60 °C nécessite Q = 7500*75*40 = 22500 kJ
+-- De façon très approximative, un foyer serait donc capable de produire 5000 kJ de chaleur par jour (chauffage...).
+-- Nous allons utiliser 400 kJ pour cet exemple.
+INSERT INTO TypeSubstance VALUES (1, 'chaleur', 5000, 400, 'chaleur...');
+-- Selon les données de l'Ipsos, un ménage français produit en moyenne 7400 kg de CO2 par an.
+-- Soit 20 kg par jour.
+INSERT INTO TypeSubstance VALUES (2, 'dioxyde de carbone', 200, 20, 'le dioxyde de carbone...');
 
 -- Produire (idTypeAppareil, idTypeSubstance, qteMinParJour, qteMaxParJour, quantiteAllume)
 INSERT INTO Produire VALUES (1, 1, 0, 1000, 500); -- chauffage élec, chaleur
 INSERT INTO Produire VALUES (2, 1, 0, 500, 100); -- réfrigérateur, chaleur
-INSERT INTO Produire VALUES (5, 1, 0, 1000, 500); -- plaques de cuisson, chaleur
-INSERT INTO Produire VALUES (7, 1, 0, 1000, 500); -- chauffage au gaz, chaleur
-INSERT INTO Produire VALUES (7, 2, 0, 1000, 500); -- chauffage au gaz, dioxyde de carbone
+INSERT INTO Produire VALUES (5, 1, 0, 1000, 700); -- plaques de cuisson, chaleur
+INSERT INTO Produire VALUES (7, 1, 0, 1000, 550); -- chauffage au gaz, chaleur
+INSERT INTO Produire VALUES (7, 2, 0, 1000, 300); -- chauffage au gaz, dioxyde de carbone
 
 -- HistoriqueConsommation (idConso, dateOn, dateOff, idAppareil)
 -- chauffage électrique 1 allumé de novembre à mars tous les ans depuis 2020 jusqu'à 2022

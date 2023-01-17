@@ -15,11 +15,15 @@
     <?php
 
     // requete pour la base
-    $reqApparts = 'SELECT idAppartement, numAppart, numeroRue, nomRue, codePostal, nomVille, nomPropriete,
-                    DATE(datefinprop) AS datefinprop, DATE(datedebutprop) AS datedebutprop,
-                    (UNIX_TIMESTAMP(datefinprop) - UNIX_TIMESTAMP(datedebutprop)) AS tempsDureeLocation,
-                    (UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(datedebutprop)) AS tempsDepuisDebutLocation
-            FROM Appartement NATURAL JOIN ProprieteAdresse NATURAL JOIN Proprietaire';
+    $reqApparts = 'SELECT Appartement.idAppartement, numAppart, numeroRue, nomRue, codePostal, nomVille, nomPropriete,
+                    datedebutprop, datefinprop,
+                    datedebutloc, dateFinLoc, nbHabitants,
+                    (UNIX_TIMESTAMP(IFNULL(dateFinLoc,NOW())) - UNIX_TIMESTAMP(datedebutloc)) AS tempsDureeLocation,
+                    idProprietaire, nomProprietaire, prenomProprietaire,
+                    idLocataire, nomLocataire, prenomLocataire
+            FROM Appartement NATURAL JOIN ProprieteAdresse
+            LEFT OUTER JOIN DernierProprietaire ON ProprieteAdresse.idPropriete = DernierProprietaire.idPropriete
+            LEFT OUTER JOIN LocataireActuel ON Appartement.idAppartement = LocataireActuel.idAppartement';
 
     if (!isset($estAdmin) || $estAdmin != true) {
         $reqApparts = "$reqApparts WHERE idPersonne = {$_SESSION['Id']}";
@@ -31,44 +35,43 @@
     if ($dataApparts == NULL)
     die("Problème d'exécution de la requête des appartements : {$bdd->errorInfo()[2]} \n");
 
-    $timestampNow = time();
-
     $nbLignes = 0;
     foreach ($dataApparts as $appartement) {
         $nbLignes++;
 
         // La durée de la location depuis le début de la location jusqu'à la fin de la location (ou jusqu'à maintenant) en heures
-        $heuresDureeLocation = 0;
-        if ($appartement['tempsDureeLocation'] != NULL) {
-            $heuresDureeLocation = $appartement['tempsDureeLocation'] / 3600;
-        }
-        else {
-            $heuresDureeLocation = $appartement['tempsDepuisDebutLocation'] / 3600;
-        }
+        $heuresDureeLocation = $appartement['tempsDureeLocation'] / 3600;
 
-        $textPeriodeLocation = "";
-        if($appartement['tempsDureeLocation'] != NULL) {
-            $textPeriodeLocation = "du {$appartement['datedebutprop']} au {$appartement['datefinprop']}";
-        }
-        else {
-            $textPeriodeLocation = "du {$appartement['datedebutprop']} au {$timestampNow}";
-        }
-
+        
         echo "<div class=\"appart\">
-                <h3>";
+        <h3>";
         
         if ($appartement['numAppart'] != NULL) echo "Appartement {$appartement['numAppart']} - ";
         echo adressePropriete($appartement) . "</h3>";
-
-        echo "<p>Données sur la période $textPeriodeLocation</p>";
-
+        
+        $textePeriodeProprietaire = periodeDateDuAu($appartement['datedebutprop'], $appartement['datefinprop']);
+        echo "<p>Propriétaire : {$appartement['prenomProprietaire']} {$appartement['nomProprietaire']} $textePeriodeProprietaire.</p>";
+        
+        if($appartement['datedebutloc'] == NULL) {
+            echo "<p>Appartement non loué</p>";
+            echo "</div>";
+            continue;
+        }
+        $dateDebut = $appartement['datedebutloc'];
+        $dateFin = $appartement['dateFinLoc'];
+        $textPeriodeLocation = periodeDateDuAu($dateDebut, $dateFin);
+        if($dateFin == NULL) $dateFin = date('Y-m-d');
+        echo "<p>Locataire : {$appartement['prenomLocataire']} {$appartement['nomLocataire']} $textPeriodeLocation.</p>";
+        $nbJoursLocation = round($heuresDureeLocation / 24, 0);
+        echo "<p>Données sur la période de location ($nbJoursLocation jours) et pour {$appartement['nbHabitants']} habitant(s).</p>";
+        
         // CONSOMMATION de ressources
 
         // requete pour la base
         $reqConso = "SELECT idAppareil, libTypeRessource, valCritiqueConsoAppart, valIdealeConsoAppart, quantiteAllume,
                     SUM((UNIX_TIMESTAMP(IFNULL(dateOff, NOW())) - UNIX_TIMESTAMP(dateOn))) AS dureeAllume
                 FROM TypeRessource NATURAL JOIN Consommer NATURAL JOIN TypeAppareil NATURAL JOIN Appareil NATURAL JOIN Piece NATURAL JOIN HistoriqueConsommation
-                WHERE idAppartement = {$appartement['idAppartement']} AND dateOn >= '{$appartement['datedebutprop']}' AND dateOn <= '{$appartement['datefinprop']}'
+                WHERE idAppartement = {$appartement['idAppartement']} AND dateOn >= '$dateDebut' AND dateOn <= '$dateFin'
                 GROUP BY typeRessource";
 
         ### peut regarder une description de la ressource si survole son nom ? ###
@@ -92,18 +95,19 @@
         foreach ($dataConso as $ligneConso) {
             // Consommation d'une ressource
 
-            $consommation = ($ligneConso['dureeAllume'] / 3600) * $ligneConso['quantiteAllume'] / $heuresDureeLocation;
+            $consommation = ($ligneConso['dureeAllume'] / 3600) * $ligneConso['quantiteAllume'] / $heuresDureeLocation / $appartement['nbHabitants'];
             $libTypeRessource = $ligneConso['libTypeRessource'];
+            $unite = "kWh / jour / habitant";
             
             echo "<tr>
                     <td>$libTypeRessource</td>
-                    <td>" . $consommation = str_replace(".", ",", round($consommation, 3)) . " kWh/j</td>
-                    <td>{$ligneConso['valIdealeConsoAppart']} kWh/j</td>
-                    <td>{$ligneConso['valCritiqueConsoAppart']} kWh/j</td>";
+                    <td>" . str_replace(".", ",", round($consommation, 3)) . " $unite</td>
+                    <td>" . $ligneConso['valIdealeConsoAppart'] . " $unite</td>
+                    <td>" . $ligneConso['valCritiqueConsoAppart'] . " $unite</td>";
 
             if ($ligneConso['valIdealeConsoAppart']+5 >= $consommation) echo "<td class=\"vert\">C'est très bien!</td>";
             else if ($ligneConso['valCritiqueConsoAppart']-5 > $consommation) echo "<td class=\"orange\">C'est moyen</td>";
-            else echo "<td class=\"rouge\">C mauvais!</td>";
+            else echo "<td class=\"rouge\">C'est mauvais!</td>";
             echo "</tr>";
         }
         
@@ -116,7 +120,7 @@
         $reqProd = "SELECT libTypeSubstance, valCritiqueProdAppart, valIdealeProdAppart, idAppareil, quantiteAllume,
                 SUM((UNIX_TIMESTAMP(IFNULL(dateOff, NOW())) - UNIX_TIMESTAMP(dateOn))) AS dureeAllume
                 FROM TypeSubstance NATURAL JOIN Produire NATURAL JOIN TypeAppareil NATURAL JOIN Appareil NATURAL JOIN Piece NATURAL JOIN HistoriqueConsommation
-                WHERE idAppartement = {$appartement['idAppartement']} AND dateOn >= '{$appartement['datedebutprop']}' AND dateOn <= '{$appartement['datefinprop']}'
+                WHERE idAppartement = {$appartement['idAppartement']} AND dateOn >= '$dateDebut' AND dateOn <= '$dateFin'
                 GROUP BY typeSubstance";
 
         ### changer base de donnée pour avoir historique des on/off et pouvoir calculer le temps de marche ###
@@ -139,16 +143,27 @@
         foreach ($dataProd as $ligneProd) {
             $heuresAllume = $ligneProd['dureeAllume'] / 3600;
     
-            $production = $heuresAllume * $ligneProd['quantiteAllume'] / $heuresDureeLocation;
+            $production = $heuresAllume * $ligneProd['quantiteAllume'] / $heuresDureeLocation / $appartement['nbHabitants'];
+
+            $unite = " kg/j";
+            switch($ligneProd['libTypeSubstance']) {
+                case "dioxyde de carbone":
+                    $unite = " kg / jour / habitant";
+                    break;
+                case "chaleur":
+                    $unite = " kJ / jour / habitant";
+                    break;
+            }
+
             echo "<tr>
                     <td>{$ligneProd['libTypeSubstance']}</td>
-                    <td>" . $consommation = str_replace(".", ",", round($production, 3)) . " kWh/j</td>
-                    <td>{$ligneProd['valIdealeProdAppart']} kWh/j</td>
-                    <td>{$ligneProd['valCritiqueProdAppart']} kWh/j</td>";
+                    <td>" . str_replace(".", ",", round($production, 3)) . "$unite</td>
+                    <td>" . $ligneProd['valIdealeProdAppart'] . $unite . "</td>
+                    <td>" . $ligneProd['valCritiqueProdAppart'] . $unite . "</td>";
 
             if ($ligneProd['valIdealeProdAppart']+5 >= $production) echo "<td class=\"vert\">C'est très bien!</td>";
             else if ($ligneProd['valCritiqueProdAppart']-5 > $production) echo "<td class=\"orange\">C'est moyen</td>";
-            else echo "<td class=\"rouge\">C mauvais!</td>";
+            else echo "<td class=\"rouge\">C'est mauvais!</td>";
             echo "</tr>";
         }
         echo "</tbody>

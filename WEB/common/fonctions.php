@@ -56,3 +56,11 @@ function trouveTypePiece($listeTypePieces, $idTypePiece)
 	echo "<p>Erreur : type de pièce {$idTypePiece} inconnu.</p>";
 	exit();
 }
+
+function periodeDateDuAu($dateDebut, $dateFin) {
+	if($dateFin == NULL) {
+		return "du " . date("d/m/Y", strtotime($dateDebut)) . " à aujourd'hui";
+	} else {
+		return "du " . date("d/m/Y", strtotime($dateDebut)) . " au " . date("d/m/Y", strtotime($dateFin));
+	}
+}

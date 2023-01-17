@@ -2,7 +2,7 @@
 DROP DATABASE IF EXISTS MaisonEco;
 CREATE DATABASE IF NOT EXISTS MaisonEco;
 USE MaisonEco;
-DROP VIEW IF EXISTS ProprieteAdresse;
+DROP VIEW IF EXISTS ProprieteAdresse, DernierLocataire, LocataireActuel, ProprietaireActuel;
 DROP TABLE IF EXISTS InfoPersonne, Administrateur, Propriete,
 	TypeAppartement, TypePiece, TypeSecurite,
 	TypeAppareil, TypeRessource, TypeSubstance,
@@ -237,6 +237,20 @@ CREATE TABLE Proprietaire(
         ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE VIEW DernierProprietaire AS
+SELECT datedebutprop, datefinprop, idPropriete, idPersonne AS idProprietaire, nom AS nomProprietaire, prenom AS prenomProprietaire
+FROM Proprietaire
+NATURAL JOIN Utilisateur
+NATURAL JOIN InfoPersonne
+WHERE datedebutprop = (SELECT MAX(datedebutprop) FROM Proprietaire AS P WHERE P.idPropriete = Proprietaire.idPropriete);
+
+CREATE VIEW ProprietaireActuel AS
+SELECT datedebutprop, datefinprop, idPropriete, idPersonne AS idProprietaire, nom AS nomProprietaire, prenom AS prenomProprietaire
+FROM Proprietaire
+NATURAL JOIN Utilisateur
+NATURAL JOIN InfoPersonne
+WHERE datefinprop IS NULL;
+
 CREATE TABLE Locataire(
    idAppartement INT,
    datedebutloc DATETIME,
@@ -249,6 +263,20 @@ CREATE TABLE Locataire(
    FOREIGN KEY(idPersonne) REFERENCES Utilisateur(idPersonne)
         ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE VIEW DernierLocataire AS
+SELECT idAppartement, datedebutloc, dateFinLoc, idPersonne AS idLocataire, nbHabitants, nom AS nomLocataire, prenom AS prenomLocataire
+FROM Locataire
+NATURAL JOIN Utilisateur
+NATURAL JOIN InfoPersonne
+WHERE datedebutloc = (SELECT MAX(datedebutloc) FROM Locataire AS L WHERE L.idAppartement = Locataire.idAppartement);
+
+CREATE VIEW LocataireActuel AS
+SELECT idAppartement, datedebutloc, dateFinLoc, idPersonne AS idLocataire, nbHabitants, nom AS nomLocataire, prenom AS prenomLocataire
+FROM Locataire
+NATURAL JOIN Utilisateur
+NATURAL JOIN InfoPersonne
+WHERE dateFinLoc IS NULL;
 
 
 -- Génération des TIGGER :
