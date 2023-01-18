@@ -64,3 +64,11 @@ function periodeDateDuAu($dateDebut, $dateFin) {
 		return "du " . date("d/m/Y", strtotime($dateDebut)) . " au " . date("d/m/Y", strtotime($dateFin));
 	}
 }
+
+function pageAccueilSiNonConnecte($ROOT)
+{
+	if (!isset($_SESSION['Id']) || empty($_SESSION['Id'])) {
+		header("Location: {$ROOT}Page_accueil/Page_accueil.php");
+		exit();
+	}
+}

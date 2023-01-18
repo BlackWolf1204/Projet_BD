@@ -14,6 +14,8 @@
 
     <?php
 
+    pageAccueilSiNonConnecte($ROOT);
+
     // requete pour la base
     $reqApparts = 'SELECT Appartement.idAppartement, numAppart, numeroRue, nomRue, codePostal, nomVille, nomPropriete,
                     datedebutprop, datefinprop,
@@ -26,7 +28,7 @@
             LEFT OUTER JOIN LocataireActuel ON Appartement.idAppartement = LocataireActuel.idAppartement';
 
     if (!isset($estAdmin) || $estAdmin != true) {
-        $reqApparts = "$reqApparts WHERE idPersonne = {$_SESSION['Id']}";
+        $reqApparts = "$reqApparts WHERE idProprietaire = {$_SESSION['Id']}";
     }
 
     // exécution de la requête
