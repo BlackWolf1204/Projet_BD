@@ -23,6 +23,7 @@ $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 <link rel='stylesheet' type='text/css' media='screen' href='<?= $ROOT ?>common/style/main.css'>
 <script src="<?= $ROOT ?>common/vanta/p5.min.js"></script>
 <script src="<?= $ROOT ?>common/vanta/vanta.topology.min.js"></script>
+<script src="<?= $ROOT ?>common/main.js"></script>
 
 </head>
 
