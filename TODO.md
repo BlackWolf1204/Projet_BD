@@ -34,8 +34,8 @@ Pour cela, CQC SA décide dans un premier temps de mettre en place une applicati
 
 - [x] Inscription - connexion - déconnexion
 - [ ] Gestion des profils
-  - [ ] Admin : stats de toutes les maisons
-  - [ ] Utilisateur : voir sa propre consommation et l'évolution de son statut
+  - [x] Admin : stats de toutes les maisons
+  - [x] Utilisateur : voir sa propre consommation et l'évolution de son statut
 - [ ] Gestion des maisons :
   - [x] Créer des maisons
   - [x] Ajouter des appartements
@@ -56,7 +56,7 @@ Pour cela, CQC SA décide dans un premier temps de mettre en place une applicati
 			=> maison B plus économe que A
   - [ ] La maison la plus polluante pour chaque substance pour un mois donné
 		Tenir compte du nombre d'habitants
-  - [ ] Conspmmation / émission mensuelle de chaque maison pour le mois pour chaque ressource / substance
+  - [ ] Consommation / émission mensuelle de chaque maison pour le mois pour chaque ressource / substance
   - [ ] La ville dont les citoyens sont les plus éco-responsables
   - [x] ...
 
@@ -76,9 +76,9 @@ Pour cela, CQC SA décide dans un premier temps de mettre en place une applicati
    2. [x] date création du compte
    3. [ ] état du compte (actif / inactif)
    4. [ ] date de dernière connexion ?
-4. [ ] Identifiant unique généré pour chaque utilisateur
-   1. [ ] Se connecter avec cet identifant
-   2. [ ] Se connecter avec le mail
+4. [x] Identifiant unique généré pour chaque utilisateur
+   1. [x] Se connecter avec cet identifant
+   2. [x] Se connecter avec le mail
 5. [ ] Âge minimum : 18 ans
 6. [x] Personne physique : Nom, prénom, date de naissance, genre, mail, identifiant, numéro de tel
 7. [x] Adresse : numéro de maison, nom de rue, code postal, ville
@@ -142,4 +142,4 @@ Pour cela, CQC SA décide dans un premier temps de mettre en place une applicati
 ### 1.3.4 Fourni
 
 1. [ ] Projet contenant les pages pour le CRUD (non connecté à la BDD) (????)
-2. [ ] Liens vers des vidéos Youtube pour être un citoyen économe (?????)
+2. [ ] Liens vers des vidéos Youtube pour être un citoyen économe (?????) => non
