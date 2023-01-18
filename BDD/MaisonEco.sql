@@ -1,3 +1,5 @@
+-- Génération des tables de la base de donnée "MaisonEco"
+-- Pour que le site fonctionne il faut charger le fichier "Echantillon.sql" (permet de remplir TypeAppartement, TypeSecurite, TypeAppareil...)
 
 DROP DATABASE IF EXISTS MaisonEco;
 CREATE DATABASE IF NOT EXISTS MaisonEco;

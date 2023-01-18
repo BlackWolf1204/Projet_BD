@@ -72,6 +72,15 @@ $ROOT = '../../';
 		$TypeAppartement = $bdd->query("SELECT * FROM TypeAppartement");
 		$TypeAppartement = $TypeAppartement->fetchAll();
 
+		if(count($TypeSecurite) == 0) {
+			echo "<p>Il n'y a pas de type de sécurité dans la base de données.<br>Avez-vous chargé les échantillons ?</p>";
+			exit();
+		}
+		if(count($TypeAppartement) == 0) {
+			echo "<p>Il n'y a pas de type d'appartement dans la base de données.<br>Avez-vous chargé les échantillons ?</p>";
+			exit();
+		}
+
 		for ($i = 1; $i <= $nbAppartements; $i++) {
 		?>
 

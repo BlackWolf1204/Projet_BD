@@ -87,11 +87,11 @@ if (isset($_POST['inscription'])) {
     if (empty($erreur)) {
         // Générer un identifiant au format : prenomXXX
         // (lower case et sans espace)
-        $prenomLowerCase = str_replace(' ', '', strtolower($Prenom));
+        $prenomLowerCase = str_replace(' ', '', mb_strtolower($Prenom));
         $echecs = 0;
         do {
             if ($echecs >= 100) {
-                $erreur = "Erreur lors de la création de votre compte !";
+                $erreur = "Erreur lors de la création de votre identifiant !";
                 $identifiant = NULL;
                 break;
             }
@@ -99,6 +99,11 @@ if (isset($_POST['inscription'])) {
             $identifiant = $prenomLowerCase . $randomNumber;
             // Vérifier que l'identifiant n'existe pas déjà
             $reqId = $bdd->prepare("SELECT * FROM Utilisateur WHERE identifiant = ?");
+            $res = $reqId->execute(array($identifiant));
+            if (!$res) {
+                $erreur = "Erreur lors de la création de votre identifiant !";
+                break;
+            }
             $echecs++;
         } while ($reqId->rowCount() > 0);
     }
@@ -109,7 +114,7 @@ if (isset($_POST['inscription'])) {
         $res = $insertmbr->execute(array($Nom, $DateNais, $Genre, $Mail, $NumTel, $Prenom));
         if (!$res) {
             $bdd->rollback();
-            $erreur = "Erreur lors de la création de votre compte !";
+            $erreur = "Erreur lors de la création de votre compte !<br>" . $insertmbr->errorInfo()[2];
         } else {
             $idPersonne = $bdd->lastInsertId();
             // date now
@@ -120,7 +125,7 @@ if (isset($_POST['inscription'])) {
             $res = $insertmbr->execute(array($idPersonne, $identifiant, $HashMdp, $dateCreation));
             if (!$res) {
                 $bdd->rollback();
-                $erreur = "Erreur lors de la création de votre compte !";
+                $erreur = "Erreur lors de la création de votre compte utilisateur !<br>" . $insertmbr->errorInfo()[2];
             } else {
                 $bdd->commit();
                 $erreur = "Votre compte a bien été créé !<br/>Votre identifiant est $identifiant ou $Mail<br/><a href=\"connexion.php\">Me connecter</a>";

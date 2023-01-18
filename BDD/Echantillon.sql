@@ -1,4 +1,5 @@
 -- Données fictives
+-- Ces données sont nécessaires pour que le site fonctionne (TypeAppartement, TypeAppareil...)
 
 -- Info personne (idPersonne, nom, dateNaissance, genre, email, tel, prenom)
 INSERT INTO InfoPersonne VALUES (1, 'MARTIN', '1990-01-01', 'M', 'gabriel9854@gmail.com', '0695867428', 'Gabriel');
