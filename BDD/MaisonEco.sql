@@ -287,7 +287,7 @@ WHERE dateFinLoc IS NULL;
 
 
 -- Génération des TIGGER :
-DELIMITER//
+DELIMITER //
 
 -- Empêcher la création d'un compte pour les données invalides :
 --  - pour une personne de moins de 18 ans
@@ -303,7 +303,7 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le numéro de téléphone doit être composé de 10 chiffres et commencer par 0';
     END IF;
 END;
-
+//
 -- Empêcher la création et modification d'un compte Utilisateur et Administrateur pour les données invalides :
 --  - pour un identifiant déjà utilisé
 --  - pour un mot de passe ne correspondant pas à un hash
@@ -318,7 +318,7 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le mot de passe n''est pas valide';
     END IF;
 END;
-
+//
 CREATE TRIGGER VerifDonneesAdministrateur
 BEFORE INSERT ON Administrateur
 FOR EACH ROW
@@ -330,7 +330,7 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le mot de passe n''est pas valide';
     END IF;
 END;
-
+//
 -- Empêcher la création d'une ville dont les données ne sont pas valides :
 --  - Un code postal doit être composé de 5 chiffres et doit commencer par le numéro du département
 CREATE TRIGGER VerifDonneesVille
@@ -345,7 +345,7 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le code postal doit commencer par le numéro du département';
     END IF;
 END;
-
+//
 -- Empêcher la création d'une adresse dont les données ne sont pas valides :
 --  - Le numéro de rue doit être un entier positif
 CREATE TRIGGER VerifDonneesAdresse
@@ -356,7 +356,7 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le numéro de rue doit être un entier positif';
     END IF;
 END;
-
+//
 -- Empêcher la création d'un appartement dont les données ne sont pas valides :
 --  - Le numéro de l'appartement doit être un entier positif
 CREATE TRIGGER VerifDonneesAppartement
@@ -390,4 +390,4 @@ END;
 -- Problème : idPersonne de Porprietaire et Locataire ne peut pas être null (donc suppression directe)
 
 //
-DELIMITER;
+DELIMITER ;
