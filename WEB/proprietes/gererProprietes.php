@@ -46,7 +46,7 @@ require_once("../common/main.php");
             FROM ProprieteAdresse NATURAL JOIN DernierProprietaire';
     
     if (!isset($estAdmin) || $estAdmin != true) {
-        $req = "$req WHERE idPersonne = {$_SESSION['Id']}";
+        $req = "$req WHERE idProprietaire = {$_SESSION['Id']}";
     }
 
     // exécution de la requête

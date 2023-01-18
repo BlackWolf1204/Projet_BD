@@ -26,7 +26,7 @@
             LEFT OUTER JOIN LocataireActuel ON Appartement.idAppartement = LocataireActuel.idAppartement';
 
     if (!isset($estAdmin) || $estAdmin != true) {
-        $reqApparts = "$reqApparts WHERE idPersonne = {$_SESSION['Id']}";
+        $reqApparts = "$reqApparts WHERE idProprietaire = {$_SESSION['Id']}";
     }
 
     // exécution de la requête
