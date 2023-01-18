@@ -2,6 +2,13 @@
 DROP DATABASE IF EXISTS MaisonEco;
 CREATE DATABASE IF NOT EXISTS MaisonEco;
 USE MaisonEco;
+DROP TRIGGER IF EXISTS VerifDonneesInfoPersonne;
+DROP TRIGGER IF EXISTS VerifDonneesUtilisateur;
+DROP TRIGGER IF EXISTS VerifDonneesAdministrateur;
+DROP TRIGGER IF EXISTS VerifDonneesVille;
+DROP TRIGGER IF EXISTS VerifDonneesAdresse;
+DROP TRIGGER IF EXISTS VerifDonneesAppartement;
+DROP TRIGGER IF EXISTS SuppressionInfoPersonne;
 DROP VIEW IF EXISTS ProprieteAdresse, DernierLocataire, LocataireActuel, ProprietaireActuel;
 DROP TABLE IF EXISTS InfoPersonne, Administrateur, Propriete,
 	TypeAppartement, TypePiece, TypeSecurite,
@@ -280,6 +287,7 @@ WHERE dateFinLoc IS NULL;
 
 
 -- Génération des TIGGER :
+DELIMITER//
 
 -- Empêcher la création d'un compte pour les données invalides :
 --  - pour une personne de moins de 18 ans
@@ -310,6 +318,7 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le mot de passe n''est pas valide';
     END IF;
 END;
+
 CREATE TRIGGER VerifDonneesAdministrateur
 BEFORE INSERT ON Administrateur
 FOR EACH ROW
@@ -358,3 +367,27 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le numéro de l''appartement doit être un entier positif';
     END IF;
 END;
+
+-- Supprimer le compte Utilisateur et Administrateur lors de la suppression d'une personne d'InfoPersonne
+-- Mettre fin aux propriétés et aux locations de l'appartement lors de la suppression
+-- CREATE TRIGGER SuppressionInfoPersonne
+-- AFTER DELETE ON InfoPersonne
+-- FOR EACH ROW
+-- BEGIN
+--     DELETE FROM Utilisateur WHERE idPersonne = OLD.idPersonne;
+--     DELETE FROM Administrateur WHERE idPersonne = OLD.idPersonne;
+--     UPDATE Proprietaire SET datefinprop = CURDATE() WHERE Proprietaire.idPersonne = OLD.idPersonne AND datefinprop IS NULL;
+--     UPDATE Proprietaire SET idPersonne = NULL WHERE idPersonne = OLD.idPersonne;
+--     UPDATE Locataire SET dateFinLoc = CURDATE() WHERE Locataire.idPersonne = OLD.idPersonne AND dateFinLoc IS NULL;
+--     UPDATE Locataire SET idPersonne = NULL WHERE idPersonne = OLD.idPersonne;
+-- END;
+
+-- DROP TRIGGER IF EXISTS SuppressionInfoPersonne;
+-- DELETE FROM InfoPersonne WHERE idPersonne = 2;
+-- SELECT * FROM utilisateur;
+-- SELECT * FROM proprietaire;
+-- SELECT * FROM locataire;
+-- Problème : idPersonne de Porprietaire et Locataire ne peut pas être null (donc suppression directe)
+
+//
+DELIMITER;

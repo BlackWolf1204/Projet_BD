@@ -43,7 +43,7 @@ require_once("../common/main.php");
     
     // requete pour la base
     $req = 'SELECT numeroRue, nomRue, codePostal, nomVille, degreIsolation, nomPropriete , idPropriete, DATE(dateDebutProp) AS dateDProp
-            FROM ProprieteAdresse NATURAL JOIN Proprietaire';
+            FROM ProprieteAdresse NATURAL JOIN DernierProprietaire';
     
     if (!isset($estAdmin) || $estAdmin != true) {
         $req = "$req WHERE idPersonne = {$_SESSION['Id']}";
