@@ -309,4 +309,4 @@ INSERT INTO HistoriqueConsommation VALUES (44, CAST('2021-04-04' AS DATETIME), C
 INSERT INTO HistoriqueConsommation VALUES (45, CAST('2021-09-06' AS DATETIME), CAST('2022-07-01' AS DATETIME), 12); -- lampe
 INSERT INTO HistoriqueConsommation VALUES (46, CAST('2019-07-26' AS DATETIME), NULL, 13); -- chauffage au gaz (toujours en cours)
 INSERT INTO HistoriqueConsommation VALUES (47, CAST('2019-12-10' AS DATETIME), CAST('2020-01-01' AS DATETIME), 14); -- lampe
-INSERT INTO HistoriqueConsommation VALUES (48, CAST('2023-06-01' AS DATETIME), NULL, 14); -- lampe
+INSERT INTO HistoriqueConsommation VALUES (48, CAST('2023-01-06' AS DATETIME), NULL, 14); -- lampe

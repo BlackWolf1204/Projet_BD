@@ -370,6 +370,29 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Le numéro de l''appartement doit être un entier positif';
     END IF;
 END;
+//
+
+-- Vérifier que l'historique de consommation est cohérent : La date de début de l'historique doit être antérieure à la date de fin
+CREATE TRIGGER VerifDonneesHistoriqueConsommation
+BEFORE INSERT ON HistoriqueConsommation
+FOR EACH ROW
+BEGIN
+    IF (NEW.dateOn > NEW.dateOff) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La date de début doit être antérieure à la date de fin';
+    END IF;
+END;
+//
+-- Update
+CREATE TRIGGER VerifDonneesHistoriqueConsommationUpdate
+BEFORE UPDATE ON HistoriqueConsommation
+FOR EACH ROW
+BEGIN
+    IF (NEW.dateOn > NEW.dateOff) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'La date de début doit être antérieure à la date de fin';
+    END IF;
+END;
+//
+
 
 -- Supprimer le compte Utilisateur et Administrateur lors de la suppression d'une personne d'InfoPersonne
 -- Mettre fin aux propriétés et aux locations de l'appartement lors de la suppression
