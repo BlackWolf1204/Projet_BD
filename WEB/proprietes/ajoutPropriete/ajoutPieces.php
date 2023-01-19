@@ -8,11 +8,17 @@ $ROOT = '../../';
 <head>
 	<title>Ajouter les pièces</title>
 	<style>
+		#labelPropriete {
+			text-align: center;
+		}
 		.infoPiece {
 			border: 1px solid black;
-			margin: 1em 0;
+			margin: 1em auto;
 			padding: 1em;
 			width: fit-content;
+		}
+		.infoAppart > p {
+			text-align: center;
 		}
 	</style>
 
@@ -153,6 +159,3 @@ $ROOT = '../../';
 	</form>
 
 	<?php require("{$ROOT}common/footer.php") ?>
-	</body>
-
-</html>

@@ -77,8 +77,4 @@
 
     <div id="piechart" style="width: 900px; height: 500px;"></div>
 
-    </body>
-
     <?php require "../common/footer.php"; ?>
-
-</html>

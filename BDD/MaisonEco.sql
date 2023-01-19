@@ -146,6 +146,7 @@ CREATE TABLE Propriete(
    degreIsolation CHAR(1) ,
    idAdresse INT NOT NULL,
    PRIMARY KEY(idPropriete),
+   UNIQUE(idAdresse),
    FOREIGN KEY(idAdresse) REFERENCES Adresse(idAdresse)
         ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

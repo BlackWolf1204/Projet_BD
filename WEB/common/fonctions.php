@@ -15,15 +15,33 @@ function proprieteFromPost()
 	);
 }
 
+function adresseSansNomPropriete($propriete)
+{
+	return $propriete['numeroRue'] . " " . $propriete['nomRue'] . ", " . $propriete['codePostal'] . " " . $propriete['nomVille'];
+}
+
 function adressePropriete($propriete)
 {
-	$adresse = $propriete['numeroRue'] . " " . $propriete['nomRue'] . ", " . $propriete['codePostal'] . " " . $propriete['nomVille'];
+	$adresse = adresseSansNomPropriete($propriete);
 	if ($propriete['nomPropriete'] != null) {
 		$labelPropriete = $propriete['nomPropriete'] . " (" . $adresse . ")";
 	} else {
 		$labelPropriete = $adresse;
 	}
 	return $labelPropriete;
+}
+
+function lienAdressePropriete($propriete, $ROOT)
+{
+	$idPropriete = $propriete['idPropriete'];
+	$lien = $ROOT . "proprietes/detailsPropriete.php?idPropriete=$idPropriete";
+	
+	$adresse = adresseSansNomPropriete($propriete);
+	if ($propriete['nomPropriete'] != null) {
+		return "<a href=\"$lien\">" . $propriete['nomPropriete'] . "</a> (" . $adresse . ")";
+	} else {
+		return "P<a href=\"$lien\">$adresse</a>";
+	}
 }
 
 function echoLabelPropriete($propriete)
@@ -71,4 +89,18 @@ function pageAccueilSiNonConnecte($ROOT)
 		header("Location: {$ROOT}Page_accueil/Page_accueil.php");
 		exit();
 	}
+}
+
+function lienInfoPersonne($idPersonne, $nomPersonne, $prenomPersonne, $ROOT, $defaut = "Personne")
+{
+	if($idPersonne == NULL)
+		return $defaut;
+	return "<a href=\"{$ROOT}administration/infoPersonne.php?idPersonne={$idPersonne}\">{$prenomPersonne} {$nomPersonne}</a>";
+}
+
+function lienInfoAppareil($idAppareil, $nomAppareil, $typeAppareil, $ROOT, $defaut = "Appareil inconnu")
+{
+	if($idAppareil == NULL)
+		return $defaut;
+	return "<a href=\"{$ROOT}Gestion des appareils/detailsAppareil.php?idAppareil={$idAppareil}\">{$nomAppareil} ({$typeAppareil})</a>";
 }

@@ -181,6 +181,3 @@ $ROOT = '../../';
 	</script>
 
 	<?php require("{$ROOT}common/footer.php") ?>
-	</body>
-
-</html>

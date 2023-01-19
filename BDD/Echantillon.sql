@@ -43,11 +43,18 @@ INSERT INTO Rue VALUES (3, 'Rue du Ressort', 3);
 INSERT INTO Adresse VALUES (1, 4, 1);
 INSERT INTO Adresse VALUES (2, 16, 2);
 INSERT INTO Adresse VALUES (3, 10, 3);
+INSERT INTO Adresse VALUES (4, 11, 3);
+INSERT INTO Adresse VALUES (5, 12, 3);
+INSERT INTO Adresse VALUES (6, 7, 1);
+
 
 -- Propriété (idPropriete, nomPropriete, degréIsolation, idAdresse)
 INSERT INTO Propriete VALUES (1, 'Tranquillité', 'C', 1);
 INSERT INTO Propriete VALUES (2, 'Laval', 'B', 2);
 INSERT INTO Propriete VALUES (3, 'Résidence du Parc', 'C', 3);
+INSERT INTO Propriete VALUES (4, 'Résidence le Clos', 'B', 4);
+INSERT INTO Propriete VALUES (5, 'Maison de la Tour', 'A', 5);
+INSERT INTO Propriete VALUES (6, 'Hôtel de la Massonnière', 'F', 6);
 
 -- Type sécurité (typeSécurité, libéllé)
 INSERT INTO TypeSecurite VALUES (1, 'Faible');
@@ -89,6 +96,20 @@ INSERT INTO Appartement VALUES (1, 2, 1, 3, 3); -- T2
 INSERT INTO Appartement VALUES (2, 7, 2, 1, 1); -- T1
 INSERT INTO Appartement VALUES (3, 9, 3, 2, 2); -- T1 bis
 INSERT INTO Appartement VALUES (4, 10, 2, 2, 2); -- T1 bis
+-- Résidence Le Clos : 4 appartements (T2, T4, Duplex et F3)
+INSERT INTO Appartement VALUES (5, 1, 1, 3, 4); -- T2
+INSERT INTO Appartement VALUES (6, 2, 2, 7, 4); -- T4
+INSERT INTO Appartement VALUES (7, 3, 3, 13, 4); -- Duplex
+INSERT INTO Appartement VALUES (8, 4, 1, 19, 4); -- F3
+-- Maison de la Tour : 1 appartements (T3)
+INSERT INTO Appartement VALUES (9, 1, 1, 5, 5); -- T3
+-- Hôtel de la Massonnière : 6 appartements (3 T2, 1 T3, 2 T1)
+INSERT INTO Appartement VALUES (10, 1, 1, 3, 6); -- T2
+INSERT INTO Appartement VALUES (11, 2, 2, 3, 6); -- T2
+INSERT INTO Appartement VALUES (12, 3, 3, 3, 6); -- T2
+INSERT INTO Appartement VALUES (13, 4, 1, 5, 6); -- T3
+INSERT INTO Appartement VALUES (14, 5, 2, 1, 6); -- T1
+INSERT INTO Appartement VALUES (15, 6, 3, 1, 6); -- T1
 
 -- Type pièce (typePiece, libéllé)
 INSERT INTO TypePiece VALUES (1, 'cuisine');
@@ -106,12 +127,47 @@ INSERT INTO Piece VALUES (5, 5, 3); -- chambre
 INSERT INTO Piece VALUES (6, 4, 3); -- pièce principale
 INSERT INTO Piece VALUES (7, 5, 4); -- chambre
 INSERT INTO Piece VALUES (8, 4, 4); -- pièce principale
+-- Résidence Le Clos : 4 appartements (T2, T4, Duplex et F3)
+INSERT INTO Piece VALUES (9, 2, 5); -- salon
+INSERT INTO Piece VALUES (10, 1, 5); -- cuisine
+INSERT INTO Piece VALUES (11, 3, 6); -- salle à manger
+INSERT INTO Piece VALUES (12, 4, 6); -- pièce principale
+INSERT INTO Piece VALUES (13, 5, 6); -- chambre
+INSERT INTO Piece VALUES (14, 5, 6); -- chambre
+INSERT INTO Piece VALUES (15, 4, 7); -- pièce principale
+INSERT INTO Piece VALUES (16, 5, 7); -- chambre
+INSERT INTO Piece VALUES (17, 5, 8); -- chambre
+INSERT INTO Piece VALUES (18, 4, 8); -- pièce principale
+INSERT INTO Piece VALUES (19, 5, 8); -- chambre
+-- Maison de la Tour : 1 appartements (T3)
+INSERT INTO Piece VALUES (20, 2, 9); -- salon
+INSERT INTO Piece VALUES (21, 1, 9); -- cuisine
+INSERT INTO Piece VALUES (22, 5, 9); -- chambre
+-- Hôtel de la Massonnière : 6 appartements (3 T2, 1 T3, 2 T1)
+INSERT INTO Piece VALUES (23, 1, 10); -- cuisine
+INSERT INTO Piece VALUES (24, 5, 10); -- chambre
+INSERT INTO Piece VALUES (25, 1, 11); -- cuisine
+INSERT INTO Piece VALUES (26, 5, 11); -- chambre
+INSERT INTO Piece VALUES (27, 1, 12); -- cuisine
+INSERT INTO Piece VALUES (28, 5, 12); -- chambre
+INSERT INTO Piece VALUES (29, 1, 13); -- cuisine
+INSERT INTO Piece VALUES (30, 5, 13); -- chambre
+INSERT INTO Piece VALUES (31, 5, 13); -- chambre
+INSERT INTO Piece VALUES (32, 5, 14); -- chambre
+INSERT INTO Piece VALUES (33, 5, 15); -- chambre
 
 -- Propriétaire (idPropriete, datedebutprop, datefinprop, idPersonne)
 INSERT INTO Proprietaire VALUES (1, '2017-06-18', NULL, 3);
 INSERT INTO Proprietaire VALUES (2, '2019-09-03', NULL, 2);
 INSERT INTO Proprietaire VALUES (3, '2021-04-27', NULL, 5);
 INSERT INTO Proprietaire VALUES (3, '2019-09-03', '2021-04-27', 2);
+-- Résidence Le Clos : un propriétaire de 2018 à 2019, puis un autre de 2019 à 2021
+INSERT INTO Proprietaire VALUES (4, '2018-02-15', '2019-07-10', 2);
+INSERT INTO Proprietaire VALUES (4, '2019-07-10', '2021-04-27', 5);
+-- Maison de la Tour : un propriétaire de 2019 à 2021
+INSERT INTO Proprietaire VALUES (5, '2019-09-03', '2021-04-27', 5);
+-- Hôtel de la Massonnière : un propriétaire depuis 2023
+INSERT INTO Proprietaire VALUES (6, '2023-01-10', NULL, 3);
 
 -- Locataire (idAppartement, datedebutloc, dateFinLoc, idPersonne, nbHabitants)
 INSERT INTO Locataire VALUES (1, '2020-08-21', NULL, 5, 2);
@@ -119,15 +175,37 @@ INSERT INTO Locataire VALUES (3, '2021-02-14', NULL, 2, 1);
 INSERT INTO Locataire VALUES (4, '2020-11-17', NULL, 4, 3);
 INSERT INTO Locataire VALUES (4, '2019-01-01', '2019-12-31', 2, 1);
 INSERT INTO Locataire VALUES (1, '2018-01-01', '2019-12-31', 2, 1);
+-- Résidence Le Clos : appartement 1
+INSERT INTO Locataire VALUES (5, '2018-02-15', '2019-07-10', 2, 1);
+INSERT INTO Locataire VALUES (5, '2019-07-10', '2021-04-27', 5, 2);
+-- Résidence Le Clos : appartement 3
+INSERT INTO Locataire VALUES (6, '2021-02-14', '2022-07-14', 2, 1);
+INSERT INTO Locataire VALUES (6, '2022-08-20', NULL, 5, 2);
+-- Résidence Le Clos : appartement 4
+INSERT INTO Locataire VALUES (7, '2019-01-01', '2019-12-31', 2, 1);
+INSERT INTO Locataire VALUES (7, '2020-11-17', NULL, 4, 3);
+-- Maison de la Tour :
+INSERT INTO Locataire VALUES (8, '2019-09-03', '2021-04-27', 5, 2);
+-- Hôtel de la Massonnière :
+INSERT INTO Locataire VALUES (9, '2023-01-10', NULL, 3, 1);
+INSERT INTO Locataire VALUES (10, '2023-01-11', NULL, 4, 1);
+INSERT INTO Locataire VALUES (11, '2023-01-15', NULL, 2, 1);
 
 -- TypeAppareil (idTypeAppareil, libTypeAppareil, VideoEconomie)
 INSERT INTO TypeAppareil VALUES (1, 'chauffage éléctrique', 'https://youtu.be/xzFdC6Dnh3g');
 INSERT INTO TypeAppareil VALUES (2, 'réfrigérateur', 'https://youtu.be/dQw4w9WgXcQ');
-INSERT INTO TypeAppareil VALUES (3, 'lampe', 'https://youtu.be/');
-INSERT INTO TypeAppareil VALUES (4, 'aspirateur', 'https://youtu.be/');
-INSERT INTO TypeAppareil VALUES (5, 'plaques de cuisson', 'https://youtu.be/');
-INSERT INTO TypeAppareil VALUES (6, 'télévision', 'https://youtu.be/');
-INSERT INTO TypeAppareil VALUES (7, 'chauffage au gaz', 'https://youtu.be/');
+INSERT INTO TypeAppareil VALUES (3, 'lampe', NULL);
+INSERT INTO TypeAppareil VALUES (4, 'aspirateur', NULL);
+INSERT INTO TypeAppareil VALUES (5, 'plaques de cuisson', NULL);
+INSERT INTO TypeAppareil VALUES (6, 'télévision', NULL);
+INSERT INTO TypeAppareil VALUES (7, 'chauffage au gaz', NULL);
+
+UPDATE TypeAppareil SET VideoEconomie = NULL WHERE idTypeAppareil = 3;
+UPDATE TypeAppareil SET VideoEconomie = NULL WHERE idTypeAppareil = 4;
+UPDATE TypeAppareil SET VideoEconomie = NULL WHERE idTypeAppareil = 5;
+UPDATE TypeAppareil SET VideoEconomie = NULL WHERE idTypeAppareil = 6;
+UPDATE TypeAppareil SET VideoEconomie = NULL WHERE idTypeAppareil = 7;
+
 
 -- Appareil (idAppareil, nomAppareil, emplacement, idTypeAppareil, idPiece)
 INSERT INTO Appareil VALUES (1, "Chauffage cuisine", "Sous la fenêtre", 1, 2); -- chauffage éléctrique, cuisine

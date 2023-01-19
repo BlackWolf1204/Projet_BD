@@ -28,7 +28,7 @@
             LEFT OUTER JOIN LocataireActuel ON Appartement.idAppartement = LocataireActuel.idAppartement';
 
     if (!isset($estAdmin) || $estAdmin != true) {
-        $reqApparts = "$reqApparts WHERE idProprietaire = {$_SESSION['Id']}";
+        $reqApparts = "$reqApparts WHERE idProprietaire = $sessionId";
     }
 
     // exécution de la requête
@@ -179,8 +179,5 @@
             echo "<p>Vous n'avez pas d'appartement</p>";
         }
     ?>
- </body>
  
  <?php require "../common/footer.php"; ?>
-
-</html>

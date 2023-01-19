@@ -8,9 +8,12 @@ $ROOT = '../../';
 <head>
 	<title>Ajouter un appartement</title>
 	<style>
+		#labelPropriete {
+			text-align: center;
+		}
 		.infoAppart {
 			border: 1px solid black;
-			margin: 1em 0;
+			margin: 1em auto;
 			padding: 1em;
 			width: fit-content;
 		}
@@ -134,6 +137,3 @@ $ROOT = '../../';
 	</form>
 
 	<?php require("{$ROOT}common/footer.php") ?>
-	</body>
-
-</html>
