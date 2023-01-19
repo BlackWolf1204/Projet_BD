@@ -48,7 +48,7 @@ require_once("../common/main.php");
 			WHERE idPropriete = ?";
 
 	if (!isset($estAdmin) || $estAdmin != true) {
-		$req = "$req WHERE idProprietaire = $sessionId";
+		$req = "$req AND idProprietaire = $sessionId";
 	}
 
 	// exécution de la requête
@@ -74,7 +74,7 @@ require_once("../common/main.php");
 		<p>Degré d'isolation : <?= $propriete['degreIsolation']; ?></p>
 		<p>Propriétaire actuel : <?= lienInfoPersonne($propriete['idProprietaire'], $propriete['nomProprietaire'], $propriete['prenomProprietaire'], $ROOT, 'Sans propriétaire'); ?></p>
 		<?php if ($propriete['idProprietaire'] != NULL) { ?>
-			<p style="margin-bottom: .5em;">Propriétaire depuis le : <?= $propriete['dateDebutProp']; ?></p>
+			<p style="margin-bottom: .5em;">Propriétaire depuis le : <?= date('d/m/Y', strtotime($propriete['dateDebutProp'])); ?></p>
 		<?php } ?>
 		<div class="boutonsgroupes centre">
 			<a class="bouton" href="changerProprietaire.php?idPropriete=<?= $idPropriete ?>">Changer le propriétaire</a>
@@ -134,7 +134,7 @@ require_once("../common/main.php");
 				<p>Type d'appartement : <?= $appartement['libTypeAppart']; ?></p>
 				<p>Locataire actuel : <?= lienInfoPersonne($appartement['idLocataire'], $appartement['nomLocataire'], $appartement['prenomLocataire'], $ROOT, 'Sans locataire'); ?></p>
 				<?php if ($appartement['idLocataire'] != NULL) { ?>
-					<p style="margin-bottom: .5em;">Locataire depuis le : <?= $appartement['dateDebutLoc']; ?></p>
+					<p style="margin-bottom: .5em;">Locataire depuis le : <?= date('d/m/Y', strtotime($appartement['dateDebutLoc'])); ?></p>
 				<?php } ?>
 				<div class="boutonsgroupes centre">
 					<a class="bouton" href="changerLocataire.php?idAppartement=<?= $appartement['idAppartement'] ?>">Changer le locataire</a>

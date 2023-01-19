@@ -39,12 +39,13 @@ require_once("../common/main.php");
     // requete pour la base
     $req = 'SELECT numeroRue, nomRue, codePostal, nomVille, degreIsolation, nomPropriete, idPropriete,
                     DATE(dateDebutProp) AS dateDebutProp, DATE(dateFinProp) AS dateFinProp, idProprietaire, nomProprietaire, prenomProprietaire
-            FROM ProprieteAdresse NATURAL JOIN DernierProprietaire
-            ORDER BY codePostal, nomRue, numeroRue';
+            FROM ProprieteAdresse NATURAL JOIN DernierProprietaire';
     
     if (!isset($estAdmin) || $estAdmin != true) {
         $req = "$req WHERE idProprietaire = $sessionId";
     }
+
+    $req = "$req ORDER BY codePostal, nomRue, numeroRue";
 
     // exécution de la requête
     $dataProprietes = $bdd->query($req);
@@ -59,7 +60,8 @@ require_once("../common/main.php");
         // requete pour la base
         $reqApparts = "SELECT idAppartement, numAppart, libTypeAppart, nomSecurite
         FROM ((Appartement NATURAL JOIN TypeAppartement) NATURAL JOIN TypeSecurite)
-        WHERE idPropriete = {$propriete['idPropriete']}";
+        WHERE idPropriete = {$propriete['idPropriete']}
+        ORDER BY numAppart";
 
         // exécution de la requête
         $dataAppartements = $bdd->query($reqApparts);
@@ -83,8 +85,12 @@ require_once("../common/main.php");
                 <td>{$propriete['degreIsolation']}</td>";
 
         if ($propriete['dateDebutProp'] != NULL){
-            if($propriete['dateFinProp'] == NULL) echo "<td>" . lienInfoPersonne($propriete['idProprietaire'], $propriete['nomProprietaire'], $propriete['prenomProprietaire'], $ROOT) . " ({$propriete['dateDebutProp']})</td>";
-            else echo "<td>Sans propriétaire depuis le {$propriete['dateFinProp']}</td>";
+            $dateDebutProp = date("d/m/Y", strtotime($propriete['dateDebutProp']));
+            if($propriete['dateFinProp'] == NULL) echo "<td>" . lienInfoPersonne($propriete['idProprietaire'], $propriete['nomProprietaire'], $propriete['prenomProprietaire'], $ROOT) . " ($dateDebutProp)</td>";
+            else {
+                $dateFinProp = date("d/m/Y", strtotime($propriete['dateFinProp']));
+                echo "<td>Sans propriétaire depuis le $dateFinProp</td>";
+            }
         }
         else echo "<td>Sans propriétaire</td>";
 
@@ -140,8 +146,12 @@ require_once("../common/main.php");
             
             $locataire = $dataLocataires->fetch();
             if ($locataire['datedebutloc'] != NULL) {
+                $locataire['datedebutloc'] = date("d/m/Y", strtotime($locataire['datedebutloc']));
                 if($locataire['datefinloc'] == NULL) echo "<td>" . lienInfoPersonne($locataire['idLocataire'], $locataire['nomLocataire'], $locataire['prenomLocataire'], $ROOT)." ({$locataire['datedebutloc']})</td>";
-                else echo "<td>Sans locataire depuis le {$locataire['datefinloc']}</td>";
+                else {
+                    $locataire['datefinloc'] = date("d/m/Y", strtotime($locataire['datefinloc']));
+                    echo "<td>Sans locataire depuis le {$locataire['datefinloc']}</td>";
+                }
             }
             else echo "<td>Sans locataire</td>";
 

@@ -46,7 +46,7 @@ if (!$userinfo) {
 }
 
 // Si l'utilisateur est admin ou qu'il est sur son propre profil
-$estAdminOuAutorise = $estAdmin || $userinfo['idPersonne'] == $idPersonne;
+$estAdminOuAutorise = $estAdmin || $userinfo['idPersonne'] == $sessionId;
 
 if (!$estAdminOuAutorise) {
 	$proprietes = $bdd->prepare('SELECT * FROM Proprietaire NATURAL JOIN ProprieteAdresse WHERE idProprietaire = ?');
