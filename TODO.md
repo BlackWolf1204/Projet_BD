@@ -25,25 +25,26 @@ Son rôle est d’encourager les citoyens français à une consommation modéré
 Pour cela, CQC SA décide dans un premier temps de mettre en place une application web responsive qui permettra de suivre la consommation des citoyens en diverses ressources (Ex: Electricité, gaz, eau,...etc) et l’émission de substances nocives pour l’environnement
 (Ex: CO2).
 
-- [ ] encourager les citoyens à une consommation éco
-- [ ] app **responsive**
-- [ ] Suivre la conso (électricité, gaz, eau, ...)
-- [ ] Suivre l'émission de substances (CO2)
+- [x] encourager les citoyens à une consommation éco
+- [x] app **responsive**
+- [x] Suivre la conso (électricité, gaz, eau, ...)
+- [x] Suivre l'émission de substances (CO2)
 
 ### 1.3.1 Spécifications foncitonnelles
 
 - [x] Inscription - connexion - déconnexion
-- [ ] Gestion des profils
+- [x] Gestion des profils
   - [x] Admin : stats de toutes les maisons
   - [x] Utilisateur : voir sa propre consommation et l'évolution de son statut
 - [ ] Gestion des maisons :
   - [x] Créer des maisons
   - [x] Ajouter des appartements
   - [x] Ajouter des appareils
+  - [ ] Renseigner le propriétaire
   - [ ] Renseigner les locataires (par le propriétaire)
-- [ ] Gestion des équipements de la maison :
-  - [ ] Allumer / éteindre
-  - [ ] Infos consommation et émission en substance
+- [x] Gestion des équipements de la maison :
+  - [x] Allumer / éteindre
+  - [x] Infos consommation et émission en substance
 - [ ] Gestion des ressources consommables et des substances
 - [ ] Stats Administateur :
   - [x] Histogramme hommes / femmes / autres
@@ -108,10 +109,10 @@ Pour cela, CQC SA décide dans un premier temps de mettre en place une applicati
 5. [x] Type appareil : conso au moins une ressource, émettre 0+ substances nocives
 6. [x] Appareil : libellé, description, Type appareil : conso/émission prédéfinie par heure
 7. [x] Historique de fonctionnement
-   1. [ ] Interrupteur ON/OFF pour les appareils
+   1. [x] Interrupteur ON/OFF pour les appareils
    2. [ ] Confirer 1s = 1h de consommation / émission
-8. [ ] Appareil : mis en marche plusieurs fois dans la même journée
-9. [ ] Vidéos de démonstrations pour être économe, chaque appareil a une vidéo
+8. [x] Appareil : mis en marche plusieurs fois dans la même journée
+9. [x] Vidéos de démonstrations pour être économe, chaque appareil a une vidéo
 
 #### Gestion des ressources / substances
 
