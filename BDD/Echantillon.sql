@@ -1,13 +1,17 @@
 -- Données fictives
 -- Ces données sont nécessaires pour que le site fonctionne (TypeAppartement, TypeAppareil...)
 
--- Info personne (idPersonne, nom, dateNaissance, genre, email, tel, prenom)
+-- Info personne (idPersonne, nom, dateNais, genre, email, tel, prenom)
 INSERT INTO InfoPersonne VALUES (1, 'MARTIN', '1990-01-01', 'M', 'gabriel9854@gmail.com', '0695867428', 'Gabriel');
 INSERT INTO InfoPersonne VALUES (2, 'ETIENNE', '1997-01-01', 'M', 'Adam7474@gmail.com', '0659852674', 'Adam');
 INSERT INTO InfoPersonne VALUES (3, 'MALLET', '1995-01-01', 'F', 'AlaineE9586@gmail.com', '0635982412', 'Alaine');
 INSERT INTO InfoPersonne VALUES (4, 'LAURENT', '1999-01-01', 'M', 'Lucas22@gmail.com', '0639356827', 'Lucas');
 INSERT INTO InfoPersonne VALUES (5, 'PETIT', '1997-01-01', 'F', 'Doriane562@gmail.com', '0695847233', 'Doriane');
 INSERT INTO InfoPersonne VALUES (6, 'DUPONT', '1995-01-01', 'A', 'dpdu2222@gmail.com', '0635987420', 'Dupont');
+INSERT INTO InfoPersonne VALUES (7, 'DUPONT', '2003-05-04', 'F', 'mar.dupont@gmail.com', '0258721875', 'Marie');
+INSERT INTO InfoPersonne VALUES (8, 'DURAND', '1953-08-17', 'F', 't.durand@gmail.com', '0593241360', 'Thérèse');
+INSERT INTO InfoPersonne VALUES (9, 'HUGUET', '1957-03-23', 'M', 'quentin.hug7@gmail.com', '0330623907', 'Quentin');
+INSERT INTO InfoPersonne VALUES (10, 'ROUSSEAU', '1974-06-08', 'F', 'roxane-rousseau@gmail.com', '0614421232', 'Roxane');
 
 -- Administrateur (idPersonne, identifiant, mdp, dateCreation)
 INSERT INTO Administrateur VALUES (1, 'gabriel9854', 'd269d30513bca41eb810eb899dcbf87b6bf00f8e', '2022-12-16'); -- yRTX7pf6

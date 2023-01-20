@@ -48,7 +48,7 @@ Pour cela, CQC SA décide dans un premier temps de mettre en place une applicati
 - [ ] Gestion des ressources consommables et des substances
 - [ ] Stats Administateur :
   - [x] Histogramme hommes / femmes / autres
-  - [ ] Nombre d'abonnés par tranches d'âge : [18;24], ]24;45], ]45;65], 65+
+  - [x] Nombre d'abonnés par tranches d'âge : [18;24], ]24;45], ]45;65], 65+
   - [ ] Maison la plus gourmande pour chaque ressource pour un mois donné
 		Tenir compte du nombre d'habitants
 		Ex :
