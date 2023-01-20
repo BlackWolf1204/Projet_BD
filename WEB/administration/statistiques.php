@@ -91,9 +91,7 @@
             $nb24_45 = 0;
             $nb45_65 = 0;
             $nb65 = 0;
-            echo "// count : " . count($nbParAge) . "\n";
             foreach ($nbParAge as $age) {
-                echo "// " . $age['age'] . " : " . $age['nbPersonnes'] . " personnes\n";
                 if ($age['age'] < 24) {
                     $nb18_24 += $age['nbPersonnes'];
                 } else if ($age['age'] < 45) {
