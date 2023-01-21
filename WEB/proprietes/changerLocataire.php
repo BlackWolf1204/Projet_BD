@@ -81,7 +81,7 @@ if (!empty($_POST)) {
 
 	<?php require "../common/header.php"; ?>
 
-	<h2>Détails de l'appartement</h2>
+	<h2>Changer le locataire</h2>
 
 	<a href="../Page_accueil/Page_accueil.php" class="bouton-retour">Retour à l'accueil</a>
 

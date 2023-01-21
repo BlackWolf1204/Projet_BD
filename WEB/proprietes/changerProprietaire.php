@@ -81,7 +81,7 @@ if (!empty($_POST)) {
 
 	<?php require "../common/header.php"; ?>
 
-	<h2>Détails de la propriété</h2>
+	<h2>Changer le propriétaire</h2>
 
 	<a href="../Page_accueil/Page_accueil.php" class="bouton-retour">Retour à l'accueil</a>
 
