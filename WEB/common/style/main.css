@@ -88,6 +88,11 @@ input:not([type="radio"]), select {
   box-sizing: border-box; /* Permet de prendre en compte la bordure dans la largeur de l'élément */
 }
 
+label:has(+ input), label:has(+ select) {
+  margin-top: .5em;
+  margin-bottom: 0;
+}
+
 span > input[type="radio"] {
   margin-left: 1em;
   margin-right: 0.1em;

@@ -11,7 +11,7 @@ $ROOT = '../../';
 	<?php require("{$ROOT}common/header.php") ?>
 	<?php require("{$ROOT}common/verif_est_connecte.php") ?>
 
-	<h2>Ajouter un immeuble</h2>
+	<h2>Ajouter une propriété</h2>
 
 	<form action="ajoutAppartement.php" method="post">
 		<!-- radio box : maison ou immeuble -->
