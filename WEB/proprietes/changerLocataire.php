@@ -96,7 +96,10 @@ if (!empty($_POST)) {
 		
 		<?php require("../common/chercherUser.php"); ?>
 
-		<button id="boutonChangerLoc" disabled="true" onclick="changerLocataireClick()">Changer le locataire</button>
+		<div class="boutonsgroupes centre">
+			<button id="boutonChangerLoc" disabled="true" onclick="changerLocataireClick()">Changer le locataire</button>
+			<a class="bouton" href="detailsPropriete.php?idPropriete=<?= $idPropriete ?>">Détails de la propriété</a>
+		</div>
 
 		<script>
 			var nouveauLocataire = null;

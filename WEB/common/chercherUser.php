@@ -12,9 +12,16 @@ if(isset($_GET) && !empty($_GET) && isset($_GET['get'])) {
 		$nom = $_GET['nom'];
 		$prenom = $_GET['prenom'];
 
+		// Si nom et prenom sont vides, ne rien envoyer
+		if($nom == "" && $prenom == "") {
+			echo json_encode(array());
+			exit();
+		}
+
+
 		// Recherche de l'utilisateur dans la base de données
 		$personnes = array();
-		$req = $bdd->prepare("SELECT idPersonne, nom, prenom, mail FROM infoPersonne NATURAL JOIN Utilisateur WHERE nom LIKE ? AND prenom LIKE ?");
+		$req = $bdd->prepare("SELECT idPersonne, nom, prenom, mail FROM infoPersonne NATURAL JOIN Utilisateur WHERE nom LIKE ? AND prenom LIKE ? LIMIT 3");
 		$req->execute(array("%" . $nom . "%", "%" . $prenom . "%"));
 		while ($personne = $req->fetch()) {
 			$personnes[] = $personne;
@@ -37,9 +44,9 @@ if(isset($_GET) && !empty($_GET) && isset($_GET['get'])) {
 <div id="rechercheUser">
 	<div>
 		<label for="nom">Nom</label>
-		<input type="text" name="nom" id="nom" onkeypress="if(event.keyCode == 13) rechercheUser();" />
+		<input type="text" name="nom" id="nom" onkeypress="if(event.keyCode == 13) rechercheUser();" oninput="onTypeUser();" />
 		<label for="prenom">Prénom</label>
-		<input type="text" name="prenom" id="prenom" onkeypress="if(event.keyCode == 13) rechercheUser();" />
+		<input type="text" name="prenom" id="prenom" onkeypress="if(event.keyCode == 13) rechercheUser();" oninput="onTypeUser();" />
 		<input type="submit" value="Rechercher" onclick="rechercheUser(); return false;" />
 	</div>
 	<div id="resultat"></div>
@@ -88,5 +95,23 @@ if(isset($_GET) && !empty($_GET) && isset($_GET['get'])) {
 			}
 		}
 		xhr.send(null);
+	}
+
+	// Délai avant de lancer la recherche
+	// exécuter maintenant si on a attendu plus de 500ms depuis la dernière requête
+	// attendre 500ms sinon
+	var rechercheUserTimeout = null;
+	var requeteSuivante = Date.now();
+	function onTypeUser() {
+		if(rechercheUserTimeout != null) {
+			clearTimeout(rechercheUserTimeout);
+		}
+		var maintenant = Date.now();
+		if(maintenant > requeteSuivante) {
+			rechercheUser();
+			requeteSuivante = maintenant + 500;
+		} else {
+			rechercheUserTimeout = setTimeout(rechercheUser, requeteSuivante - maintenant);
+		}
 	}
 </script>
