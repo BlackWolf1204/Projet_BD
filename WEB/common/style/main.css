@@ -120,7 +120,7 @@ button, .header-right > a, .bouton, .bouton-retour {
 table:not(.with-space) {
   margin: 20px auto auto auto;
   table-layout: auto;
-  width: 98%;
+  width: 100%;
   border-collapse: collapse;
   border: solid green 4px;
   text-align: center;
@@ -129,7 +129,7 @@ table:not(.with-space) {
 table.with-space {
   margin: 20px auto auto auto;
   table-layout: auto;
-  width: 98%;
+  width: 100%;
   text-align: center;
   border-collapse: collapse;
   border: solid green 4px;
