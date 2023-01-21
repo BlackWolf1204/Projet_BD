@@ -60,7 +60,10 @@ header > .header-right > a {
 h2{
   font-size: 36px; /* Change la taille de la police */
   text-align: center; /* Centre le texte */
-  color: #00b894; /* Change la couleur du texte */
+}
+
+h2, h3, h4, h5, h6 {
+  color: #00b894;
 }
 
 .bouton-retour {
@@ -106,10 +109,18 @@ button, .header-right > a, .bouton, .bouton-retour {
   text-decoration: none; /* Enlève la décoration du texte du bouton (souligné, etc.) */
 }
 
+.petit-bouton {
+  padding: 5px 10px;
+  width: fit-content;
+  margin: auto;
+}
+
+.bouton.rouge { background-color: #ff7675; }
+
 table:not(.with-space) {
   margin: 20px auto auto auto;
   table-layout: auto;
-  width: 98%;
+  width: 100%;
   border-collapse: collapse;
   border: solid green 4px;
   text-align: center;
@@ -118,7 +129,7 @@ table:not(.with-space) {
 table.with-space {
   margin: 20px auto auto auto;
   table-layout: auto;
-  width: 98%;
+  width: 100%;
   text-align: center;
   border-collapse: collapse;
   border: solid green 4px;
@@ -170,9 +181,18 @@ table tr.space {
 
 /* Styles pour les boutons au survol de la souris */
 .bouton:hover, .header-right > a:hover, button:hover, .bouton-retour:hover {
-  background-color: #3dc7ab;
+  filter: brightness(1.1);
   text-decoration: none;
   color: #fff;
+}
+
+button:disabled {
+  background-color: #ccc;
+  color: #fff;
+  cursor: not-allowed;
+}
+button:disabled:hover {
+  filter: brightness(1);
 }
 
 footer {
@@ -206,6 +226,18 @@ footer p {
   width: 50% !important;
 }
 
+.boutonsgroupes {
+  display: flex;
+  flex-direction: row;
+}
+
+.boutonsgroupes > * {
+  margin: 0 0.2em;
+}
+
+.boutonsgroupes.centre { justify-content: center; }
+.boutonsgroupes.gauche { justify-content: left; }
+
 .vantatopologymin {
   height: 77px;
   position: unset !important;
@@ -218,6 +250,37 @@ img.validation {
   width: 20%;
   height: auto;
 }
+
+span.bouton-ON-OFF {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  cursor: pointer;
+}
+
+.bouton-ON-OFF > span {
+  width: 50%;
+  padding: .5em .2em;
+}
+
+.bouton-ON-OFF .ON { background: #ff7675; color: black; }
+.bouton-ON-OFF .OFF { background: #6e1e1e; color: white; }
+
+span.bouton-ON-OFF::after {
+  content: '';
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  left: 0;
+  background: black;
+  
+  transition: left 0.5s ease-out;
+}
+
+span.bouton-ON-OFF[etat="ON"]::after { left: 50%; }
+
+
 
 /* Pour width < 700px */
 @media screen and (max-width: 700px) {

@@ -9,13 +9,7 @@ require_once("../common/main.php");
  
  <head>
  
-    <title>Page propriété</title>
-
-    <style>
-        tr.space > td {
-            padding: 5px;
-        }
-    </style>
+    <title>Page propriétés</title>
 
     <?php require "../common/header.php"; ?>
     <?php pageAccueilSiNonConnecte($ROOT); ?>
@@ -27,28 +21,31 @@ require_once("../common/main.php");
         <tbody>
             <tr class="titre">
                 <td>Immeuble</td>
-                <td colspan = "2">Adresse (nom)</td>
+                <td colspan = "2">Nom (Adresse)</td>
                 <td>Niveau d'isolation</td>
-                <td colspan = "1">Date d'acquisition de la propriété</td>
-                <td rowspan = "2">Modifications</td>
+                <td>Propriétaire (Date de début de la propriété)</td>
+                <td rowspan = "2">Détails et<br>modifications</td>
             </tr>
             <tr>
                 <td>Numéro appartement</td>
-                <td>Type de sécurité</td>
-                <td>Locataire (Date de début de la location)</td>
                 <td>Type d'appartement/maison</td>
                 <td>Pièce(s)</td>
+                <td>Type de sécurité</td>
+                <td>Locataire (Date de début de la location)</td>
             </tr>
 
     <?php
     
     // requete pour la base
-    $req = 'SELECT numeroRue, nomRue, codePostal, nomVille, degreIsolation, nomPropriete , idPropriete, DATE(dateDebutProp) AS dateDProp
+    $req = 'SELECT numeroRue, nomRue, codePostal, nomVille, degreIsolation, nomPropriete, idPropriete,
+                    DATE(dateDebutProp) AS dateDebutProp, DATE(dateFinProp) AS dateFinProp, idProprietaire, nomProprietaire, prenomProprietaire
             FROM ProprieteAdresse NATURAL JOIN DernierProprietaire';
     
     if (!isset($estAdmin) || $estAdmin != true) {
-        $req = "$req WHERE idProprietaire = {$_SESSION['Id']}";
+        $req = "$req WHERE idProprietaire = $sessionId";
     }
+
+    $req = "$req ORDER BY codePostal, nomRue, numeroRue";
 
     // exécution de la requête
     $dataProprietes = $bdd->query($req);
@@ -63,7 +60,8 @@ require_once("../common/main.php");
         // requete pour la base
         $reqApparts = "SELECT idAppartement, numAppart, libTypeAppart, nomSecurite
         FROM ((Appartement NATURAL JOIN TypeAppartement) NATURAL JOIN TypeSecurite)
-        WHERE idPropriete = {$propriete['idPropriete']}";
+        WHERE idPropriete = {$propriete['idPropriete']}
+        ORDER BY numAppart";
 
         // exécution de la requête
         $dataAppartements = $bdd->query($reqApparts);
@@ -80,45 +78,32 @@ require_once("../common/main.php");
 
         if ($nbAppart == 1) echo "Maison";
         else echo "Immeuble";
+
+        $descriptionPropriete = adressePropriete($propriete);
         echo "  </td>
-                <td colspan = \"2\">".$propriete['numeroRue']." ".$propriete['nomRue']." ".$propriete['codePostal']." ".$propriete['nomVille'];
-        if ($propriete['nomPropriete'] != NULL) echo " ({$propriete['nomPropriete']})";
-        echo "  </td>
-                <td>{$propriete['degreIsolation']}</td>
-                <td>{$propriete['dateDProp']}</td>
-                <td rowspan = \"$rowspan\"><a href='{$ROOT}proprietes/ajoutPropriete/ajoutPropriete.php'>Modifier<a></td>
-            </tr>";   //changer Modification pour garder en memoire l'id de la propriété a modifier
+                <td colspan = \"2\">".$descriptionPropriete ."</td>
+                <td>{$propriete['degreIsolation']}</td>";
+
+        if ($propriete['dateDebutProp'] != NULL){
+            $dateDebutProp = date("d/m/Y", strtotime($propriete['dateDebutProp']));
+            if($propriete['dateFinProp'] == NULL) echo "<td>" . lienInfoPersonne($propriete['idProprietaire'], $propriete['nomProprietaire'], $propriete['prenomProprietaire'], $ROOT) . " ($dateDebutProp)</td>";
+            else {
+                $dateFinProp = date("d/m/Y", strtotime($propriete['dateFinProp']));
+                echo "<td>Sans propriétaire depuis le $dateFinProp</td>";
+            }
+        }
+        else echo "<td>Sans propriétaire</td>";
+
+        echo "  <td rowspan = \"$rowspan\"><a href='{$ROOT}proprietes/detailsPropriete.php?idPropriete={$propriete['idPropriete']}'>Détails<a></td>
+            </tr>";
         
         foreach ($dataAppartements as $appartement) {
             echo "<tr>
-                    <td>{$appartement['numAppart']}</td>
-                    <td>{$appartement['nomSecurite']}</td>";
-
-            // requete pour la base
-            $reqLocataire = "SELECT DATE(datedebutloc) AS dateDLoc, nom, prenom
-            FROM (Locataire NATURAL JOIN Utilisateur) NATURAL JOIN InfoPersonne
-            WHERE idAppartement = {$appartement['idAppartement']} AND dateFinLoc IS NULL";
-
-            // exécution de la requête
-            $dataLocataires = $bdd->query($reqLocataire);
-            $nbLocataire = $dataLocataires->rowCount();
-            // si erreur
-            if ($dataLocataires == NULL)
-            die("Problème d'exécution de la requête des locataires \n");
-
-            if ($nbLocataire == 1) {
-                $locataire = $dataLocataires->fetch();
-                echo "<td>{$locataire['prenom']} {$locataire['nom']} ({$locataire['dateDLoc']})</td>";
-            }
-            else if ($nbLocataire == 0) {
-                echo "<td>Pas de locataire</td>";
-            }
-            else {
-                echo "<td>Problème au niveau de la location de l'appartement (plusieurs locataires)</td>";
-            }
-            echo "  <td>{$appartement['libTypeAppart']}</td>
+                    <td>N<sup>o</sup> {$appartement['numAppart']}</td>
+                    <td>{$appartement['libTypeAppart']}</td>
                     <td>";
             
+            // Afficher les pièces de l'appartement
             // requete pour la base
             $reqPieces = "SELECT  libTypePiece
             FROM Piece NATURAL JOIN TypePiece 
@@ -141,6 +126,35 @@ require_once("../common/main.php");
                 $iPiece++;
             } // fin foreach pieces
             echo "</td>";
+
+            echo "<td>{$appartement['nomSecurite']}</td>";
+
+            // Afficher le locataire de l'appartement
+            // requete pour la base
+            $reqLocataire = "SELECT DATE(datedebutloc) AS datedebutloc, DATE(datefinloc) AS datefinloc, idLocataire, nomLocataire, prenomLocataire
+            FROM DernierLocataire
+            WHERE idAppartement = {$appartement['idAppartement']}";
+
+            // exécution de la requête
+            $dataLocataires = $bdd->query($reqLocataire);
+            if(!$dataLocataires) {
+                die("Problème d'exécution de la requête des locataires.<br>{$bdd->errorInfo()[2]}<br>");
+            }
+            // si erreur
+            if ($dataLocataires == NULL)
+            die("Problème d'exécution de la requête des locataires \n");
+            
+            $locataire = $dataLocataires->fetch();
+            if ($locataire['datedebutloc'] != NULL) {
+                $locataire['datedebutloc'] = date("d/m/Y", strtotime($locataire['datedebutloc']));
+                if($locataire['datefinloc'] == NULL) echo "<td>" . lienInfoPersonne($locataire['idLocataire'], $locataire['nomLocataire'], $locataire['prenomLocataire'], $ROOT)." ({$locataire['datedebutloc']})</td>";
+                else {
+                    $locataire['datefinloc'] = date("d/m/Y", strtotime($locataire['datefinloc']));
+                    echo "<td>Sans locataire depuis le {$locataire['datefinloc']}</td>";
+                }
+            }
+            else echo "<td>Sans locataire</td>";
+
         } // fin foreach appartements
 
         echo "</tr>";
@@ -151,8 +165,5 @@ require_once("../common/main.php");
     </tbody>
     </table>
     <a href="../proprietes/ajoutPropriete/ajoutPropriete.php">Ajouter propiété</a>
- </body>
 
  <?php require "../common/footer.php"; ?>
-
-</html>

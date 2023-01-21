@@ -6,7 +6,7 @@ require_once("{$ROOT}common/verif_est_connecte.php");
 
 // Données du POST :
 // type, nbAppartements,
-// numeroRue, nomRue, codePostal, ville, codeDepartement, nomDepartement, codeRegion, nomRegion,
+// numeroRue, nomRue, codePostal, nomVille, codeDepartement, nomDepartement, codeRegion, nomRegion,
 // nomPropriete, degreIsolation
 // pour chaque appartement :
 // 		numAppartement_i, degreSecurite_i, typeAppartement_i
@@ -15,12 +15,30 @@ require_once("{$ROOT}common/verif_est_connecte.php");
 
 if (
 	!isset($_POST['type']) || !isset($_POST['nbAppartements'])
-	|| !isset($_POST['numeroRue']) || !isset($_POST['nomRue']) || !isset($_POST['codePostal']) || !isset($_POST['ville'])
+	|| !isset($_POST['numeroRue']) || !isset($_POST['nomRue']) || !isset($_POST['codePostal']) || !isset($_POST['nomVille'])
 	|| !isset($_POST['codeDepartement']) || !isset($_POST['nomDepartement']) || !isset($_POST['codeRegion']) || !isset($_POST['nomRegion'])
 	|| !isset($_POST['nomPropriete']) || !isset($_POST['degreIsolation'])
 	|| !isset($_POST['numAppartement_1']) || !isset($_POST['degreSecurite_1']) || !isset($_POST['typeAppartement_1'])
 	|| !isset($_POST['numPiece_1_1']) || !isset($_POST['typePiece_1_1'])
 ) {
+	if(!isset($_POST['type'])) echo "type non défini<br>";
+	if(!isset($_POST['nbAppartements'])) echo "nbAppartements non défini<br>";
+	if(!isset($_POST['numeroRue'])) echo "numeroRue non défini<br>";
+	if(!isset($_POST['nomRue'])) echo "nomRue non défini<br>";
+	if(!isset($_POST['codePostal'])) echo "codePostal non défini<br>";
+	if(!isset($_POST['nomVille'])) echo "ville non défini<br>";
+	if(!isset($_POST['codeDepartement'])) echo "codeDepartement non défini<br>";
+	if(!isset($_POST['nomDepartement'])) echo "nomDepartement non défini<br>";
+	if(!isset($_POST['codeRegion'])) echo "codeRegion non défini<br>";
+	if(!isset($_POST['nomRegion'])) echo "nomRegion non défini<br>";
+	if(!isset($_POST['nomPropriete'])) echo "nomPropriete non défini<br>";
+	if(!isset($_POST['degreIsolation'])) echo "degreIsolation non défini<br>";
+	if(!isset($_POST['numAppartement_1'])) echo "numAppartement_1 non défini<br>";
+	if(!isset($_POST['degreSecurite_1'])) echo "degreSecurite_1 non défini<br>";
+	if(!isset($_POST['typeAppartement_1'])) echo "typeAppartement_1 non défini<br>";
+	if(!isset($_POST['numPiece_1_1'])) echo "numPiece_1_1 non défini<br>";
+	if(!isset($_POST['typePiece_1_1'])) echo "typePiece_1_1 non défini<br>";
+	
 	die("Erreur : données non valides.");
 }
 
@@ -64,33 +82,42 @@ for ($i = 1; $i <= $nbAppartements; $i++) {
 $bdd->beginTransaction();
 
 // Ajouter la région si elle n'existe pas
-$res = $bdd->query("INSERT INTO region (idRegion, nomRegion) VALUES ('{$propriete['codeRegion']}', '{$propriete['nomRegion']}')");
+$res = $bdd->prepare("INSERT INTO region (idRegion, nomRegion) VALUES (?, ?)");
+$res->execute(array($propriete['codeRegion'], $propriete['nomRegion']));
 // Ajouter le déparpartement s'il n'existe pas
-$res = $bdd->query("INSERT INTO departement (numDepartement, nomDepartement, idRegion) VALUES ('{$propriete['codeDepartement']}', '{$propriete['nomDepartement']}', '{$propriete['codeRegion']}')");
+$res = $bdd->prepare("INSERT INTO departement (numDepartement, nomDepartement, idRegion) VALUES (?, ?, ?)");
+$res->execute(array($propriete['codeDepartement'], $propriete['nomDepartement'], $propriete['codeRegion']));
 // Ajouter la ville si elle n'existe pas
-$res = $bdd->query("SELECT idVille FROM ville WHERE nomVille = '{$propriete['ville']}' AND numDepartement = '{$propriete['codeDepartement']}'");
-if (!$res) {
-	$bdd->rollBack();
-	die("Erreur : impossible d'ajouter la ville : " . $bdd->errorInfo()[2]);
-}
+$res = $bdd->prepare("SELECT idVille FROM ville WHERE nomVille = ? AND numDepartement = ?");
+$res->execute(array($propriete['nomVille'], $propriete['codeDepartement']));
 if ($res->rowCount() == 0) {
-	$res = $bdd->query("INSERT INTO ville (codePostal, nomVille, numDepartement) VALUES ('{$propriete['codePostal']}', '{$propriete['ville']}', '{$propriete['codeDepartement']}')");
+	$res = $bdd->prepare("INSERT INTO ville (nomVille, codePostal, numDepartement) VALUES (?, ?, ?)");
+	$res->execute(array($propriete['nomVille'], $propriete['codePostal'], $propriete['codeDepartement']));
 	$idVille = $bdd->lastInsertId();
+	if($idVille == 0) {
+		$bdd->rollBack();
+		echo "INSERT INTO ville (nomVille, codePostal, numDepartement) VALUES ('{$propriete['nomVille']}', '{$propriete['codePostal']}', '{$propriete['codeDepartement']}')<br>";
+		die("Erreur : impossible d'ajouter la ville");
+	}
 } else {
 	$idVille = $res->fetch()['idVille'];
 }
+
 // Ajouter la rue si elle n'existe pas
-$res = $bdd->query("SELECT idRue FROM rue WHERE nomRue = '{$propriete['nomRue']}' AND idVille = '{$idVille}'");
+$res = $bdd->prepare("SELECT idRue FROM rue WHERE nomRue = ? AND idVille = ?");
+$res->execute(array($propriete['nomRue'], $idVille));
 if ($res->rowCount() == 0) {
-	$res = $bdd->query("INSERT INTO rue (nomRue, idVille) VALUES ('{$propriete['nomRue']}', '$idVille')");
+	$res = $bdd->prepare("INSERT INTO rue (nomRue, idVille) VALUES (?, ?)");
 	if (!$res) {
 		$bdd->rollBack();
 		die("Erreur : impossible d'ajouter la rue : " . $bdd->errorInfo()[2]);
 	}
+	$res->execute(array($propriete['nomRue'], $idVille));
 	$idRue = $bdd->lastInsertId();
 } else {
 	$idRue = $res->fetch()['idRue'];
 }
+
 // Ajouter l'adresse si elle n'existe pas
 $res = $bdd->query("SELECT idAdresse FROM adresse WHERE numeroRue = '{$propriete['numeroRue']}' AND idRue = '{$idRue}'");
 if ($res->rowCount() == 0) {
@@ -104,16 +131,21 @@ if ($res->rowCount() == 0) {
 	$idAdresse = $res->fetch()['idAdresse'];
 }
 
-$res = $bdd->query("INSERT INTO propriete (idAdresse, nomPropriete, degreIsolation)
-	VALUES ('$idAdresse', '{$propriete['nomPropriete']}', '{$_POST['degreIsolation']}')");
-if ($res === false) {
+$res = $bdd->prepare("INSERT INTO propriete (idAdresse, nomPropriete, degreIsolation) VALUES (?, ?, ?)");
+if(!$res->execute(array($idAdresse, $propriete['nomPropriete'], $_POST['degreIsolation']))) {
 	$bdd->rollBack();
-	echo "<p>Erreur : propriété non insérée.</p>";
-	for ($i = 0; $i < 3; $i++)
-		echo $bdd->errorInfo()[$i] . "<br>";
+	if($res->errorInfo()[2] == "Duplicate entry '$idAdresse' for key 'idAdresse'") {
+		echo "Erreur : une propriété existe déjà à cette adresse<br>";
+	}
+	else {
+		echo "Erreur : impossible d'ajouter la propriété<br>{$res->errorInfo()[2]}<br>";
+	}
+	echo "<a href='{$ROOT}Page_accueil/Page_accueil.php'>Retour à la page d'accueil</a><br>";
 	exit();
 }
+
 $propriete['idPropriete'] = $bdd->lastInsertId();
+
 foreach ($appartements as $appartement) {
 	$res = $bdd->query("INSERT INTO appartement (idPropriete, numAppart, degreSecurite, typeAppart)
 		VALUES ({$propriete['idPropriete']}, '{$appartement['numAppartement']}', {$appartement['degreSecurite']}, {$appartement['typeAppart']['typeAppart']})");

@@ -35,3 +35,6 @@
 		el: "#vantatopologymin_2"
 	});
 </script>
+
+</body>
+</html>
