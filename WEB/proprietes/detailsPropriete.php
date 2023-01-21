@@ -86,7 +86,7 @@ require_once("../common/main.php");
 		$req = "SELECT idPersonne, nom, prenom, DATE(dateDebutProp) AS dateDebutProp, DATE(dateFinProp) AS dateFinProp
 				FROM Proprietaire LEFT OUTER JOIN InfoPersonne USING (idPersonne)
 				WHERE idPropriete = ?
-				ORDER BY dateDebutProp DESC";
+				ORDER BY Proprietaire.dateDebutProp DESC";
 		$req = $bdd->prepare($req);
 		if (!$req->execute(array($idPropriete))) {
 			die("Problème d'exécution de la requête :<br>{$req->errorInfo()[2]}<br>");
@@ -146,7 +146,7 @@ require_once("../common/main.php");
 				<?php
 				$req = "SELECT idPersonne, nom, prenom, DATE(dateDebutLoc) AS dateDebutLoc, DATE(dateFinLoc) AS dateFinLoc
 						FROM Locataire NATURAL JOIN InfoPersonne WHERE idAppartement = ?
-						ORDER BY dateDebutLoc DESC";
+						ORDER BY Locataire.dateDebutLoc DESC";
 				$req = $bdd->prepare($req);
 				if (!$req->execute(array($appartement['idAppartement']))) {
 					die("Problème d'exécution de la requête :<br>{$req->errorInfo()[2]}<br>");

@@ -22,6 +22,9 @@ INSERT INTO Utilisateur VALUES (2, 'Adam7474', '92229b4b0d3adbd8fb017a3281b38265
 INSERT INTO Utilisateur VALUES (3, 'Alaine8', 'fe518362407a1723b8e8e14b7c4a7dbb47876ab2', '2022-12-16'); -- Ht5e9d
 INSERT INTO Utilisateur VALUES (4, 'Lucas', '63edb57989e8d3168e7c2e5f48dcd0f20b967b07', '2022-12-16'); -- zk2C8mM
 INSERT INTO Utilisateur VALUES (5, 'Doriane', '8b0a16c3fb5dc325cc51d2331f3d86bccac487ae', '2022-12-16'); -- rGh9L2m
+INSERT INTO Utilisateur VALUES (6, 'dupont1172', '7c854345a38e7750f534c58de55f63621322a893', '2022-12-16'); -- brique
+INSERT INTO Utilisateur VALUES (7, 'marie2323', '7c4a8d09ca3762af61e59520943dc26494f8941b', '2022-12-16'); -- 123456
+INSERT INTO Utilisateur VALUES (8, 'thérèse7643', 'e731a7b612ab389fcb7f973c452f33df3eb69c99', '2022-12-16'); -- p4ssw0rd
 
 -- Région (codeRegion, nomRegion)
 INSERT INTO Region VALUES (24, 'Centre-Val de Loire');

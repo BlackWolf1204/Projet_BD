@@ -40,8 +40,8 @@ Pour cela, CQC SA décide dans un premier temps de mettre en place une applicati
   - [x] Créer des maisons
   - [x] Ajouter des appartements
   - [x] Ajouter des appareils
-  - [ ] Renseigner le propriétaire
-  - [ ] Renseigner les locataires (par le propriétaire)
+  - [x] Renseigner le propriétaire
+  - [x] Renseigner les locataires (par le propriétaire)
 - [x] Gestion des équipements de la maison :
   - [x] Allumer / éteindre
   - [x] Infos consommation et émission en substance

@@ -102,8 +102,9 @@ require_once("../common/main.php");
                         <td rowspan = $nb>$libTypeAppareil</td>";
                 }
                 $libTypeRessource = $ligne2['libTypeRessource'];
+
                 echo "<td>$libTypeRessource</td>
-                        <td>{$ligne2['quantiteAllume']} k../h</td>";
+                        <td>{$ligne2['quantiteAllume']} W</td>";
                 if ($numeroLigne == 0) {
                         echo "<td rowspan = $nb><a href='detailsAppareil.php?idAppareil=$idAppareil'>Détails</a></td>";
                 } 
@@ -121,8 +122,19 @@ require_once("../common/main.php");
                         <td rowspan = $nb>$libTypeAppareil</td>";
                 }
                 $libTypeSubstance = $ligne3['libTypeSubstance'];
+                        
+                $unite = " kg/h";
+                switch($ligne3['libTypeSubstance']) {
+                        case "dioxyde de carbone":
+                        $unite = " kg/h";
+                        break;
+                        case "chaleur":
+                        $unite = " kJ/h";
+                        break;
+                }
+
                 echo "<td>$libTypeSubstance</td>
-                        <td>{$ligne3['quantiteAllume']} k../h</td>"; 
+                        <td>{$ligne3['quantiteAllume']} $unite</td>"; 
                 if ($numeroLigne == 0) {
                         echo "<td rowspan = $nb><a href='detailsAppareil.php?idAppareil=$idAppareil'>Détails</a></td>";
                 }
