@@ -47,6 +47,8 @@ if($estConnecte)
                         <br /><br />
                         <a class="bouton" href="edition_profil.php">Editer mon profil</a>
                         <a class="bouton" href="Page_accueil.php">Retour à l'accueil</a>
+                        <!-- Ajout d'un bouton supprimer le compte -->
+                        <a class="bouton" href="supprimer_compte.php">Supprimer mon compte</a>
                         
                     </div>
                     </div>

@@ -1,6 +1,4 @@
 <!-- Connexion.php --> 
-<!--Notes 23/12/2022 : Probleme avec l'affichage de l'image de validation, il faut que je trouve une solution pour l'afficher au premier plan, apresc'est que en option)-->
-<!--Notes 06/01/2022 : Pour l'instant , on ne peut se connecter "que en tatn q'utilisateur" -->
 
 <?php
 $ROOT="../";

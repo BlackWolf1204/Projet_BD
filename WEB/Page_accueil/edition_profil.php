@@ -1,5 +1,5 @@
 <!-- Page d'edition de profil -->
-<!-- on ajoutera la possibilité de faire la modification de l'identifiant sur l'edition de profil ! -->
+
 
 <?php
 $ROOT = "../";
@@ -11,26 +11,6 @@ if ($estConnecte) {
     $requser = $bdd->prepare("SELECT * FROM InfoPersonne NATURAL JOIN $tableUser WHERE InfoPersonne.idPersonne = ?");
     $result = $requser->execute(array($sessionId));
     $userinfo = $requser->fetch();
-
-    /*
-
-    CREATE TABLE Utilisateur(
-    idPersonne INT,
-    identifiant VARCHAR(50) ,
-    mdp VARCHAR(50) ,
-    PRIMARY KEY(idPersonne),
-    FOREIGN KEY(idPersonne) REFERENCES InfoPersonne(idPersonne)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-    CREATE TABLE Administrateur(
-    idPersonne INT,
-    identifiant VARCHAR(50) ,
-    mdp VARCHAR(50) ,
-    PRIMARY KEY(idPersonne),
-    FOREIGN KEY(idPersonne) REFERENCES InfoPersonne(idPersonne)
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-    */
 
     // on modifie l'identifiant de l'utilisateur et de l'administrateur si il est connecté en tant qu'administrateur
     $nbChangements = 0;
