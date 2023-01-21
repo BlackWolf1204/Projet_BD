@@ -306,8 +306,12 @@ $derniereConsommation = $derniereConsommation->fetch();
 					<div id="chart_div_<?= $annee ?>" class="graph-activite">
 						<?php
 						// Afficher le graphique de l'année
+						$premierJourDeLAnnee = date("N", strtotime("$annee-01-01"));
+						$dernierJourDeLAnnee = date("N", strtotime("$annee-12-31"));
 						for($semaine = 1; $semaine <= 52; $semaine++) {
-							for($jourSemaine = 1; $jourSemaine <= 7; $jourSemaine++) {
+							$premJour = $semaine == 1 ? $premierJourDeLAnnee : 1;
+							$dernJour = $semaine == 52 ? $dernierJourDeLAnnee : 7;
+							for($jourSemaine = $premJour; $jourSemaine <= $dernJour; $jourSemaine++) {
 								$tempsActif = $activite[$annee][$semaine][$jourSemaine];
 								$semaine2Chiffres = str_pad($semaine, 2, "0", STR_PAD_LEFT);
 

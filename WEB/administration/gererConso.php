@@ -51,8 +51,14 @@
         if ($appartement['numAppart'] != NULL) echo "Appartement {$appartement['numAppart']} - ";
         echo adressePropriete($appartement) . "</h3>";
         
-        $textePeriodeProprietaire = periodeDateDuAu($appartement['datedebutprop'], $appartement['datefinprop']);
-        echo "<p>Propriétaire : {$appartement['prenomProprietaire']} {$appartement['nomProprietaire']} $textePeriodeProprietaire.</p>";
+        if($appartement['idProprietaire'] != NULL) {
+            $lienProp = lienInfoPersonne($appartement['idProprietaire'], $appartement['nomProprietaire'], $appartement['prenomProprietaire'], $ROOT);
+            $textePeriodeProprietaire = periodeDateDuAu($appartement['datedebutprop'], $appartement['datefinprop']);
+            echo "<p>Propriétaire : $lienProp $textePeriodeProprietaire.</p>";
+        }
+        else {
+            echo "<p>Sans propriétaire.</p>";
+        }
         
         if($appartement['datedebutloc'] == NULL) {
             echo "<p>Appartement non loué</p>";
@@ -63,9 +69,11 @@
         $dateFin = $appartement['dateFinLoc'];
         $textPeriodeLocation = periodeDateDuAu($dateDebut, $dateFin);
         if($dateFin == NULL) $dateFin = date('Y-m-d');
-        echo "<p>Locataire : {$appartement['prenomLocataire']} {$appartement['nomLocataire']} $textPeriodeLocation.</p>";
+        $lienLocataire = lienInfoPersonne($appartement['idLocataire'], $appartement['nomLocataire'], $appartement['prenomLocataire'], $ROOT);
+        echo "<p>Locataire : $lienLocataire $textPeriodeLocation.</p>";
         $nbJoursLocation = round($heuresDureeLocation / 24, 0);
-        echo "<p>Données sur la période de location ($nbJoursLocation jours) et pour {$appartement['nbHabitants']} habitant(s).</p>";
+        $texteHabitants = ($appartement['nbHabitants'] > 1) ? "habitants" : "habitant";
+        echo "<p>Données sur la période de location ($nbJoursLocation jours) et pour {$appartement['nbHabitants']} $texteHabitants.</p>";
         
         // CONSOMMATION de ressources
 
