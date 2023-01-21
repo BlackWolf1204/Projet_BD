@@ -24,6 +24,7 @@ if (isset($_POST['Appareil'])) {
       } else if (empty($_POST['emplacement'])) {
           $erreur = "l'emplacement de l'appareil est vide";
       }
+      // store form data in variables
       $nomAppareil = htmlspecialchars($_POST['nomAppareil']);
       $TypeAppareil = htmlspecialchars($_POST['TypeAppareil']);
       $emplacement = htmlspecialchars($_POST['emplacement']);
@@ -32,6 +33,10 @@ if (isset($_POST['Appareil'])) {
       $sql = "INSERT INTO Appareil (nomAppareil, TypeAppareil,emplacement) VALUES ('$nomAppareil', '$TypeAppareil','$emplacement')";
     }
   } 
+}else {
+  $nomAppareil ="";
+  $TypeAppareil ="";
+  $emplacement ="";
 }
 ?>
 
@@ -44,10 +49,11 @@ if (isset($_POST['Appareil'])) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title> Ajouter un apparreil</title>
+   <title> Page d'ajout</title>
    <script>
 
    </script>
+   
    <style>
       body 
       {
@@ -55,7 +61,7 @@ if (isset($_POST['Appareil'])) {
         color: #333; /* Change la couleur du texte, , #333 est le code couleur noir */
         background-color: #eee;/* Change la couleur de fond , #eee est le code couleur gris clair */
       }
-      h3 {
+      h2 {
         font-size: 36px; /* Change la taille de la police */
         text-align: center; /* Centre le texte */
         color: #00b894; /* Change la couleur du texte */
@@ -86,41 +92,45 @@ if (isset($_POST['Appareil'])) {
 </head>
 <body>
     <!-- Ajout d'un "style de fond" -->
-                <div class="container mt-5"> <!-- container c'est pour le centrage -->
+       <div class="container mt-5"> <!-- container c'est pour le centrage -->
 
-                    <div class="row">
-                    <div class="col-sm-8 offset-sm-2"><!-- col-sm-8 offset-sm-2 c'est pour le centrage avec un espace de 2 -->
-                    <!--on affiche le infos d'appareil nom,  -->
-                    <!--<h2>Profil de <?= $Prenom ?></h2>-->
-                    <a href="../Page_accueil/Page_accueil.php">Retour</a>
-         <form action="Appareil.php" method="post">
-                    <!-- Non d'appareil --> 
-                    <div>
-                        <label for="nomApareil">Nom d'appareril</label>
-                        <input type="text" name="nomAppareil" placeholder="ex: Lampe">
-                    </div>
-                    <!-- Type d'appareil --> 
-                    <div>
-                        <label for="TypeAppareil">Type d'appareril</label>
-                        <select name="TypeAppareil">
-                          <option value="A">choisissez le type de votre appareil</option>
-                          <option value="B">chauffage éléctrique</option>
-			                  	<option value="C">réfrigérateur</option>
-			                  	<option value="D">lampe</option>
-			                  	<option value="E">aspirateur</option>
-		                  		<option value="F">plaques de cuisson</option>
-		                  		<option value="G">télévision</option> 
-                          <option value="H">chauffage au gaz</option> 
-                        </select>
-                    </div>
-                     <!-- Description --> 
-                     <div>
-                        <label for="emplacement">Description</label>
-                        <input type="text" name="emplacement" placeholder="Indiquez l'emplacement de votre appareil">
-                    </div>
-                    <a href="Supprimer.php">Supprimer</a>
-                    <button type="submit" value="Ajouter"> Ajouter</button>
-          </form>
-          <?php require('../common/footer.php') ?>
+            <div class="row">
+
+                  <div class="col-sm-8 offset-sm-2"><!-- col-sm-8 offset-sm-2 c'est pour le centrage avec un espace de 2 -->
+                        <!--on affiche le infos d'appareil nom,  -->
+                        <!--<h2>Profil de <?= $Prenom ?></h2>-->
+                      <h2>Ajouter un appareil </h2>
+                      <form action="Appareil.php" method="post"> 
+                          <!-- Non d'appareil --> 
+                         <div>
+                             <label for="nomApareil">Nom d'appareril</label>
+                             <input type="text" name="nomAppareil" placeholder="ex: Lampe">
+                         </div>
+                         <!-- Type d'appareil --> 
+                         <div>
+                             <label for="TypeAppareil">Type d'appareril</label>
+                              <select name="TypeAppareil">
+                                 <option value="A">choisissez le type de votre appareil</option>
+                                 <option value="B">chauffage éléctrique</option>
+			                         	 <option value="C">réfrigérateur</option>
+			                           <option value="D">lampe</option>
+                                 <option value="E">aspirateur</option>
+                                 <option value="F">plaques de cuisson</option>
+                                 <option value="G">télévision</option> 
+                                 <option value="H">chauffage au gaz</option> 
+                              </select>
+                          </div>
+                          <!-- Description --> 
+                          <div>
+                             <label for="emplacement">Description</label>
+                             <input type="text" name="emplacement" placeholder="Indiquez l'emplacement de votre appareil">
+                          </div>
+                    
+                          <div  class="doubleboutons">
+                             <button href="../Page_accueil/Page_accueil.php" class="bouton-retour">Retour à l'accueil</button>
+                             <button type="submit" value="Ajouter"> Ajouter</button>
+                          </div>
+                      </form>
+          <?php require "../common/footer.php"; ?>
 </body>
 </html>
