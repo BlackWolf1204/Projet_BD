@@ -252,14 +252,17 @@ SELECT datedebutprop, datefinprop, idPropriete, idPersonne AS idProprietaire, no
 FROM Proprietaire
 NATURAL JOIN Utilisateur
 NATURAL JOIN InfoPersonne
-WHERE datedebutprop = (SELECT MAX(datedebutprop) FROM Proprietaire AS P WHERE P.idPropriete = Proprietaire.idPropriete);
+GROUP BY idPropriete
+ORDER BY datedebutprop DESC;
 
 CREATE VIEW ProprietaireActuel AS
 SELECT datedebutprop, datefinprop, idPropriete, idPersonne AS idProprietaire, nom AS nomProprietaire, prenom AS prenomProprietaire
 FROM Proprietaire
 NATURAL JOIN Utilisateur
 NATURAL JOIN InfoPersonne
-WHERE datefinprop IS NULL;
+WHERE datefinprop IS NULL
+GROUP BY idPropriete
+ORDER BY datedebutprop DESC;
 
 CREATE TABLE Locataire(
    idAppartement INT,
@@ -279,14 +282,17 @@ SELECT idAppartement, datedebutloc, dateFinLoc, idPersonne AS idLocataire, nbHab
 FROM Locataire
 NATURAL JOIN Utilisateur
 NATURAL JOIN InfoPersonne
-WHERE datedebutloc = (SELECT MAX(datedebutloc) FROM Locataire AS L WHERE L.idAppartement = Locataire.idAppartement);
+GROUP BY idAppartement
+ORDER BY datedebutloc DESC;
 
 CREATE VIEW LocataireActuel AS
 SELECT idAppartement, datedebutloc, dateFinLoc, idPersonne AS idLocataire, nbHabitants, nom AS nomLocataire, prenom AS prenomLocataire
 FROM Locataire
 NATURAL JOIN Utilisateur
 NATURAL JOIN InfoPersonne
-WHERE dateFinLoc IS NULL;
+WHERE dateFinLoc IS NULL
+GROUP BY idAppartement
+ORDER BY datedebutloc DESC;
 
 
 -- Génération des TIGGER :
