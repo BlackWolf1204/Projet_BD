@@ -252,8 +252,7 @@ SELECT datedebutprop, datefinprop, idPropriete, idPersonne AS idProprietaire, no
 FROM Proprietaire
 NATURAL JOIN Utilisateur
 NATURAL JOIN InfoPersonne
-GROUP BY idPropriete
-ORDER BY datedebutprop DESC;
+WHERE datedebutprop = (SELECT MAX(datedebutprop) FROM Proprietaire AS P WHERE P.idPropriete = Proprietaire.idPropriete);
 
 CREATE VIEW ProprietaireActuel AS
 SELECT datedebutprop, datefinprop, idPropriete, idPersonne AS idProprietaire, nom AS nomProprietaire, prenom AS prenomProprietaire
@@ -280,8 +279,7 @@ SELECT idAppartement, datedebutloc, dateFinLoc, idPersonne AS idLocataire, nbHab
 FROM Locataire
 NATURAL JOIN Utilisateur
 NATURAL JOIN InfoPersonne
-GROUP BY idAppartement
-ORDER BY datedebutloc DESC;
+WHERE datedebutloc = (SELECT MAX(datedebutloc) FROM Locataire AS L WHERE L.idAppartement = Locataire.idAppartement);
 
 CREATE VIEW LocataireActuel AS
 SELECT idAppartement, datedebutloc, dateFinLoc, idPersonne AS idLocataire, nbHabitants, nom AS nomLocataire, prenom AS prenomLocataire

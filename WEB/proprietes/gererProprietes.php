@@ -136,7 +136,7 @@ pageAccueilSiNonConnecte($estConnecte, $ROOT);
             die("Problème d'exécution de la requête des locataires \n");
             
             $locataire = $dataLocataires->fetch();
-            if ($locataire['datedebutloc'] != NULL) {
+            if ($locataire && $locataire['datedebutloc'] != NULL) {
                 $locataire['datedebutloc'] = date("d/m/Y", strtotime($locataire['datedebutloc']));
                 if($locataire['datefinloc'] == NULL) echo "<td>" . lienInfoPersonne($locataire['idLocataire'], $locataire['nomLocataire'], $locataire['prenomLocataire'], $ROOT)." ({$locataire['datedebutloc']})</td>";
                 else {
