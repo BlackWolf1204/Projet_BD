@@ -2,7 +2,7 @@
 $ROOT = '../../';
 $titre = "Ajouter les pièces";
 require $ROOT . 'common/header.php';
-require $ROOT . 'common/verif_est_connecte.php';
+pageAccueilSiNonConnecte($estConnecte, $ROOT);
 ?>
 
 	<style>

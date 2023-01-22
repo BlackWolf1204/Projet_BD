@@ -2,7 +2,8 @@
 $ROOT = "../";
 $titre = "Page statistiques";
 require $ROOT . "common/header.php";
-require $ROOT . "common/verif_est_admin.php";
+pageAccueilSiNonConnecte($estAdmin, $ROOT);
+
 ?>
 
     <h2>Les statistiques</h2>

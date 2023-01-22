@@ -2,7 +2,7 @@
 $ROOT = '../../';
 $titre = "Ajouter une propriété";
 require $ROOT . 'common/header.php';
-require $ROOT . 'common/verif_est_connecte.php';
+pageAccueilSiNonConnecte($estConnecte, $ROOT);
 ?>
 
 	<h2>Ajouter une propriété</h2>
