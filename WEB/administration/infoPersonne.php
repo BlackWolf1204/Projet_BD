@@ -97,7 +97,7 @@ require_once $ROOT . 'common/header.php';
 			<?php if($estAdminOuAutorise) { // Uniquement visible par l'utilisateur ou un admin ?>
 				<tr>
 					<td>Date de naissance</td>
-					<td><?= $userinfo['dateNais']; ?></td>
+					<td><?= ($userinfo['dateNais'] ? date('d/m/Y', strtotime($userinfo['dateNais'])) : ''); ?></td>
 				</tr>
 				<tr>
 					<td>Numéro de téléphone</td>
@@ -112,7 +112,7 @@ require_once $ROOT . 'common/header.php';
 
 			<tr>
 				<td>Date de création du compte</td>
-				<td><?= isset($userinfo['dateCreation']) ? $userinfo['dateCreation'] : 'Sans compte'; ?></td>
+				<td><?= isset($userinfo['dateCreation']) ? date('d/m/Y', strtotime($userinfo['dateCreation'])) : 'Sans compte'; ?></td>
 			</tr>
 			<tr>
 				<td>Administrateur</td>
