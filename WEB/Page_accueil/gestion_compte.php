@@ -4,7 +4,7 @@
 
 <?php
 $ROOT = "../";
-require_once '../common/main.php';
+require_once $ROOT . 'common/main.php';
 
 if(!$estConnecte)
 {
@@ -15,17 +15,11 @@ if(!$estConnecte)
 $requser = $bdd->prepare('SELECT * FROM InfoPersonne WHERE idPersonne = ?');
 $requser->execute(array($sessionId));
 $userinfo = $requser->fetch();
+
+$titre = "Page profil";
+require $ROOT . 'common/header.php';
 ?>
 
-
-<html>
-<head>
-    <title> Page Profil </title>
-    <meta charset="UTF-8">
-    <?php require_once "{$ROOT}common/header.php"; ?>
-
-
-    <!-- Ajout d'un "style de fond" -->
     <div class="mt-5 text-center"> <!-- centrage -->
 
         <!--on affiche le infos du profil nom, prenom , on met un bouton de modification a cote du mail, du numero de telephone et si on  clique dessus on peut modifier les champs -->

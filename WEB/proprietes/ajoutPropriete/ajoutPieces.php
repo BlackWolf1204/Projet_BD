@@ -1,12 +1,10 @@
 <?php
 $ROOT = '../../';
+$titre = "Ajouter les pièces";
+require $ROOT . 'common/header.php';
+require $ROOT . 'common/verif_est_connecte.php';
 ?>
 
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-	<title>Ajouter les pièces</title>
 	<style>
 		#labelPropriete {
 			text-align: center;
@@ -21,9 +19,6 @@ $ROOT = '../../';
 			text-align: center;
 		}
 	</style>
-
-	<?php require("{$ROOT}common/header.php") ?>
-	<?php require("{$ROOT}common/verif_est_connecte.php") ?>
 
 	<?php
 	if (empty($_POST)) {

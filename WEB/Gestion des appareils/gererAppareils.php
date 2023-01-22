@@ -2,23 +2,18 @@
 $ROOT = "../";
 require_once("../common/main.php");
 ?>
-
-<!DOCTYPE html>
-
- <html lang="fr">
- 
- <head>
- 
-    <title>Page appareil</title>
-
-    <?php require "../common/header.php"; ?>
+<?php
+$ROOT = "../";
+$titre = "Page appareils";
+require "../common/header.php";
+pageAccueilSiNonConnecte($estConnecte, $ROOT);
+?>
 
     <h2>Vos appareils</h2>
 
     <a href="../Page_accueil/Page_accueil.php" class = "bouton-retour">Retour à l'accueil</a>
 
     <?php
-    pageAccueilSiNonConnecte($ROOT);
     
     // requete pour la base
     $req = "SELECT idAppareil, idTypeAppareil, nomAppareil, libTypeAppareil

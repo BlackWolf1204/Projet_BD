@@ -30,13 +30,11 @@ if(!$derniereConsommation->execute(array($idAppareil))) {
 }
 $derniereConsommation = $derniereConsommation->fetch();
 
+
+$titre = "Page Appareil";
+require_once $ROOT . 'common/header.php';
 ?>
 
-<html>
-
-<head>
-	<title> Page Appareil </title>
-	<meta charset="UTF-8">
 	<style>
 		h3 {
 			margin-top: 1em !important;
@@ -116,7 +114,6 @@ $derniereConsommation = $derniereConsommation->fetch();
 		@media (max-width: 360px) { .graph-annee { --taille: .4; } }
 
 	</style>
-	<?php require_once "{$ROOT}common/header.php"; ?>
 
 	<div class="container mt-5 text-center">
 

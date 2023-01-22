@@ -14,3 +14,4 @@ if (!isset($ROOT)) {
 session_start();
 
 require_once("bdd.php");
+require_once("fonctions.php");

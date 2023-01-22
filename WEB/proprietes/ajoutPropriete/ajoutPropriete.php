@@ -1,15 +1,9 @@
 <?php
 $ROOT = '../../';
+$titre = "Ajouter une propriété";
+require $ROOT . 'common/header.php';
+require $ROOT . 'common/verif_est_connecte.php';
 ?>
-
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-	<title>Ajouter une propriété</title>
-
-	<?php require("{$ROOT}common/header.php") ?>
-	<?php require("{$ROOT}common/verif_est_connecte.php") ?>
 
 	<h2>Ajouter une propriété</h2>
 

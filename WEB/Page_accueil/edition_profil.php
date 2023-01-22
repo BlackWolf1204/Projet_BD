@@ -69,6 +69,16 @@ if ($estConnecte) {
         }
     }
 
+    if (isset($_POST['newdatenaissance']) and !empty($_POST['newdatenaissance']) and $_POST['newdatenaissance'] != $userinfo['dateNais']) {
+        $newdatenaissance = htmlspecialchars($_POST['newdatenaissance']);
+        $insertdatenaissance = $bdd->prepare("UPDATE InfoPersonne SET dateNais = ? WHERE idPersonne = ?");
+        $res = $insertdatenaissance->execute(array($newdatenaissance, $sessionId));
+        if ($res)
+            $nbChangements++;
+        else
+            $msgs[] = "Erreur lors de la modification de la date de naissance";
+    }
+
     if (isset($_POST['newnumtel']) and !empty($_POST['newnumtel']) and $_POST['newnumtel'] != $userinfo['numTel']) {
         $NumTel = htmlspecialchars($_POST['newnumtel']);
         $NumTel = preg_replace("#^(0[1-9]).?([0-9]{2}).?([0-9]{2}).?([0-9]{2}).?([0-9]{2})$#", "$1$2$3$4$5", $NumTel);
@@ -124,29 +134,23 @@ if ($estConnecte) {
     echo "Vous n'êtes pas connecté !<br>Redirection vers la page d'accueil dans 2 secondes...";
     header("Refresh: 2; url={$ROOT}Page_accueil/Page_accueil.php");
 }
+
+
+$titre = "Édition Profil";
+require $ROOT . 'common/header.php';
 ?>
 
-<!DOCTYPE html>
-<html>
-<title>Édition Profil </title>
-    <meta charset="UTF-8">
-    <!-- Ajout de Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="icon" href="<?= $ROOT ?>common/images/Green_house.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="<?= $ROOT ?>common/style/main.css">
     <!-- Ajout de style personnalisé -->
-    </head>
     <style> 
         form > label {
             margin-top: 1em;
         }
     </style>
     
-    <body>
-        <div align="center">
-            <h2>Édition de mon profil</h2>
-            <div align="left">
-                <form method="POST" action="edition_profil.php">
+    <div align="center">
+        <h2>Édition de mon profil</h2>
+        <div align="left">
+            <form method="POST" action="edition_profil.php">
                 <label>Nom :</label>
                 <input type="text" name="newnom" placeholder="Nom" value="<?php echo $userinfo['nom']; ?>" />
                 <label>Prénom :</label>
@@ -157,6 +161,8 @@ if ($estConnecte) {
                 <input type="password" name="newmdp1" placeholder="Nouveau mot de passe" autocomplete="new-password" />
                 <label>Confirmation - mot de passe :</label>
                 <input type="password" name="newmdp2" placeholder="Confirmation du mot de passe" autocomplete="new-password" />
+                <label>Date de naissance :</label>
+                <input type="date" name="newdatenaissance" placeholder="Date de naissance" value="<?php echo $userinfo['dateNais']; ?>" />
                 <label>Numéro de téléphone :</label>
                 <input type="text" name="newnumtel" placeholder="Numéro de téléphone" pattern="0[1-9][ \-]?[0-9]{2}[ \-]?[0-9]{2}[ \-]?[0-9]{2}[ \-]?[0-9]{2}" title="Format 01 23 45 67 89" value="<?php echo $userinfo['numTel']; ?>" />
                 <label>Genre :</label>
@@ -173,13 +179,13 @@ if ($estConnecte) {
                 </div>
 
             </form>
-            <!-- Afficher $msgs avec un join de \n -->
-            <script>
-                var msgs = <?= json_encode($msgs) ?>;
-                if (msgs.length > 0) {
-                    alert(msgs.join("\n"));
-                }
-            </script>
         </div>
+        <!-- Afficher $msgs avec un join de \n -->
+        <script>
+            var msgs = <?= json_encode($msgs) ?>;
+            if (msgs.length > 0) {
+                alert(msgs.join("\n"));
+            }
+        </script>
     </div>
-</body>
+    <?php require($ROOT . 'common/footer.php'); ?>

@@ -1,18 +1,9 @@
 <?php
 $ROOT = "../";
-require_once("../common/main.php");
+$titre = "Page propriétés";
+require "../common/header.php";
+pageAccueilSiNonConnecte($estConnecte, $ROOT);
 ?>
-
-<!DOCTYPE html>
-
- <html lang="fr">
- 
- <head>
- 
-    <title>Page propriétés</title>
-
-    <?php require "../common/header.php"; ?>
-    <?php pageAccueilSiNonConnecte($ROOT); ?>
 
     <h2>Votre/Vos propriété(s)</h2>
 

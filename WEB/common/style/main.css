@@ -246,6 +246,7 @@ footer p {
 .vantatopologymin {
   height: 77px;
   position: unset !important;
+  background: #042523;
 }
 .vanta-canvas {
   position: unset !important;

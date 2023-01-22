@@ -144,15 +144,9 @@ if (isset($_POST['inscription'])) {
     $Mdp2 = "";
 }
 
+$titre = "Page Inscription";
+require($ROOT . 'common/header.php');
 ?>
-<html>
-
-<head>
-    <title> Page Inscription </title>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="icon" href="<?= $ROOT ?>common/images/Green_house.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="<?= $ROOT ?>common/style/main.css">
     <style>
         input.hidden {
             position: absolute;
@@ -235,9 +229,6 @@ if (isset($_POST['inscription'])) {
         }
     </script>
 
-</head>
-
-<body>
     <!-- Ajout d'un "style de fond" -->
     <div class="container mt-5"> <!-- container c'est pour le centrage -->
 
@@ -334,6 +325,4 @@ if (isset($_POST['inscription'])) {
             </div>
         </div>
     </div>
-</body>
-
-</html>
+<?php require($ROOT . 'common/footer.php'); ?>

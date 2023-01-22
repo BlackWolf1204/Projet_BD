@@ -1,14 +1,8 @@
-<?php $ROOT = "./"; ?>
-<!DOCTYPE html>
-<html>
+<?php
+$ROOT = "./";
+$titre = "Projet Maison Économe";
+require('common/header.php');
 
-<head>
-	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-	<title>Projet Maison Économe</title>
-
-	<?php require('common/header.php') ?>
-
-	<?php
 	function scanFolder($path)
 	{
 		$files = scandir($path);
@@ -52,9 +46,6 @@
 	// afficher un lien vers tous les .php et .html du projet
 	// et sous-dossiers
 	scanFolder(".");
-	?>
-
-	<?php require('common/footer.php') ?>
-	</body>
-
-</html>
+	
+	require('common/footer.php')
+?>

@@ -1,9 +1,12 @@
+<!DOCTYPE html>
+<html lang='fr'>
+<head>
+
 <?php
 if (!isset($ROOT)) {
     $ROOT = "../";
 }
 require_once("main.php");
-require_once("fonctions.php");
 
 
 if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
@@ -12,6 +15,10 @@ if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
     $url = 'http';
 }
 $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+if(isset($titre)) {
+    echo "<title>$titre</title>\n";
+}
 ?>
 
 <meta charset="utf-8">
@@ -60,21 +67,5 @@ $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     <br><br>
 
     <div class="vantatopologymin" id="vantatopologymin_1"></div>
-
-
-    <?php if (!($estConnecte)) { ?>
-        <!-- on affiche une image de fond avec un texte qui explique le site , l'image sera d'une opacite plus legere pour que le texte soit lisible -->
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <!-- pour mettre de la bordure sur l'image, on peut utiliser la classe img-thumbnail -->
-                <img class="d-block w-100" src="<?= $ROOT ?>common/images/appareil.webp" alt="Green House" ; style="opacity:0.35; image-thumnail: 5px; border: 5px solid white; object-fit: fill; height: 100%; width: 100%; ">
-                <div class="carousel-caption center"><!-- les parametre de object-fit sont : fill, contain, cover, none, scale-down -->
-                    <h1 style="color: Green; font-size: 50px; font-weight: bold; text-shadow: 0px 0px 35px #000000;">Green House</h1>
-                    <p style="color: White; font-size: 30px; font-weight: bold; text-shadow: 0px 0px 25px #000000;">Contrôler votre consommation d'energies </p>
-                    <p style="color: White; font-size: 30px; font-weight: bold; text-shadow: 0px 0px 25px #000000;">afin de réduire vos émissions de substances nocives </p>
-                </div>
-            </div>
-        </div>
-    <?php } ?>
 
     <div class="body">

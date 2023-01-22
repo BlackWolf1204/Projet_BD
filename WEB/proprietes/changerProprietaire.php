@@ -1,8 +1,7 @@
 <?php
 $ROOT = "../";
 require_once("../common/main.php");
-require_once("../common/fonctions.php");
-pageAccueilSiNonConnecte($ROOT);
+pageAccueilSiNonConnecte($estConnecte, $ROOT);
 
 if (isset($_GET['idPropriete'])) {
 	$idPropriete = $_GET['idPropriete']; // utiliser prepare() pour éviter les injections SQL
@@ -63,23 +62,16 @@ if (!empty($_POST)) {
 	// Redirection vers la page des détails
 	die('{ "message": "Changement de propriétaire effectué." }');
 }
+
+$titre = "Changer le propriétaire";
+require $ROOT . 'common/header.php';
 ?>
-
-<!DOCTYPE html>
-
-<html lang="fr">
-
-<head>
-
-	<title>Changer le locataire</title>
 
 	<style>
 		#boutonChangerProp {
 			width: auto;
 		}
 	</style>
-
-	<?php require "../common/header.php"; ?>
 
 	<h2>Changer le propriétaire</h2>
 

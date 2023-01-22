@@ -1,21 +1,15 @@
-<!DOCTYPE html>
-
- <html lang="fr">
- 
- <head>
- 
-    <title>Page consomation</title>
-
-    <?php require "../common/header.php"; ?>
+<?php
+$ROOT = "../";
+$titre = "Page consommation";
+require "../common/header.php";
+pageAccueilSiNonConnecte($estConnecte, $ROOT);
+?>
 
     <h2>Votre consommation et production</h2>
 
     <a href="../Page_accueil/Page_accueil.php" class = "bouton-retour">Retour à l'accueil</a>
 
     <?php
-
-    pageAccueilSiNonConnecte($ROOT);
-
     // requete pour la base
     $reqApparts = 'SELECT Appartement.idAppartement, numAppart, numeroRue, nomRue, codePostal, nomVille, nomPropriete,
                     datedebutprop, datefinprop,

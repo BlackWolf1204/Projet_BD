@@ -1,8 +1,7 @@
 <?php
 $ROOT = "../../";
 require_once("{$ROOT}common/main.php");
-require_once("{$ROOT}common/fonctions.php");
-require_once("{$ROOT}common/verif_est_connecte.php");
+pageAccueilSiNonConnecte($estConnecte, $ROOT);
 
 // Données du POST :
 // type, nbAppartements,
@@ -185,6 +184,8 @@ if (!$estAdmin) {
 
 // Commit de la transaction
 $bdd->commit();
+
+require $ROOT . 'common/header.php';
 echo "<p>Propriété insérée avec succès.</p>";
 if ($proprietaire)
 	echo "<p>Vous êtes le propriétaire de cette propriété.</p>";
@@ -196,3 +197,5 @@ echo "<p>Redirection vers la page d'accueil...</p>";
 
 // Redirection vers la page d'accueil dans 2 secondes
 header("Refresh: 2; url={$ROOT}Page_accueil/Page_accueil.php");
+
+require $ROOT . 'common/footer.php';

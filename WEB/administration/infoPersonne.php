@@ -63,14 +63,10 @@ if (!$estAdminOuAutorise) {
 	$locations->execute(array($idPersonne));
 	$location = $locations->fetchAll();
 }
+
+$titre = "Page Profil";
+require_once $ROOT . 'common/header.php';
 ?>
-
-<html>
-
-<head>
-	<title> Page Profil </title>
-	<meta charset="UTF-8">
-	<?php require_once "{$ROOT}common/header.php"; ?>
 
 	<div class="container mt-5 text-center">
 

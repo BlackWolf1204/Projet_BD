@@ -1,15 +1,9 @@
 <?php
 $ROOT = "../";
-require_once("../common/main.php");
+$titre = "Page propriété";
+require "../common/header.php";
+pageAccueilSiNonConnecte($estConnecte, $ROOT);
 ?>
-
-<!DOCTYPE html>
-
-<html lang="fr">
-
-<head>
-
-	<title>Page propriété</title>
 
 	<style>
 		.appart p {
@@ -25,9 +19,6 @@ require_once("../common/main.php");
 			margin-top: .5em;
 		}
 	</style>
-
-	<?php require "../common/header.php"; ?>
-	<?php pageAccueilSiNonConnecte($ROOT); ?>
 
 	<h2>Détails de la propriété</h2>
 

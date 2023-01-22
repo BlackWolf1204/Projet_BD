@@ -1,14 +1,8 @@
-
- <!DOCTYPE html><!-- déclaration du type de document HTML -->
-
- <html lang="fr"><!-- déclaration de la langue de la page -->
- 
- <head><!-- début de l'entête de la page -->
-
-    <title>Green House</title><!-- déclaration du titre de la page -->
-
-    
-    <?php require "../common/header.php"?>
+<?php
+$ROOT = "../";
+$titre = "Green House";
+require $ROOT . 'common/header.php';
+?>
 
 <!-- entré dans body -->
 
@@ -46,6 +40,14 @@
         {
             position: unset !important;
         }
+
+        #image-appareil {
+            opacity:0.35;
+            border: 5px solid white;
+            object-fit: fill;
+            width: 84%;
+            margin: auto;
+        }
         </style>
       
     
@@ -60,6 +62,19 @@
             <a href="../proprietes/gererProprietes.php" class="bouton_Nav bouton">Gérer sa/ses propriété(s)</a>
             <a href="../proprietes/ajoutPropriete/ajoutPropriete.php" class="bouton_Nav bouton">Ajouter une propriété</a>
             <!--on affciche le bouton statistiques UNIQUEMENT si l'utilisateur est un admin, on va donc vérifier si la variable de session $estAdmin est validée-->
+        <?php } else { ?>
+            <!-- on affiche une image de fond avec un texte qui explique le site , l'image sera d'une opacite plus legere pour que le texte soit lisible -->
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <!-- pour mettre de la bordure sur l'image, on peut utiliser la classe img-thumbnail -->
+                    <img id="image-appareil" class="d-block" src="<?= $ROOT ?>common/images/appareil.webp" alt="Green House">
+                    <div class="carousel-caption center"><!-- les parametre de object-fit sont : fill, contain, cover, none, scale-down -->
+                        <h1 style="color: Green; font-size: 50px; font-weight: bold; text-shadow: 0px 0px 35px #000000;">Green House</h1>
+                        <p style="color: White; font-size: 30px; font-weight: bold; text-shadow: 0px 0px 25px #000000;">Contrôler votre consommation d'energies </p>
+                        <p style="color: White; font-size: 30px; font-weight: bold; text-shadow: 0px 0px 25px #000000;">afin de réduire vos émissions de substances nocives </p>
+                    </div>
+                </div>
+            </div>
         <?php } ?>
         <?php if($estAdmin) { ?>
             <a href="../administration/statistiques.php" class="bouton_Nav bouton">Statistiques</a>
@@ -67,12 +82,4 @@
    
     </div>
     
-<?php require "../common/footer.php"; ?>
-
-</html><!-- fin de la page -->
-
-    
-    
-    
-
- 
+<?php require $ROOT . 'common/footer.php'; ?>

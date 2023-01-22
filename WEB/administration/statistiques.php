@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-
-<html lang="fr">
-
-<head>
-
-    <title>Page statistiques</title>
-
-    <?php require "../common/header.php"; ?>
-    <?php require "../common/verif_est_admin.php"; ?>
+<?php
+$ROOT = "../";
+$titre = "Page statistiques";
+require $ROOT . "common/header.php";
+require $ROOT . "common/verif_est_admin.php";
+?>
 
     <h2>Les statistiques</h2>
 
@@ -50,6 +46,7 @@
             foreach ($nbParGenre as $genre) {
                 switch ($genre['genre']) {
                     case 'M':
+                    case 'H':
                         $nbHomme += $genre['nbPersonnes'];
                         break;
                     case 'F':
@@ -138,4 +135,4 @@
     <div class="google_chart" id="piechart_genres" style="width: 900px; height: 500px;"></div>
     <div class="google_chart" id="graph_ages" style="width: 900px; height: 500px;"></div>
 
-    <?php require "../common/footer.php"; ?>
+    <?php require $ROOT . "common/footer.php"; ?>

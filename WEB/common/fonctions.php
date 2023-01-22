@@ -83,10 +83,20 @@ function periodeDateDuAu($dateDebut, $dateFin) {
 	}
 }
 
-function pageAccueilSiNonConnecte($ROOT)
+function getURLPageAccueil($ROOT)
 {
-	if (!isset($_SESSION['Id']) || empty($_SESSION['Id'])) {
-		header("Location: {$ROOT}Page_accueil/Page_accueil.php");
+	return $ROOT . "Page_accueil/Page_accueil.php";
+}
+
+function getURLConnexion($ROOT)
+{
+	return $ROOT . "connexion/connexion.php";
+}
+
+function pageAccueilSiNonConnecte($estConnecte, $ROOT)
+{
+	if (!$estConnecte) {
+		header("Location: " . getURLPageAccueil($ROOT));
 		exit();
 	}
 }
