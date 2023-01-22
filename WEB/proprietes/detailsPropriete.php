@@ -129,7 +129,6 @@ pageAccueilSiNonConnecte($estConnecte, $ROOT);
 				<?php } ?>
 				<div class="boutonsgroupes centre">
 					<a class="bouton" href="changerLocataire.php?idAppartement=<?= $appartement['idAppartement'] ?>">Changer le locataire</a>
-					<a class="bouton rouge" href="supprimerAppartement.php?idAppartement=<?= $appartement['idAppartement'] ?>">Supprimer l'appartement</a>
 				</div>
 
 				<h4>Locataires précédents</h4>

@@ -90,15 +90,24 @@ function getURLPageAccueil($ROOT)
 
 function getURLConnexion($ROOT)
 {
-	return $ROOT . "connexion/connexion.php";
+	return $ROOT . "Page_accueil/connexion.php";
+}
+
+function redirectPageAccueilExit($ROOT)
+{
+	header("Location: " . getURLPageAccueil($ROOT));
+	exit();
+}
+
+function redirectPageConnexionExit($ROOT)
+{
+	header("Location: " . getURLConnexion($ROOT));
+	exit();
 }
 
 function pageAccueilSiNonConnecte($estConnecte, $ROOT)
 {
-	if (!$estConnecte) {
-		header("Location: " . getURLPageAccueil($ROOT));
-		exit();
-	}
+	if (!$estConnecte) redirectPageAccueilExit($ROOT);
 }
 
 function lienInfoPersonne($idPersonne, $nomPersonne, $prenomPersonne, $ROOT, $defaut = "Personne")
