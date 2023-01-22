@@ -36,12 +36,13 @@ Pour cela, CQC SA décide dans un premier temps de mettre en place une applicati
 - [x] Gestion des profils
   - [x] Admin : stats de toutes les maisons
   - [x] Utilisateur : voir sa propre consommation et l'évolution de son statut
-- [ ] Gestion des maisons :
+- [x] Gestion des maisons :
   - [x] Créer des maisons
   - [x] Ajouter des appartements
   - [x] Ajouter des appareils
   - [x] Renseigner le propriétaire
   - [x] Renseigner les locataires (par le propriétaire)
+  - [x] Supprimer des maisons
 - [x] Gestion des équipements de la maison :
   - [x] Allumer / éteindre
   - [x] Infos consommation et émission en substance
@@ -80,7 +81,7 @@ Pour cela, CQC SA décide dans un premier temps de mettre en place une applicati
 4. [x] Identifiant unique généré pour chaque utilisateur
    1. [x] Se connecter avec cet identifant
    2. [x] Se connecter avec le mail
-5. [ ] Âge minimum : 18 ans
+5. [x] Âge minimum : 18 ans
 6. [x] Personne physique : Nom, prénom, date de naissance, genre, mail, identifiant, numéro de tel
 7. [x] Adresse : numéro de maison, nom de rue, code postal, ville
 8. [ ] Degré de citoyenneté d'une maison / appartements
@@ -133,7 +134,7 @@ Pour cela, CQC SA décide dans un premier temps de mettre en place une applicati
 6. [x] Page pour l'inscription / connexion, page pour consulter / modifier son profil, pour se déconnecter
 7. [ ] CRUD (Create-Read-Update-Delete) des entités sélectionnées
 8. [ ] CRUD / page de gestion des associations concernées
-9. [ ] Trigger pour suppression d'une personne physique
+9. [x] Trigger pour suppression d'une personne physique
 10. [ ] Fin du projet : fichier zippé contenant
     1.  [ ] Compte rendu
     2.  [ ] .lo vu MCD
@@ -142,5 +143,5 @@ Pour cela, CQC SA décide dans un premier temps de mettre en place une applicati
 
 ### 1.3.4 Fourni
 
-1. [ ] Projet contenant les pages pour le CRUD (non connecté à la BDD) (????)
+1. [x] Projet contenant les pages pour le CRUD (non connecté à la BDD) (pas utilisé)
 2. [ ] Liens vers des vidéos Youtube pour être un citoyen économe (?????) => non
