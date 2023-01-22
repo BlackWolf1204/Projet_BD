@@ -260,9 +260,7 @@ SELECT datedebutprop, datefinprop, idPropriete, idPersonne AS idProprietaire, no
 FROM Proprietaire
 NATURAL JOIN Utilisateur
 NATURAL JOIN InfoPersonne
-WHERE datefinprop IS NULL
-GROUP BY idPropriete
-ORDER BY datedebutprop DESC;
+WHERE datefinprop IS NULL;
 
 CREATE TABLE Locataire(
    idAppartement INT,
@@ -290,9 +288,7 @@ SELECT idAppartement, datedebutloc, dateFinLoc, idPersonne AS idLocataire, nbHab
 FROM Locataire
 NATURAL JOIN Utilisateur
 NATURAL JOIN InfoPersonne
-WHERE dateFinLoc IS NULL
-GROUP BY idAppartement
-ORDER BY datedebutloc DESC;
+WHERE dateFinLoc IS NULL;
 
 
 -- Génération des TIGGER :
