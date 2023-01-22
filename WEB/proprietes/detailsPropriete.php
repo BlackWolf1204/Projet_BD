@@ -99,8 +99,8 @@ pageAccueilSiNonConnecte($estConnecte, $ROOT);
 					echo "<tr>";
 					echo "<td>" . lienInfoPersonne($proprietaire['idPersonne'], $proprietaire['nom'], '', $ROOT, 'Utilisateur inconnu') . "</td>";
 					echo "<td>" . $proprietaire['prenom'] . "</td>";
-					echo "<td>" . $proprietaire['dateDebutProp'] . "</td>";
-					echo "<td>" . $proprietaire['dateFinProp'] . "</td>";
+					echo "<td>" . date('d/m/Y', strtotime($proprietaire['dateDebutProp'])) . "</td>";
+					echo "<td>" . ($proprietaire['dateFinProp'] ? date('d/m/Y', strtotime($proprietaire['dateFinProp'])) : '') . "</td>";
 					echo "</tr>";
 				} ?>
 			</table>
@@ -159,8 +159,8 @@ pageAccueilSiNonConnecte($estConnecte, $ROOT);
 						<tr>
 							<td><?= lienInfoPersonne($locataire['idPersonne'], $locataire['nom'], '', $ROOT, 'Utilisateur inconnu'); ?></td>
 							<td><?= $locataire['prenom']; ?></td>
-							<td><?= $locataire['dateDebutLoc']; ?></td>
-							<td><?= $locataire['dateFinLoc']; ?></td>
+							<td><?= date('d/m/Y', strtotime($locataire['dateDebutLoc'])); ?></td>
+							<td><?= $locataire['dateFinLoc'] ? date('d/m/Y', strtotime($locataire['dateFinLoc'])) : ''; ?></td>
 						</tr>
 						<?php } ?>
 					</table>
